@@ -1,0 +1,7 @@
+<p-sidebar [(visible)]="isVisible" [baseZIndex]="10000">
+  <h1 style="font-weight:normal">Left Sidebar</h1>
+  <p-button type="button" (click)="isVisible = false" label="Save" styleClass="p-button-success"></p-button>
+  <p-button type="button" (click)="isVisible = false" label="Cancel" styleClass="p-button-secondary"></p-button>
+</p-sidebar>
+
+<p-button type="button" class="mr-2" (click)="isVisible = true" icon="pi pi-arrow-right"></p-button>
