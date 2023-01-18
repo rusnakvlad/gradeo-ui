@@ -1,0 +1,9 @@
+<p-menubar>
+  <ng-template pTemplate="start">
+    <p-button type="text" (click)=expandMenu() icon="pi pi-plus" label="Show"></p-button>
+    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/cf/Angular_full_color_logo.svg/1200px-Angular_full_color_logo.svg.png" height="40" class="mr-2">
+  </ng-template>
+  <ng-template pTemplate="end">
+    <app-business-unit-dropdown></app-business-unit-dropdown>
+  </ng-template>
+</p-menubar>
