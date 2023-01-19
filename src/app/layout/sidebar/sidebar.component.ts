@@ -1,4 +1,5 @@
 import {Component, EventEmitter, Input, OnInit} from '@angular/core';
+import {LayoutService} from "../services/layout.service";
 
 @Component({
   selector: 'app-sidebar',
@@ -7,16 +8,16 @@ import {Component, EventEmitter, Input, OnInit} from '@angular/core';
 })
 export class SidebarComponent implements OnInit {
 
-  @Input() expandMenu: EventEmitter<boolean> = new EventEmitter<boolean>();
   public display: boolean = false;
 
-  constructor() {
+  constructor(private layoutService: LayoutService) {
+    layoutService.menuToggled.subscribe(sidebarState => this.display = sidebarState);
   }
 
   ngOnInit(): void {
   }
 
-  onExpandMenu() {
+  onMenuExpanded() {
     this.display = true;
   }
 }
