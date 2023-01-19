@@ -17,6 +17,8 @@ import { SidebarComponent } from './layout/sidebar/sidebar.component';
 import { HeaderBarComponent } from './layout/header-bar/header-bar.component';
 import { BusinessUnitDropdownComponent } from './layout/header-bar/business-unit-dropdown/business-unit-dropdown.component';
 import {FormsModule} from "@angular/forms";
+import {MenuModule} from "primeng/menu";
+import {TieredMenuModule} from "primeng/tieredmenu";
 
 @NgModule({
   declarations: [
@@ -36,6 +38,8 @@ import {FormsModule} from "@angular/forms";
     MenubarModule,
     DropdownModule,
     FormsModule,
+    MenuModule,
+    TieredMenuModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

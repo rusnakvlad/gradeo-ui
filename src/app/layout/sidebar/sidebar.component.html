@@ -1,4 +1,18 @@
-<p-sidebar [(visible)]="display">
-  Content
+<p-sidebar [(visible)]="display" [style]="{width:'15%'}">
+  <div [style]="{'text-align':'center'}">
+    <img src="assets/images/appicon.png" width="60">
+    <h3>Smart solutions</h3>
+  </div>
+
+  <button pButton pRipple type="button" label="Home" class="p-button-outlined p-button-rounded" icon="pi pi-home" iconPos="left"></button>
+  <br><br>
+  <button pButton pRipple type="button" label="Schools" class="p-button-outlined p-button-rounded" icon="pi pi-sitemap" iconPos="left"></button>
+  <br><br>
+  <button pButton pRipple type="button" label="Users" class="p-button-outlined p-button-rounded" icon="pi pi-users" iconPos="left"></button>
+  <br><br>
+  <button pButton pRipple type="button" label="Statistics" class="p-button-outlined p-button-rounded" icon="pi pi-chart-bar" iconPos="left"></button>
+  <br><br>
+  <button pButton pRipple type="button" label="Master Data" class="p-button-outlined p-button-rounded" icon="pi pi-microsoft" iconPos="left"></button>
+
 </p-sidebar>
 

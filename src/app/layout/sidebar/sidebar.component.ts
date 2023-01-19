@@ -15,9 +15,7 @@ export class SidebarComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
   }
 
-  onMenuExpanded() {
-    this.display = true;
-  }
 }
