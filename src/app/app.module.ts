@@ -18,6 +18,8 @@ import { HeaderBarComponent } from './layout/header-bar/header-bar.component';
 import {FormsModule} from "@angular/forms";
 import {MenuModule} from "primeng/menu";
 import {TieredMenuModule} from "primeng/tieredmenu";
+import {TableModule} from "primeng/table";
+import {ToastModule} from "primeng/toast";
 
 @NgModule({
   declarations: [
@@ -38,6 +40,8 @@ import {TieredMenuModule} from "primeng/tieredmenu";
     FormsModule,
     MenuModule,
     TieredMenuModule,
+    TableModule,
+    ToastModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
