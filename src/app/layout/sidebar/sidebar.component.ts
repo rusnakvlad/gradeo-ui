@@ -18,4 +18,7 @@ export class SidebarComponent implements OnInit {
 
   }
 
+  closeSidebar(){
+    this.layoutService.menuToggled.emit(false);
+  }
 }
