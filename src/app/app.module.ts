@@ -20,6 +20,11 @@ import {MenuModule} from "primeng/menu";
 import {TieredMenuModule} from "primeng/tieredmenu";
 import {TableModule} from "primeng/table";
 import {ToastModule} from "primeng/toast";
+import {ToolbarModule} from "primeng/toolbar";
+import {FileUploadModule} from "primeng/fileupload";
+import {CardModule} from "primeng/card";
+import {InputTextModule} from "primeng/inputtext";
+import {RippleModule} from "primeng/ripple";
 
 @NgModule({
   declarations: [
@@ -42,6 +47,11 @@ import {ToastModule} from "primeng/toast";
     TieredMenuModule,
     TableModule,
     ToastModule,
+    ToolbarModule,
+    FileUploadModule,
+    CardModule,
+    InputTextModule,
+    RippleModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

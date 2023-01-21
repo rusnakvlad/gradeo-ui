@@ -1,13 +1,25 @@
+<p-card>
+
+  <p-toolbar styleClass="p-mb-4">
+    <ng-template pTemplate="left">
+        <button pButton pRipple label="New" icon="pi pi-plus" class="p-button-success p-mr-2" style="margin-right:10px"></button>
+        <button pButton pRipple label="Delete" icon="pi pi-trash" class="p-button-danger" [disabled]="!selectedProducts || !selectedProducts.length"></button>
+    </ng-template>
+  </p-toolbar>
+  <br>
+
 <p-table #dt [value]="products" [rows]="10" [paginator]="true" [globalFilterFields]="['name','country.name','representative.name','status']"
          [(selection)]="selectedProducts" [rowHover]="true" dataKey="id"
          currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true">
   <ng-template pTemplate="caption">
-    <div class="p-d-flex p-ai-center p-jc-between">
-      <h5 class="p-m-0">Manage Products</h5>
+    <div class="flex justify-content-between">
+      <h5>Manage Schools</h5>
+      <div>
       <span class="p-input-icon-left">
-                    <i class="pi pi-search"></i>
-                    <input pInputText type="text"  placeholder="Search..." />
-                </span>
+        <i class="pi pi-search"></i>
+        <input pInputText type="text"  placeholder="Search..." />
+      </span>
+      </div>
     </div>
   </ng-template>
   <ng-template pTemplate="header">
@@ -33,7 +45,7 @@
       <td>{{product.category}}</td>
       <td>rating</td>
       <td><span [class]="'product-badge status-' + product.inventoryStatus.toLowerCase()">{{product.inventoryStatus}}</span></td>
-      <td>
+      <td class="flex justify-content-center flex-wrap gap-1">
         <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success p-mr-2"></button>
         <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning"></button>
       </td>
@@ -45,3 +57,4 @@
     </div>
   </ng-template>
 </p-table>
+</p-card>
