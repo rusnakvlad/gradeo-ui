@@ -3,6 +3,7 @@ import { TableModule } from 'primeng/table';
 import {CardModule} from "primeng/card";
 
 import {Product} from "./product";
+import {HttpClient} from "@angular/common/http";
 
 @Component({
   selector: 'app-schools',
@@ -88,9 +89,15 @@ export class SchoolsComponent implements OnInit {
   ]
   public showModalWindow: boolean = false;
   public selectedProducts: Product[] | any;
-  constructor() {
+  constructor(private httpClient: HttpClient) {
   }
   ngOnInit(): void {
+  }
+
+  getOrganizations(){
+    this.httpClient.get<any>( "https://localhost:7001/api/Schools").subscribe(x => {
+      console.log(x);
+    });
   }
 
 }

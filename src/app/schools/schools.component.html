@@ -2,7 +2,7 @@
 
   <p-toolbar styleClass="p-mb-4">
     <ng-template pTemplate="left">
-        <button pButton pRipple label="New" icon="pi pi-plus" class="p-button-success p-mr-2" style="margin-right:10px"></button>
+        <button pButton pRipple label="New" (click)="getOrganizations()" icon="pi pi-plus" class="p-button-success p-mr-2" style="margin-right:10px"></button>
         <button pButton pRipple label="Delete" icon="pi pi-trash" class="p-button-danger" [disabled]="!selectedProducts || !selectedProducts.length"></button>
     </ng-template>
   </p-toolbar>
