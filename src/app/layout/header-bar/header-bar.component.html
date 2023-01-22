@@ -1,9 +1,10 @@
 <p-menubar>
   <ng-template pTemplate="start">
-    <button pButton pRipple type="button"  (click)=expandSidebar() icon="pi pi-bars" class="p-button-outlined"></button>
+    <button *ngIf="loginDisplay" pButton pRipple type="button"  (click)=expandSidebar() icon="pi pi-bars" class="p-button-outlined"></button>
     <img src="assets/images/applogo.png" height="40" style="padding-left: 5px">
   </ng-template>
   <ng-template pTemplate="end">
-    <p>FirstName LastName</p>
+    <p-button *ngIf="!loginDisplay" (click)="login()">Login</p-button>
+    <p-button *ngIf="loginDisplay" (click)="logout()">Logout</p-button>
   </ng-template>
 </p-menubar>
