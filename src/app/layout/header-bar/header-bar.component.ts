@@ -1,5 +1,5 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import {LayoutService} from "../services/layout.service";
+import {LayoutService} from "../../shared/services/layout.service";
 import { IdTokenClaims, PromptValue } from '@azure/msal-common';
 import {Subject} from "rxjs";
 import { filter, takeUntil } from 'rxjs/operators';

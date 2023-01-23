@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, OnInit} from '@angular/core';
-import {LayoutService} from "../services/layout.service";
+import {LayoutService} from "../../shared/services/layout.service";
 
 @Component({
   selector: 'app-sidebar',
