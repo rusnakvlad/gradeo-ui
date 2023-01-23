@@ -66,7 +66,7 @@ export const msalConfig: Configuration = {
  * https://github.com/AzureAD/microsoft-authentication-library-for-js/blob/dev/lib/msal-browser/docs/resources-and-scopes.md
  */
 export const protectedResources = {
-  todoListApi: {
+  GradeoCoreApi: {
     endpoint: 'https://localhost:7001', //this will change if you deploy to server, server address will go here
     scopes: ["https://gradeoua.onmicrosoft.com/gradeocore/api/all.crud"]
   },

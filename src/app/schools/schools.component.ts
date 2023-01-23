@@ -4,6 +4,8 @@ import {CardModule} from "primeng/card";
 
 import {Product} from "./product";
 import {HttpClient} from "@angular/common/http";
+import {SchoolService} from "../shared/services/school.service";
+import {SchoolInfo} from "../shared/models/school.model";
 
 @Component({
   selector: 'app-schools',
@@ -13,6 +15,7 @@ import {HttpClient} from "@angular/common/http";
 
 export class SchoolsComponent implements OnInit {
 
+  schools:SchoolInfo[] = [];
   public products: Product[] = [
     {
       id: "1000",
@@ -89,15 +92,13 @@ export class SchoolsComponent implements OnInit {
   ]
   public showModalWindow: boolean = false;
   public selectedProducts: Product[] | any;
-  constructor(private httpClient: HttpClient) {
+  constructor(private schoolService: SchoolService) {
   }
   ngOnInit(): void {
+    this.schoolService.getOrganizations().subscribe(x => this.schools = x)
   }
 
   getOrganizations(){
-    this.httpClient.get<any>( "https://localhost:7001/api/Schools").subscribe(x => {
-      console.log(x);
-    });
   }
 
 }
