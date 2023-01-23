@@ -1,6 +1,6 @@
 export type SchoolInfo = {
-  Id: number,
-  Name: string,
-  Country: string,
-  City: string
+  id: number,
+  name: string,
+  country: string,
+  city: string
 }

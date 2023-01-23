@@ -2,14 +2,14 @@
 
   <p-toolbar styleClass="p-mb-4">
     <ng-template pTemplate="left">
-        <button pButton pRipple label="New" (click)="getOrganizations()" icon="pi pi-plus" class="p-button-success p-mr-2" style="margin-right:10px"></button>
-        <button pButton pRipple label="Delete" icon="pi pi-trash" class="p-button-danger" [disabled]="!selectedProducts || !selectedProducts.length"></button>
+        <button pButton pRipple label="New" (click)="openNew()" icon="pi pi-plus" class="p-button-success p-mr-2" style="margin-right:10px"></button>
+        <button pButton pRipple label="Delete" icon="pi pi-trash" class="p-button-danger" [disabled]="!selectedSchools || !selectedSchools.length"></button>
     </ng-template>
   </p-toolbar>
   <br>
 
-<p-table #dt [value]="products" [rows]="10" [paginator]="true" [globalFilterFields]="['name','country.name','representative.name','status']"
-         [(selection)]="selectedProducts" [rowHover]="true" dataKey="id"
+<p-table #dt [value]="schools" [rows]="10" [paginator]="true" [globalFilterFields]="['name','country','city']"
+         [(selection)]="selectedSchools" [rowHover]="true" dataKey="id"
          currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true">
   <ng-template pTemplate="caption">
     <div class="flex justify-content-between">
@@ -27,24 +27,20 @@
       <th style="width: 3rem">
         <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
       </th>
-      <th pSortableColumn="name">Name <p-sortIcon field="name"></p-sortIcon></th>
-      <th pSortableColumn="price">Price <p-sortIcon field="price"></p-sortIcon></th>
-      <th pSortableColumn="category">Category <p-sortIcon field="category"></p-sortIcon></th>
-      <th pSortableColumn="rating">Reviews <p-sortIcon field="rating"></p-sortIcon></th>
-      <th pSortableColumn="inventoryStatus">Status <p-sortIcon field="inventoryStatus"></p-sortIcon></th>
+      <th pSortableColumn="name">Name<p-sortIcon field="name"></p-sortIcon></th>
+      <th pSortableColumn="country">Country<p-sortIcon field="country"></p-sortIcon></th>
+      <th pSortableColumn="city">City<p-sortIcon field="city"></p-sortIcon></th>
       <th></th>
     </tr>
   </ng-template>
-  <ng-template pTemplate="body" let-product>
+  <ng-template pTemplate="body" let-school>
     <tr>
       <td>
-        <p-tableCheckbox [value]="product"></p-tableCheckbox>
+        <p-tableCheckbox [value]="school"></p-tableCheckbox>
       </td>
-      <td>{{product.name}}</td>
-      <td>{{product.price | currency:'USD'}}</td>
-      <td>{{product.category}}</td>
-      <td>rating</td>
-      <td><span [class]="'product-badge status-' + product.inventoryStatus.toLowerCase()">{{product.inventoryStatus}}</span></td>
+      <td>{{school.name}}</td>
+      <td>{{school.country}}</td>
+      <td>{{school.city}}</td>
       <td class="flex justify-content-center flex-wrap gap-1">
         <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success p-mr-2"></button>
         <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning"></button>
@@ -53,8 +49,33 @@
   </ng-template>
   <ng-template pTemplate="summary">
     <div class="p-d-flex p-ai-center p-jc-between">
-      In total there are {{products ? products.length : 0 }} products.
+      In total there are {{schools ? schools.length : 0 }} products.
     </div>
   </ng-template>
 </p-table>
 </p-card>
+
+<p-dialog [(visible)]="schoolDialog" [style]="{width: '450px'}" header="School Details" [modal]="true" styleClass="p-fluid">
+  <ng-template pTemplate="content">
+    <div class="field">
+      <label for="name">Name</label>
+      <input type="text" pInputText id="name" [(ngModel)]="school.name" required autofocus />
+      <small class="p-error" *ngIf="submitted && !school.name">Name is required.</small>
+    </div>
+    <div class="field">
+      <label for="country">Country</label>
+      <input type="text" pInputText id="country" [(ngModel)]="school.country" required autofocus />
+      <small class="p-error" *ngIf="submitted && !school.name">Country is required.</small>
+    </div>
+    <div class="field">
+      <label for="city">City</label>
+      <input type="text" pInputText id="city" [(ngModel)]="school.city" required autofocus />
+      <small class="p-error" *ngIf="submitted && !school.name">City is required.</small>
+    </div>
+  </ng-template>
+
+  <ng-template pTemplate="footer">
+    <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
+    <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="saveContent()"></button>
+  </ng-template>
+</p-dialog>

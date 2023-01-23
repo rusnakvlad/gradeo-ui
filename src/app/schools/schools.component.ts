@@ -1,11 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { TableModule } from 'primeng/table';
 import {CardModule} from "primeng/card";
-
-import {Product} from "./product";
-import {HttpClient} from "@angular/common/http";
+import {DialogModule} from "primeng/dialog";
 import {SchoolService} from "../shared/services/school.service";
 import {SchoolInfo} from "../shared/models/school.model";
+import {MessageService} from "primeng/api";
 
 @Component({
   selector: 'app-schools',
@@ -15,90 +14,32 @@ import {SchoolInfo} from "../shared/models/school.model";
 
 export class SchoolsComponent implements OnInit {
 
+  school:SchoolInfo | any;
   schools:SchoolInfo[] = [];
-  public products: Product[] = [
-    {
-      id: "1000",
-      code: "f230fh0g3",
-      name: "Bamboo Watch",
-      description: "Product Description",
-      image: "bamboo-watch.jpg",
-      price: 65,
-      category: "Accessories",
-      quantity: 24,
-      inventoryStatus: "INSTOCK",
-      rating: 5
-    },
-    {
-      id: "1001",
-      code: "nvklal433",
-      name: "Black Watch",
-      description: "Product Description",
-      image: "black-watch.jpg",
-      price: 72,
-      category: "Accessories",
-      quantity: 61,
-      inventoryStatus: "INSTOCK",
-      rating: 4
-    },
-    {
-      id: "1000",
-      code: "f230fh0g3",
-      name: "Bamboo Watch",
-      description: "Product Description",
-      image: "bamboo-watch.jpg",
-      price: 65,
-      category: "Accessories",
-      quantity: 24,
-      inventoryStatus: "INSTOCK",
-      rating: 5
-    },
-    {
-      id: "1001",
-      code: "nvklal433",
-      name: "Black Watch",
-      description: "Product Description",
-      image: "black-watch.jpg",
-      price: 72,
-      category: "Accessories",
-      quantity: 61,
-      inventoryStatus: "INSTOCK",
-      rating: 4
-    },
-    {
-      id: "1000",
-      code: "f230fh0g3",
-      name: "Bamboo Watch",
-      description: "Product Description",
-      image: "bamboo-watch.jpg",
-      price: 65,
-      category: "Accessories",
-      quantity: 24,
-      inventoryStatus: "INSTOCK",
-      rating: 5
-    },
-    {
-      id: "1001",
-      code: "nvklal433",
-      name: "Black Watch",
-      description: "Product Description",
-      image: "black-watch.jpg",
-      price: 72,
-      category: "Accessories",
-      quantity: 61,
-      inventoryStatus: "INSTOCK",
-      rating: 4
-    },
-  ]
-  public showModalWindow: boolean = false;
-  public selectedProducts: Product[] | any;
-  constructor(private schoolService: SchoolService) {
+  selectedSchools:SchoolInfo[] = [];
+  schoolDialog: boolean = false;
+  submitted: boolean = false;
+  constructor(
+    private schoolService: SchoolService,
+    private messageService: MessageService
+  ) {
   }
   ngOnInit(): void {
     this.schoolService.getOrganizations().subscribe(x => this.schools = x)
   }
 
-  getOrganizations(){
+  hideDialog() {
+    this.schoolDialog = false;
+    this.submitted = false;
   }
 
+  openNew() {
+    this.school = {};
+    this.submitted = false;
+    this.schoolDialog = true;
+  }
+
+  saveContent(){
+    this.messageService.add({severity:'success', summary: 'Successful', detail: 'School Created', life: 3000});
+  }
 }
