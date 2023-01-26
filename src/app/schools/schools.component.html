@@ -3,7 +3,7 @@
   <p-toolbar styleClass="p-mb-4">
     <ng-template pTemplate="left">
         <button pButton pRipple label="New" (click)="openNew()" icon="pi pi-plus" class="p-button-success p-mr-2" style="margin-right:10px"></button>
-        <button pButton pRipple label="Delete" icon="pi pi-trash" class="p-button-danger" [disabled]="!selectedSchools || !selectedSchools.length"></button>
+        <button pButton pRipple label="Delete" icon="pi pi-trash" class="p-button-danger" (click)="deleteSelected()" [disabled]="!selectedSchools || !selectedSchools.length"></button>
     </ng-template>
   </p-toolbar>
   <br>
@@ -54,7 +54,7 @@
       <td>{{school.city}}</td>
       <td class="flex justify-content-center flex-wrap gap-1">
         <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success p-mr-2" (click) = editSchool(school)></button>
-        <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning"></button>
+        <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="deleteSingle(school.id)"></button>
       </td>
     </tr>
   </ng-template>

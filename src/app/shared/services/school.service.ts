@@ -12,9 +12,14 @@ export class SchoolService {
   constructor(private httpClient: HttpClient, private commonApi: CommonApiService) {
   }
 
-  create(school: SchoolInfo): Observable<any>{
+  create(school: SchoolInfo): Observable<any> {
     return this.httpClient.post(this.commonApi.schools, school);
   }
+
+  delete(ids: number[]): Observable<any> {
+    return this.httpClient.post(this.commonApi.schools + '/delete', {ids});
+  }
+
   getPaged(pageNumber: number, pageSize: number): Observable<SchoolInfoPaged> {
     return this.httpClient.get<SchoolInfoPaged>(this.commonApi.schools, {
       params: {

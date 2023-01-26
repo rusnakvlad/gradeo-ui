@@ -4,9 +4,8 @@ import {CardModule} from "primeng/card";
 import {DialogModule} from "primeng/dialog";
 import {SchoolService} from "../shared/services/school.service";
 import {SchoolInfo, SchoolInfoPaged} from "../shared/models/school.model";
-import {LazyLoadEvent, MessageService} from "primeng/api";
+import {ConfirmationService, LazyLoadEvent, MessageService} from "primeng/api";
 import {DefaultPageNumber, DefaultPageSize} from "../shared/models/pagination.model";
-import {toNumbers} from "@angular/compiler-cli/src/version_helpers";
 import {HttpErrorResponse} from "@angular/common/http";
 
 @Component({
@@ -26,16 +25,13 @@ export class SchoolsComponent implements OnInit {
 
   constructor(
     private schoolService: SchoolService,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private confirmationService: ConfirmationService
   ) {
   }
 
   ngOnInit(): void {
-    this.schoolService.getPaged(DefaultPageNumber, DefaultPageSize).subscribe(x => {
-        this.schools = x;
-        console.log(this.schools);
-      }
-    )
+    this.refreshGrid(DefaultPageNumber, DefaultPageSize);
   }
 
   hideDialog() {
@@ -49,10 +45,43 @@ export class SchoolsComponent implements OnInit {
     this.schoolDialog = true;
   }
 
+  deleteSingle(id:number){
+    this.confirmationService.confirm({
+      message: 'Are you sure you want to delete the selected school(s)?',
+      header: 'Confirm',
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+        this.schoolService.delete([id]).subscribe(response =>{
+            this.messageService.add({severity:'success', summary: 'Successful', detail: 'School(s) Deleted', life: 3000});
+          },
+          error => {
+            this.messageService.add({severity: 'error', summary: 'Error', detail: 'School(s) not deleted', life: 3000});
+          })
+
+      }
+    });
+  }
+  deleteSelected(){
+    this.confirmationService.confirm({
+      message: 'Are you sure you want to delete the selected school(s)?',
+      header: 'Confirm',
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+        this.schoolService.delete(this.selectedSchools.map(x => x.id)).subscribe(response =>{
+          this.messageService.add({severity:'success', summary: 'Successful', detail: 'School(s) Deleted', life: 3000});
+            this.refreshGrid(DefaultPageNumber, DefaultPageSize);
+        },
+          error => {
+            this.messageService.add({severity: 'error', summary: 'Error', detail: 'School(s) not deleted', life: 3000});
+          })
+      }
+    });
+  }
   editSchool(schoolMetadata: SchoolInfo){
     this.openNew();
     this.school = schoolMetadata;
   }
+
   saveContent() {
     this.submitted = true;
     if (this.validateFields() == false) {
@@ -61,6 +90,7 @@ export class SchoolsComponent implements OnInit {
     this.schoolService.create(this.school).subscribe(response => {
         this.messageService.add({severity: 'success', summary: 'Successful', detail: 'School Created', life: 3000});
         this.schoolDialog = false;
+        this.refreshGrid(DefaultPageNumber, DefaultPageSize);
       },
       (error: HttpErrorResponse) => {
         this.messageService.add({severity: 'error', summary: 'Error', detail: 'School not created', life: 3000});
@@ -72,10 +102,16 @@ export class SchoolsComponent implements OnInit {
     let pageSize: number = event.rows as number;
     let pageNumber = (event.first as number / pageSize) + 1;
 
-    console.log(event);
-    this.schoolService.getPaged(pageNumber, pageSize).subscribe(x => {
-        this.schools = x;
+    this.schoolService.getPaged(pageNumber, pageSize).subscribe(response => {
+        this.schools = response;
         this.loading = false;
+      }
+    )
+  }
+
+  refreshGrid(pageNumber: number, pageSize:number){
+    this.schoolService.getPaged(pageNumber, pageSize).subscribe(response => {
+        this.schools = response;
       }
     )
   }

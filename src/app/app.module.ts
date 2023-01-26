@@ -34,7 +34,8 @@ import {CardModule} from "primeng/card";
 import {InputTextModule} from "primeng/inputtext";
 import {RippleModule} from "primeng/ripple";
 import {DialogModule} from "primeng/dialog";
-import {MessageService} from "primeng/api";
+import {ConfirmationService, MessageService} from "primeng/api";
+import {ConfirmDialogModule} from "primeng/confirmdialog";
 
 export function MSALInstanceFactory(): IPublicClientApplication {
   return new PublicClientApplication(msalConfig);
@@ -96,6 +97,7 @@ export function MSALGuardConfigFactory(): MsalGuardConfiguration {
     RippleModule,
     MsalModule,
     DialogModule,
+    ConfirmDialogModule,
   ],
   providers: [
     {
@@ -118,7 +120,8 @@ export function MSALGuardConfigFactory(): MsalGuardConfiguration {
     MsalService,
     MsalGuard,
     MsalBroadcastService,
-    MessageService
+    MessageService,
+    ConfirmationService,
   ],
   bootstrap: [AppComponent, MsalRedirectComponent]
 })
