@@ -12,7 +12,7 @@ export class SchoolService {
   constructor(private httpClient: HttpClient, private commonApi: CommonApiService) {
   }
 
-  create(school: SchoolInfo): Observable<any> {
+  upsert(school: SchoolInfo): Observable<any> {
     return this.httpClient.post(this.commonApi.schools, school);
   }
 

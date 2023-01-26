@@ -87,8 +87,8 @@ export class SchoolsComponent implements OnInit {
     if (this.validateFields() == false) {
       return;
     }
-    this.schoolService.create(this.school).subscribe(response => {
-        this.messageService.add({severity: 'success', summary: 'Successful', detail: 'School Created', life: 3000});
+    this.schoolService.upsert(this.school).subscribe(response => {
+        this.messageService.add({severity: 'success', summary: 'Successful', detail: 'Record saved', life: 3000});
         this.schoolDialog = false;
         this.refreshGrid(DefaultPageNumber, DefaultPageSize);
       },
