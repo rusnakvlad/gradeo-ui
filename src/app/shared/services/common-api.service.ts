@@ -9,5 +9,6 @@ export class CommonApiService {
 
   url = protectedResources.GradeoCoreApi.endpoint;
   schools: string = this.url + '/api/schools'
+  users: string = this.url + '/api/users'
   constructor() { }
 }
