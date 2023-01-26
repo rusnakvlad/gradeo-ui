@@ -3,12 +3,17 @@ import {RouterModule, Routes} from '@angular/router';
 import {LayoutComponent} from "./layout/layout.component";
 import {SchoolsComponent} from "./schools/schools.component";
 import {MsalGuard, MsalRedirectComponent} from "@azure/msal-angular";
+import {WelcomeComponent} from "./layout/welcome/welcome.component";
 
 const routes: Routes = [
   {
     path: '',
     component: LayoutComponent,
     children: [
+      {
+        path: '',
+        component: WelcomeComponent,
+      },
       {
         path: 'schools',
         component: SchoolsComponent,

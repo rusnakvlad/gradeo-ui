@@ -36,6 +36,7 @@ import {RippleModule} from "primeng/ripple";
 import {DialogModule} from "primeng/dialog";
 import {ConfirmationService, MessageService} from "primeng/api";
 import {ConfirmDialogModule} from "primeng/confirmdialog";
+import { WelcomeComponent } from './layout/welcome/welcome.component';
 
 export function MSALInstanceFactory(): IPublicClientApplication {
   return new PublicClientApplication(msalConfig);
@@ -75,6 +76,7 @@ export function MSALGuardConfigFactory(): MsalGuardConfiguration {
     LayoutComponent,
     SidebarComponent,
     HeaderBarComponent,
+    WelcomeComponent,
   ],
   imports: [
     BrowserModule,
