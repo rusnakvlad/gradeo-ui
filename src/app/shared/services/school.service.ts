@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
-import {SchoolInfoPaged} from "../models/school.model";
+import {SchoolInfo, SchoolInfoPaged} from "../models/school.model";
 import {CommonApiService} from "./common-api.service";
 
 @Injectable({
@@ -12,7 +12,10 @@ export class SchoolService {
   constructor(private httpClient: HttpClient, private commonApi: CommonApiService) {
   }
 
-  getOrganizations(pageNumber: number, pageSize: number): Observable<SchoolInfoPaged> {
+  create(school: SchoolInfo): Observable<any>{
+    return this.httpClient.post(this.commonApi.schools, school);
+  }
+  getPaged(pageNumber: number, pageSize: number): Observable<SchoolInfoPaged> {
     return this.httpClient.get<SchoolInfoPaged>(this.commonApi.schools, {
       params: {
         PageNumber: pageNumber,
