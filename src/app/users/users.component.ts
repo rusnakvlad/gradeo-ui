@@ -66,8 +66,8 @@ export class UsersComponent implements OnInit {
     this.loading = true;
     this.userService.getPaged(pageNumber, pageSize).subscribe(response => {
         this.users = response;
-        this.loading = false;
       }
     )
+    this.loading = false;
   }
 }

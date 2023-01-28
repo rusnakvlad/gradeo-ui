@@ -8,7 +8,7 @@
   </p-toolbar>
   <br>
 
-<p-table [value]="schools.items"
+<p-table [value]="schools?.items || []"
          [paginator]="true"
          [rows]="5"
          [rowsPerPageOptions]="[5,10,20]"
@@ -16,7 +16,7 @@
          [loading]="loading"
          [lazyLoadOnInit]="false"
          (onLazyLoad)="nextPage($event)"
-         [totalRecords]="schools.totalCount"
+         [totalRecords]="schools?.totalCount || 0"
          [showCurrentPageReport]=true
          [globalFilterFields]="['name','country','city']"
          [(selection)]="selectedSchools"
@@ -49,12 +49,12 @@
       <td>
         <p-tableCheckbox [value]="school"></p-tableCheckbox>
       </td>
-      <td>{{school.name}}</td>
-      <td>{{school.country}}</td>
-      <td>{{school.city}}</td>
+      <td>{{school?.name}}</td>
+      <td>{{school?.country}}</td>
+      <td>{{school?.city}}</td>
       <td class="flex justify-content-center flex-wrap gap-1">
         <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success p-mr-2" (click) = editSchool(school)></button>
-        <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="deleteSingle(school.id)"></button>
+        <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="deleteSingle(school?.id)"></button>
       </td>
     </tr>
   </ng-template>
@@ -71,12 +71,12 @@
     <div class="field">
       <label for="country">Country</label>
       <input type="text" pInputText id="country" [(ngModel)]="school.country" required autofocus />
-      <small class="p-error" *ngIf="submitted && !school.name">Country is required.</small>
+      <small class="p-error" *ngIf="submitted && !school.country">Country is required.</small>
     </div>
     <div class="field">
       <label for="city">City</label>
       <input type="text" pInputText id="city" [(ngModel)]="school.city" required autofocus />
-      <small class="p-error" *ngIf="submitted && !school.name">City is required.</small>
+      <small class="p-error" *ngIf="submitted && !school.city">City is required.</small>
     </div>
   </ng-template>
 

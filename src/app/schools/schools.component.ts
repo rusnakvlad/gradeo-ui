@@ -16,8 +16,8 @@ import {HttpErrorResponse} from "@angular/common/http";
 
 export class SchoolsComponent implements OnInit {
 
-  school: SchoolInfo | any;
-  schools: SchoolInfoPaged;
+  school: SchoolInfo;
+  schools?: SchoolInfoPaged;
   selectedSchools: SchoolInfo[] = [];
   schoolDialog: boolean = false;
   submitted: boolean = false;
@@ -40,18 +40,17 @@ export class SchoolsComponent implements OnInit {
   }
 
   openNew() {
-    this.school = {};
     this.submitted = false;
     this.schoolDialog = true;
   }
 
-  deleteSingle(id:number){
+  deleteSingle(id?:number){
     this.confirmationService.confirm({
       message: 'Are you sure you want to delete the selected school(s)?',
       header: 'Confirm',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
-        this.schoolService.delete([id]).subscribe(response =>{
+        this.schoolService.delete([id as number]).subscribe(response =>{
             this.messageService.add({severity:'success', summary: 'Successful', detail: 'School(s) Deleted', life: 3000});
           },
           error => {
@@ -87,7 +86,7 @@ export class SchoolsComponent implements OnInit {
     if (this.validateFields() == false) {
       return;
     }
-    this.schoolService.upsert(this.school).subscribe(response => {
+    this.schoolService.upsert(this.school as SchoolInfo).subscribe(response => {
         this.messageService.add({severity: 'success', summary: 'Successful', detail: 'Record saved', life: 3000});
         this.schoolDialog = false;
         this.refreshGrid(DefaultPageNumber, DefaultPageSize);
@@ -104,20 +103,23 @@ export class SchoolsComponent implements OnInit {
 
     this.schoolService.getPaged(pageNumber, pageSize).subscribe(response => {
         this.schools = response;
-        this.loading = false;
       }
     )
+
+    this.loading = false;
   }
 
   refreshGrid(pageNumber: number, pageSize:number){
+    this.loading=true;
     this.schoolService.getPaged(pageNumber, pageSize).subscribe(response => {
         this.schools = response;
       }
     )
+    this.loading=false;
   }
 
   validateFields(): boolean {
-    if (!this.school.name || !this.school.country || !this.school.city) {
+    if (!this?.school?.name || !this.school.country || !this.school.city) {
       return false;
     }
     return true;
