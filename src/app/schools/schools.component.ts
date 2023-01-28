@@ -44,14 +44,19 @@ export class SchoolsComponent implements OnInit {
     this.schoolDialog = true;
   }
 
-  deleteSingle(id?:number){
+  deleteSingle(id?: number) {
     this.confirmationService.confirm({
       message: 'Are you sure you want to delete the selected school(s)?',
       header: 'Confirm',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
-        this.schoolService.delete([id as number]).subscribe(response =>{
-            this.messageService.add({severity:'success', summary: 'Successful', detail: 'School(s) Deleted', life: 3000});
+        this.schoolService.delete([id as number]).subscribe(response => {
+            this.messageService.add({
+              severity: 'success',
+              summary: 'Successful',
+              detail: 'School(s) Deleted',
+              life: 3000
+            });
           },
           error => {
             this.messageService.add({severity: 'error', summary: 'Error', detail: 'School(s) not deleted', life: 3000});
@@ -60,23 +65,30 @@ export class SchoolsComponent implements OnInit {
       }
     });
   }
-  deleteSelected(){
+
+  deleteSelected() {
     this.confirmationService.confirm({
       message: 'Are you sure you want to delete the selected school(s)?',
       header: 'Confirm',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
-        this.schoolService.delete(this.selectedSchools.map(x => x.id)).subscribe(response =>{
-          this.messageService.add({severity:'success', summary: 'Successful', detail: 'School(s) Deleted', life: 3000});
+        this.schoolService.delete(this.selectedSchools.map(x => x.id)).subscribe(response => {
+            this.messageService.add({
+              severity: 'success',
+              summary: 'Successful',
+              detail: 'School(s) Deleted',
+              life: 3000
+            });
             this.refreshGrid(DefaultPageNumber, DefaultPageSize);
-        },
+          },
           error => {
             this.messageService.add({severity: 'error', summary: 'Error', detail: 'School(s) not deleted', life: 3000});
           })
       }
     });
   }
-  editSchool(schoolMetadata: SchoolInfo){
+
+  editSchool(schoolMetadata: SchoolInfo) {
     this.openNew();
     this.school = schoolMetadata;
   }
@@ -109,13 +121,16 @@ export class SchoolsComponent implements OnInit {
     this.loading = false;
   }
 
-  refreshGrid(pageNumber: number, pageSize:number){
-    this.loading=true;
+  refreshGrid(pageNumber: number, pageSize: number) {
+    this.loading = true;
     this.schoolService.getPaged(pageNumber, pageSize).subscribe(response => {
         this.schools = response;
+        this.loading = false;
+      },
+      error => {
+        this.loading = false;
       }
     )
-    this.loading=false;
   }
 
   validateFields(): boolean {

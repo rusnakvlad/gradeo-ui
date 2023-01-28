@@ -62,12 +62,15 @@ export class UsersComponent implements OnInit {
     )
   }
 
-  refreshGrid(pageNumber: number, pageSize:number){
+  refreshGrid(pageNumber: number, pageSize: number) {
     this.loading = true;
     this.userService.getPaged(pageNumber, pageSize).subscribe(response => {
         this.users = response;
+        this.loading = false;
+      },
+      error => {
+        this.loading = false;
       }
     )
-    this.loading = false;
   }
 }
