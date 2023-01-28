@@ -11,7 +11,7 @@ export class UserService {
 
   constructor(private httpClient: HttpClient, private api: CommonApiService) {
   }
-  get(pageNumber: number, pageSize: number): Observable<UsersPaged> {
+  getPaged(pageNumber: number, pageSize: number): Observable<UsersPaged> {
     return this.httpClient.get<UsersPaged>(this.api.users, {
       params: {
         PageNumber: pageNumber,
