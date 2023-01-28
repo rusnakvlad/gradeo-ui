@@ -11,14 +11,13 @@
   <p-table [value]="users?.items || []"
            [paginator]="true"
            [rows]="5"
-           [rowsPerPageOptions]="[5,10,20]"
+           [rowsPerPageOptions]="[5]"
            [lazy]="true"
            [loading]="loading"
            [lazyLoadOnInit]="false"
            (onLazyLoad)="nextPage($event)"
            [totalRecords]="users?.totalCount || 0"
            [showCurrentPageReport]=true
-           [globalFilterFields]="['firstName','lastName','email']"
            [(selection)]="selectedUsers"
            [rowHover]="true"
            dataKey="id">
@@ -40,9 +39,10 @@
         <th style="width: 3rem">
           <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
         </th>
-        <th pSortableColumn="firstName">First Name<p-sortIcon field="firstName"></p-sortIcon></th>
-        <th pSortableColumn="lastName">Last Name<p-sortIcon field="lastName"></p-sortIcon></th>
-        <th pSortableColumn="email">Email<p-sortIcon field="email"></p-sortIcon></th>
+        <th pSortableColumn="firstName">First Name</th>
+        <th pSortableColumn="lastName">Last Name</th>
+        <th pSortableColumn="email">Email</th>
+        <th pSortableColumn="userType">User Type</th>
         <th></th>
       </tr>
     </ng-template>
@@ -55,6 +55,7 @@
         <td>{{user?.firstName}}</td>
         <td>{{user?.lastName}}</td>
         <td>{{user?.email}}</td>
+        <td>{{user?.userType || '-'}}</td>
         <td class="flex justify-content-center flex-wrap gap-1">
           <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success p-mr-2" (click) = edit(user)></button>
           <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="deleteSingle(user.id)"></button>

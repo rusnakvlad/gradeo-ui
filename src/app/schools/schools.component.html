@@ -11,14 +11,13 @@
 <p-table [value]="schools?.items || []"
          [paginator]="true"
          [rows]="5"
-         [rowsPerPageOptions]="[5,10,20]"
+         [rowsPerPageOptions]="[5]"
          [lazy]="true"
          [loading]="loading"
          [lazyLoadOnInit]="false"
          (onLazyLoad)="nextPage($event)"
          [totalRecords]="schools?.totalCount || 0"
          [showCurrentPageReport]=true
-         [globalFilterFields]="['name','country','city']"
          [(selection)]="selectedSchools"
          [rowHover]="true"
          dataKey="id">
@@ -38,9 +37,9 @@
       <th style="width: 3rem">
         <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
       </th>
-      <th pSortableColumn="name">Name<p-sortIcon field="name"></p-sortIcon></th>
-      <th pSortableColumn="country">Country<p-sortIcon field="country"></p-sortIcon></th>
-      <th pSortableColumn="city">City<p-sortIcon field="city"></p-sortIcon></th>
+      <th pSortableColumn="name">Name</th>
+      <th pSortableColumn="country">Country</th>
+      <th pSortableColumn="city">City</th>
       <th></th>
     </tr>
   </ng-template>

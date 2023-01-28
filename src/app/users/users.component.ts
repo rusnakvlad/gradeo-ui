@@ -8,6 +8,7 @@ import {User, UsersPaged} from "../shared/models/user.model";
 import {ConfirmationService, LazyLoadEvent, MessageService} from "primeng/api";
 import {UserService} from "../shared/services/user.service";
 import {DefaultPageNumber, DefaultPageSize} from "../shared/models/pagination.model";
+import {UserType} from "../shared/enums/user-type";
 
 @Component({
   selector: 'app-users',
@@ -16,10 +17,10 @@ import {DefaultPageNumber, DefaultPageSize} from "../shared/models/pagination.mo
 })
 export class UsersComponent implements OnInit {
 
+  userType: UserType;
   user?: User;
   selectedUsers: User[] = [];
   users?: UsersPaged;
-
   showDialog: boolean = false;
   submitted: boolean = false;
   loading: boolean = false;
