@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
-import {UsersPaged} from "../models/user.model";
+import {User, UsersPaged} from "../models/user.model";
 import {CommonApiService} from "./common-api.service";
 
 @Injectable({
@@ -18,5 +18,11 @@ export class UserService {
         PageSize: pageSize
       }
     });
+  }
+
+  create(user: User){
+    return this.httpClient.post(this.api.users, {
+      userMetadata:user
+    })
   }
 }

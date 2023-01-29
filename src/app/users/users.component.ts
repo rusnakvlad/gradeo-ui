@@ -9,6 +9,7 @@ import {ConfirmationService, LazyLoadEvent, MessageService} from "primeng/api";
 import {UserService} from "../shared/services/user.service";
 import {DefaultPageNumber, DefaultPageSize} from "../shared/models/pagination.model";
 import {UserType} from "../shared/enums/user-type";
+import {HttpErrorResponse} from "@angular/common/http";
 
 @Component({
   selector: 'app-users',
@@ -59,7 +60,18 @@ export class UsersComponent implements OnInit {
   }
 
   saveContent(){
-
+    this.submitted = true;
+    if (!this.isModelValid()) {
+      return;
+    }
+    this.userService.create(this.user).subscribe(response => {
+        this.messageService.add({severity: 'success', summary: 'Successful', detail: 'Record saved', life: 3000});
+        this.showDialog = false;
+        this.refreshGrid(DefaultPageNumber, DefaultPageSize);
+      },
+      (error: HttpErrorResponse) => {
+        this.messageService.add({severity: 'error', summary: 'Error', detail: 'User not created', life: 3000});
+      })
   }
 
   nextPage(event: LazyLoadEvent) {
@@ -84,5 +96,12 @@ export class UsersComponent implements OnInit {
         this.loading = false;
       }
     )
+  }
+
+  isModelValid(){
+    if(!this.user.firstName || !this.user.lastName || !this.user.email){
+      return false;
+    }
+    return true;
   }
 }
