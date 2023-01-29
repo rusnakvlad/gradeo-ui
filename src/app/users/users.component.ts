@@ -18,12 +18,13 @@ import {UserType} from "../shared/enums/user-type";
 export class UsersComponent implements OnInit {
 
   userType: UserType;
-  user?: User;
+  user: User;
   selectedUsers: User[] = [];
   users?: UsersPaged;
   showDialog: boolean = false;
   submitted: boolean = false;
   loading: boolean = false;
+  userTypes:string[] = [...Object.keys(UserType), 'Other'];
 
   constructor(
     private userService: UserService,
@@ -48,6 +49,16 @@ export class UsersComponent implements OnInit {
   }
 
   openNew() {
+    this.user = {} as User;
+    this.showDialog=true;
+  }
+
+  hideDialog(){
+    this.showDialog = false;
+    this.submitted = false;
+  }
+
+  saveContent(){
 
   }
 

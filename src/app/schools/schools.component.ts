@@ -40,6 +40,7 @@ export class SchoolsComponent implements OnInit {
   }
 
   openNew() {
+    this.school = {} as SchoolInfo;
     this.submitted = false;
     this.schoolDialog = true;
   }
