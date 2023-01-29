@@ -5,6 +5,7 @@ import {SchoolsComponent} from "./schools/schools.component";
 import {MsalGuard, MsalRedirectComponent} from "@azure/msal-angular";
 import {WelcomeComponent} from "./layout/welcome/welcome.component";
 import {UsersComponent} from "./users/users.component";
+import {MasterDataComponent} from "./master-data/master-data.component";
 
 const routes: Routes = [
   {
@@ -23,6 +24,11 @@ const routes: Routes = [
       {
         path: 'users',
         component: UsersComponent,
+        canActivate: [MsalGuard]
+      },
+      {
+        path:'master',
+        component: MasterDataComponent,
         canActivate: [MsalGuard]
       }
     ]

@@ -38,6 +38,7 @@ import {ConfirmationService, MessageService} from "primeng/api";
 import {ConfirmDialogModule} from "primeng/confirmdialog";
 import { WelcomeComponent } from './layout/welcome/welcome.component';
 import { UsersComponent } from './users/users.component';
+import { MasterDataComponent } from './master-data/master-data.component';
 
 export function MSALInstanceFactory(): IPublicClientApplication {
   return new PublicClientApplication(msalConfig);
@@ -79,6 +80,7 @@ export function MSALGuardConfigFactory(): MsalGuardConfiguration {
     HeaderBarComponent,
     WelcomeComponent,
     UsersComponent,
+    MasterDataComponent,
   ],
   imports: [
     BrowserModule,
