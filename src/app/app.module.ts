@@ -39,6 +39,7 @@ import {ConfirmDialogModule} from "primeng/confirmdialog";
 import { WelcomeComponent } from './layout/welcome/welcome.component';
 import { UsersComponent } from './users/users.component';
 import { MasterDataComponent } from './master-data/master-data.component';
+import {TabMenuModule} from "primeng/tabmenu";
 
 export function MSALInstanceFactory(): IPublicClientApplication {
   return new PublicClientApplication(msalConfig);
@@ -104,6 +105,7 @@ export function MSALGuardConfigFactory(): MsalGuardConfiguration {
     MsalModule,
     DialogModule,
     ConfirmDialogModule,
+    TabMenuModule,
   ],
   providers: [
     {
