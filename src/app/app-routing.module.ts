@@ -6,6 +6,7 @@ import {MsalGuard, MsalRedirectComponent} from "@azure/msal-angular";
 import {WelcomeComponent} from "./layout/welcome/welcome.component";
 import {UsersComponent} from "./users/users.component";
 import {MasterDataComponent} from "./master-data/master-data.component";
+import {MasterSubjectsComponent} from "./master-data/master-subjects/master-subjects.component";
 
 const routes: Routes = [
   {
@@ -27,9 +28,15 @@ const routes: Routes = [
         canActivate: [MsalGuard]
       },
       {
-        path:'master',
+        path:'admin',
         component: MasterDataComponent,
-        canActivate: [MsalGuard]
+        canActivate: [MsalGuard],
+        children:[
+          {
+            path: 'subjects',
+            component: MasterSubjectsComponent,
+          }
+        ]
       }
     ]
   },

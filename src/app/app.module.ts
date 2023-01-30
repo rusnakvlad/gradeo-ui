@@ -40,6 +40,7 @@ import { WelcomeComponent } from './layout/welcome/welcome.component';
 import { UsersComponent } from './users/users.component';
 import { MasterDataComponent } from './master-data/master-data.component';
 import {TabMenuModule} from "primeng/tabmenu";
+import { MasterSubjectsComponent } from './master-data/master-subjects/master-subjects.component';
 
 export function MSALInstanceFactory(): IPublicClientApplication {
   return new PublicClientApplication(msalConfig);
@@ -82,6 +83,7 @@ export function MSALGuardConfigFactory(): MsalGuardConfiguration {
     WelcomeComponent,
     UsersComponent,
     MasterDataComponent,
+    MasterSubjectsComponent,
   ],
   imports: [
     BrowserModule,
