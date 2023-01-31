@@ -1,1 +1,9 @@
-<p>master-subjects works!</p>
+<p-card>
+  <p-toolbar styleClass="p-mb-4">
+    <ng-template pTemplate="left">
+      <button pButton pRipple label="New" (click)="openNew()" icon="pi pi-plus" class="p-button-success p-mr-2" style="margin-right:10px"></button>
+      <button pButton pRipple label="Delete" (click)="deleteSelected()" icon="pi pi-trash" class="p-button-danger"></button>
+    </ng-template>
+  </p-toolbar>
+  <br>
+</p-card>

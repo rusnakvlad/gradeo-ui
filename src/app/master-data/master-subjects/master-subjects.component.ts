@@ -7,6 +7,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MasterSubjectsComponent implements OnInit {
 
+  openNew(){
+
+  }
+
+  deleteSelected(){
+
+  }
+
   constructor() { }
 
   ngOnInit(): void {
