@@ -7,6 +7,11 @@ export type SchoolInfo = {
   city: string
 }
 
+export type SchoolBasicInfo = {
+  id: number,
+  name: string
+}
+
 export type SchoolInfoPaged = {
   items: SchoolInfo[]
 } & PaginationModel;

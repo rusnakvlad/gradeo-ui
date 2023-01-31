@@ -11,18 +11,20 @@ export class UserService {
 
   constructor(private httpClient: HttpClient, private api: CommonApiService) {
   }
-  getPaged(pageNumber: number, pageSize: number): Observable<UsersPaged> {
+  getPaged(pageNumber: number, pageSize: number, schoolId: string): Observable<UsersPaged> {
     return this.httpClient.get<UsersPaged>(this.api.users, {
       params: {
         PageNumber: pageNumber,
-        PageSize: pageSize
+        PageSize: pageSize,
+        schoolId: schoolId,
       }
     });
   }
 
-  create(user: User){
+  create(user: User, schoolId?: number){
     return this.httpClient.post(this.api.users, {
-      userMetadata:user
+      userMetadata:user,
+      businessUnitId:schoolId,
     })
   }
 }

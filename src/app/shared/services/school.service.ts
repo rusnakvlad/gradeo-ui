@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
-import {SchoolInfo, SchoolInfoPaged} from "../models/school.model";
+import {SchoolBasicInfo, SchoolInfo, SchoolInfoPaged} from "../models/school.model";
 import {CommonApiService} from "./common-api.service";
 
 @Injectable({
@@ -27,5 +27,9 @@ export class SchoolService {
         PageSize: pageSize
       }
     });
+  }
+
+  getAll(): Observable<SchoolBasicInfo[]> {
+    return this.httpClient.get<SchoolBasicInfo[]>(this.commonApi.schools + '/all');
   }
 }

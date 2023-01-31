@@ -26,10 +26,8 @@
       <div class="flex justify-content-between">
         <h5>Manage Users</h5>
         <div>
-      <span class="p-input-icon-left">
-        <i class="pi pi-search"></i>
-        <input pInputText type="text"  placeholder="Search..." />
-      </span>
+          <label for="School">School: </label>
+          <p-dropdown [options]="schoolsOptions" id="school" [(ngModel)]="selectedSchoolId" optionLabel="name" optionValue="id" [style]="{'width':'20rem'}" (onChange)="schoolChanged()"></p-dropdown>
         </div>
       </div>
     </ng-template>
@@ -69,6 +67,11 @@
 <p-dialog [(visible)]="showDialog" [style]="{width: '450px'}" header="User Details" [modal]="true" styleClass="p-fluid">
   <ng-template pTemplate="content">
     <div class="field">
+      <label for="userType">User Type</label>
+      <p-dropdown [options]="userTypes" id="userType" [(ngModel)]="user.userType"></p-dropdown>
+      <small class="p-error" *ngIf="submitted && !user.userType">City is required.</small>
+    </div>
+    <div class="field">
       <label for="firstName">First Name</label>
       <input type="text" pInputText id="firstName" [(ngModel)]="user.firstName" required autofocus />
       <small class="p-error" *ngIf="submitted && !user.firstName">Name is required.</small>
@@ -77,11 +80,6 @@
       <label for="lastName">Last Name</label>
       <input type="text" pInputText id="lastName" [(ngModel)]="user.lastName" required autofocus />
       <small class="p-error" *ngIf="submitted && !user.lastName">Country is required.</small>
-    </div>
-    <div class="field">
-      <label for="userType">User Type</label>
-      <p-dropdown [options]="userTypes" id="userType" [(ngModel)]="user.userType"></p-dropdown>
-      <small class="p-error" *ngIf="submitted && !user.userType">City is required.</small>
     </div>
     <div class="field">
       <label for="email">Email</label>

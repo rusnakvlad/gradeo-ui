@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {SchoolInfo, SchoolInfoPaged} from "../shared/models/school.model";
+import {SchoolBasicInfo, SchoolInfo, SchoolInfoPaged} from "../shared/models/school.model";
 import {TableModule} from 'primeng/table';
 import {CardModule} from "primeng/card";
 import {DialogModule} from "primeng/dialog";
@@ -10,6 +10,7 @@ import {UserService} from "../shared/services/user.service";
 import {DefaultPageNumber, DefaultPageSize} from "../shared/models/pagination.model";
 import {UserType} from "../shared/enums/user-type";
 import {HttpErrorResponse} from "@angular/common/http";
+import {SchoolService} from "../shared/services/school.service";
 
 @Component({
   selector: 'app-users',
@@ -26,15 +27,20 @@ export class UsersComponent implements OnInit {
   submitted: boolean = false;
   loading: boolean = false;
   userTypes:string[] = [...Object.keys(UserType), 'Other'];
+  schoolsOptions: SchoolBasicInfo[];
+  selectedSchoolId?: number;
+
 
   constructor(
     private userService: UserService,
+    private schoolService: SchoolService,
     private messageService: MessageService,
     private confirmationService: ConfirmationService) {
   }
 
   ngOnInit(): void {
     this.refreshGrid(DefaultPageNumber, DefaultPageSize);
+    this.retrieveSchools();
   }
 
   deleteSelected() {
@@ -64,7 +70,7 @@ export class UsersComponent implements OnInit {
     if (!this.isModelValid()) {
       return;
     }
-    this.userService.create(this.user).subscribe(response => {
+    this.userService.create(this.user, this.selectedSchoolId).subscribe(response => {
         this.messageService.add({severity: 'success', summary: 'Successful', detail: 'Record saved', life: 3000});
         this.showDialog = false;
         this.refreshGrid(DefaultPageNumber, DefaultPageSize);
@@ -79,7 +85,7 @@ export class UsersComponent implements OnInit {
     let pageSize: number = event.rows as number;
     let pageNumber = (event.first as number / pageSize) + 1;
 
-    this.userService.getPaged(pageNumber, pageSize).subscribe(response => {
+    this.userService.getPaged(pageNumber, pageSize, `${this.selectedSchoolId}`).subscribe(response => {
         this.users = response;
         this.loading = false;
       }
@@ -88,7 +94,7 @@ export class UsersComponent implements OnInit {
 
   refreshGrid(pageNumber: number, pageSize: number) {
     this.loading = true;
-    this.userService.getPaged(pageNumber, pageSize).subscribe(response => {
+    this.userService.getPaged(pageNumber, pageSize, `${this.selectedSchoolId}`).subscribe(response => {
         this.users = response;
         this.loading = false;
       },
@@ -98,10 +104,23 @@ export class UsersComponent implements OnInit {
     )
   }
 
+  retrieveSchools(){
+    this.schoolService.getAll().subscribe(response => {
+      this.schoolsOptions = [{name: 'All', id: 0}, ...response];
+    },
+        error => {
+
+      })
+  }
+
   isModelValid(){
     if(!this.user.firstName || !this.user.lastName || !this.user.email){
       return false;
     }
     return true;
+  }
+
+  schoolChanged(){
+    this.refreshGrid(DefaultPageNumber, DefaultPageSize);
   }
 }
