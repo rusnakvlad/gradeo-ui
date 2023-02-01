@@ -19,14 +19,14 @@ import {SchoolService} from "../shared/services/school.service";
 })
 export class UsersComponent implements OnInit {
 
-  userType: UserType;
+  userType: string;
   user: User;
   selectedUsers: User[] = [];
   users?: UsersPaged;
   showDialog: boolean = false;
   submitted: boolean = false;
   loading: boolean = false;
-  userTypes:string[] = [...Object.keys(UserType), 'Other'];
+  userTypes: string[] = [...Object.keys(UserType), 'Other'];
   schoolsOptions: SchoolBasicInfo[];
   selectedSchoolId?: number;
 
@@ -57,19 +57,20 @@ export class UsersComponent implements OnInit {
 
   openNew() {
     this.user = {} as User;
-    this.showDialog=true;
+    this.showDialog = true;
   }
 
-  hideDialog(){
+  hideDialog() {
     this.showDialog = false;
     this.submitted = false;
   }
 
-  saveContent(){
+  saveContent() {
     this.submitted = true;
     if (!this.isModelValid()) {
       return;
     }
+    this.user.userType = this.userType == 'Other' ? '' : this.userType;
     this.userService.create(this.user, this.selectedSchoolId).subscribe(response => {
         this.messageService.add({severity: 'success', summary: 'Successful', detail: 'Record saved', life: 3000});
         this.showDialog = false;
@@ -85,7 +86,7 @@ export class UsersComponent implements OnInit {
     let pageSize: number = event.rows as number;
     let pageNumber = (event.first as number / pageSize) + 1;
 
-    this.userService.getPaged(pageNumber, pageSize, `${this.selectedSchoolId}`).subscribe(response => {
+    this.userService.getPaged(pageNumber, pageSize, this.selectedSchoolId).subscribe(response => {
         this.users = response;
         this.loading = false;
       }
@@ -94,7 +95,7 @@ export class UsersComponent implements OnInit {
 
   refreshGrid(pageNumber: number, pageSize: number) {
     this.loading = true;
-    this.userService.getPaged(pageNumber, pageSize, `${this.selectedSchoolId}`).subscribe(response => {
+    this.userService.getPaged(pageNumber, pageSize, this.selectedSchoolId).subscribe(response => {
         this.users = response;
         this.loading = false;
       },
@@ -104,23 +105,23 @@ export class UsersComponent implements OnInit {
     )
   }
 
-  retrieveSchools(){
+  retrieveSchools() {
     this.schoolService.getAll().subscribe(response => {
-      this.schoolsOptions = [{name: 'All', id: 0}, ...response];
-    },
-        error => {
+        this.schoolsOptions = [{name: 'All', id: 0}, ...response];
+      },
+      error => {
 
       })
   }
 
-  isModelValid(){
-    if(!this.user.firstName || !this.user.lastName || !this.user.email){
+  isModelValid() {
+    if (!this.user.firstName || !this.user.lastName || !this.user.email) {
       return false;
     }
     return true;
   }
 
-  schoolChanged(){
+  schoolChanged() {
     this.refreshGrid(DefaultPageNumber, DefaultPageSize);
   }
 }

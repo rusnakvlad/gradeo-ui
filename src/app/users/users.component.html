@@ -68,7 +68,7 @@
   <ng-template pTemplate="content">
     <div class="field">
       <label for="userType">User Type</label>
-      <p-dropdown [options]="userTypes" id="userType" [(ngModel)]="user.userType"></p-dropdown>
+      <p-dropdown [options]="userTypes" id="userType" [(ngModel)]="userType"></p-dropdown>
       <small class="p-error" *ngIf="submitted && !user.userType">City is required.</small>
     </div>
     <div class="field">
