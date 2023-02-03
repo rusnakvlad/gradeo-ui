@@ -34,8 +34,7 @@ export class UsersComponent implements OnInit {
   constructor(
     private userService: UserService,
     private schoolService: SchoolService,
-    private messageService: MessageService,
-    private confirmationService: ConfirmationService) {
+    private messageService: MessageService) {
   }
 
   ngOnInit(): void {
