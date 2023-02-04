@@ -11,7 +11,7 @@ export type Role = {
 export type RoleUpsertModel = {
   id?:number,
   roleName: string,
-  businessUnitId: number
+  businessUnitId?: number
   permissions: number[]
 }
 

@@ -12,7 +12,7 @@ export class RoleService {
   constructor(private httpClient: HttpClient, private commonApi: CommonApiService) {
   }
 
-  getPaged(businessUnitId: number, pageNumber: number, pageSize: number): Observable<RolePaged> {
+  getPaged(pageNumber: number, pageSize: number,businessUnitId?: number): Observable<RolePaged> {
     return this.httpClient.get<RolePaged>(this.commonApi.roles);
   }
 

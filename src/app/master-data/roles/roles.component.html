@@ -1,1 +1,62 @@
-<p>roles works!</p>
+<p-card>
+  <p-toolbar styleClass="p-mb-4">
+    <ng-template pTemplate="left">
+      <button pButton pRipple label="New" (click)="openNew()" icon="pi pi-plus" class="p-button-success p-mr-2" style="margin-right:10px"></button>
+      <button pButton pRipple label="Delete" (click)="deleteSelected()" icon="pi pi-trash" class="p-button-danger" [disabled]="!selectedRoles || !selectedRoles.length"></button>
+    </ng-template>
+  </p-toolbar>
+  <br>
+
+  <p-table [value]="roles?.items || []"
+           [paginator]="true"
+           [rows]="5"
+           [rowsPerPageOptions]="[5]"
+           [lazy]="true"
+           [loading]="loading"
+           [lazyLoadOnInit]="false"
+           (onLazyLoad)="nextPage($event)"
+           [totalRecords]="roles?.totalCount || 0"
+           [showCurrentPageReport]=true
+           [(selection)]="selectedRoles"
+           [rowHover]="true"
+           dataKey="id">
+
+    <ng-template pTemplate="header">
+      <tr>
+        <th style="width: 3rem">
+          <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+        </th>
+        <th pSortableColumn="name">Role Name</th>
+        <th></th>
+      </tr>
+    </ng-template>
+
+    <ng-template pTemplate="body" let-role>
+      <tr>
+        <td>
+          <p-tableCheckbox [value]="role"></p-tableCheckbox>
+        </td>
+        <td>{{role.roleName}}</td>
+        <td class="flex justify-content-center flex-wrap gap-1">
+          <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success p-mr-2" (click) = "edit(role)"></button>
+          <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="deleteSingle(role.id)"></button>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</p-card>
+
+<p-dialog [(visible)]="showDialog" [style]="{width: '450px'}" header="Role details" [modal]="true" styleClass="p-fluid">
+  <ng-template pTemplate="content">
+    <div class="field">
+      <label for="name">Role Name</label>
+      <input type="text" pInputText id="name" [(ngModel)]="role.roleName" required autofocus />
+      <small class="p-error" *ngIf="submitted && !role.roleName">Name is required.</small>
+    </div>
+  </ng-template>
+
+  <ng-template pTemplate="footer">
+    <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
+    <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="saveContent()"></button>
+  </ng-template>
+</p-dialog>
