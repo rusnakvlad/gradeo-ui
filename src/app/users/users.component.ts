@@ -106,7 +106,7 @@ export class UsersComponent implements OnInit {
 
   retrieveSchools() {
     this.schoolService.getAll().subscribe(response => {
-        this.schoolsOptions = [{name: 'All', id: 0}, ...response];
+        this.schoolsOptions = [{name: 'System', id: 0}, ...response];
       },
       error => {
 

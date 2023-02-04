@@ -45,7 +45,7 @@ export class RolesComponent implements OnInit {
 
   openNew() {
     this.role = {} as RoleUpsertModel;
-    this.retrivePermissions();
+    this.retrievePermissions();
     this.showDialog = true;
   }
 
@@ -113,14 +113,14 @@ export class RolesComponent implements OnInit {
 
   retrieveSchools() {
     this.schoolService.getAll().subscribe(response => {
-        this.schoolsOptions = [{name: 'All', id: 0}, ...response];
+        this.schoolsOptions = [{name: 'System', id: 0}, ...response];
       },
       error => {
 
       })
   }
 
-  retrivePermissions() {
+  retrievePermissions() {
     this.permissionService.get().subscribe(response => {
       this.permissionOptions = response;
     })
