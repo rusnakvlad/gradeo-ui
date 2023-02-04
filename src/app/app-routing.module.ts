@@ -7,6 +7,7 @@ import {WelcomeComponent} from "./layout/welcome/welcome.component";
 import {UsersComponent} from "./users/users.component";
 import {MasterDataComponent} from "./master-data/master-data.component";
 import {MasterSubjectsComponent} from "./master-data/master-subjects/master-subjects.component";
+import {RolesComponent} from "./master-data/roles/roles.component";
 
 const routes: Routes = [
   {
@@ -35,6 +36,10 @@ const routes: Routes = [
           {
             path: 'subjects',
             component: MasterSubjectsComponent,
+          },
+          {
+            path: 'roles',
+            component: RolesComponent,
           }
         ]
       }

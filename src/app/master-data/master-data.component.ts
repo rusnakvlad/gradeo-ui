@@ -18,6 +18,7 @@ export class MasterDataComponent implements OnInit {
   ngOnInit(): void {
     this.items = [
       {label: 'Subjects', icon: 'pi pi-fw pi-book', routerLink: 'subjects'},
+      {label: 'Roles', icon: 'pi pi-fw pi-sitemap', routerLink: 'roles'},
     ];
     this.activeItem = this.items[0];
     this.router.navigate(['admin/subjects'])
