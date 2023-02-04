@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {CommonApiService} from "./common-api.service";
 import {Observable} from "rxjs";
-import {RoleCreateModel, RolePaged} from "../models/role.model";
+import {RoleUpsertModel, RolePaged} from "../models/role.model";
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +16,7 @@ export class RoleService {
     return this.httpClient.get<RolePaged>(this.commonApi.roles);
   }
 
-  create(role: RoleCreateModel): Observable<any> {
+  create(role: RoleUpsertModel): Observable<any> {
     return this.httpClient.post(this.commonApi.roles, role);
   }
 }

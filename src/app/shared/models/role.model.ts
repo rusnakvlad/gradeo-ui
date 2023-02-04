@@ -8,7 +8,8 @@ export type Role = {
   permissions: Permission[]
 }
 
-export type RoleCreateModel = {
+export type RoleUpsertModel = {
+  id?:number,
   roleName: string,
   businessUnitId: number
   permissions: number[]
