@@ -21,6 +21,16 @@
            [rowHover]="true"
            dataKey="id">
 
+    <ng-template pTemplate="caption">
+      <div class="flex justify-content-between">
+        <h5>Manage Users</h5>
+        <div>
+          <label for="School">School: </label>
+          <p-dropdown [options]="schoolsOptions" id="school" [(ngModel)]="selectedSchoolId" optionLabel="name" optionValue="id" [style]="{'width':'20rem'}" (onChange)="schoolChanged()"></p-dropdown>
+        </div>
+      </div>
+    </ng-template>
+
     <ng-template pTemplate="header">
       <tr>
         <th style="width: 3rem">
@@ -46,11 +56,16 @@
   </p-table>
 </p-card>
 
-<p-dialog [(visible)]="showDialog" [style]="{width: '450px'}" header="Role details" [modal]="true" styleClass="p-fluid">
+<p-dialog [(visible)]="showDialog" [style]="{width: '450px', height:'500px'}" header="Role details" [modal]="true" styleClass="p-fluid">
   <ng-template pTemplate="content">
     <div class="field">
-      <label for="name">Role Name</label>
-      <input type="text" pInputText id="name" [(ngModel)]="role.roleName" required autofocus />
+      <label for="permission">Permissions</label>
+      <p-multiSelect id="permission" [options]="permissionOptions" [(ngModel)]="selectedPermissions" defaultLabel="Select Permissions" optionLabel="name" optionValue="permissionId"></p-multiSelect>
+      <small class="p-error" *ngIf="submitted && !role.roleName">Name is required.</small>
+    </div>
+    <div class="field">
+      <label for="roleName">Role Name</label>
+      <input type="text" pInputText id="roleName" [(ngModel)]="role.roleName" required autofocus />
       <small class="p-error" *ngIf="submitted && !role.roleName">Name is required.</small>
     </div>
   </ng-template>

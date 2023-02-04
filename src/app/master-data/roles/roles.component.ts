@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Role, RolePaged, RoleUpsertModel} from "../../shared/models/role.model";
 import {RoleService} from "../../shared/services/role.service";
 import {PermissionService} from "../../shared/services/permission.service";
@@ -10,6 +10,10 @@ import {CardModule} from "primeng/card";
 import {DialogModule} from "primeng/dialog";
 
 import {DefaultPageNumber, DefaultPageSize} from "../../shared/models/pagination.model";
+import {SchoolBasicInfo} from "../../shared/models/school.model";
+import {SchoolService} from "../../shared/services/school.service";
+import {PopupService} from "../../shared/services/popup.service";
+import {Permission} from "../../shared/models/permission.model";
 
 @Component({
   selector: 'app-roles',
@@ -19,24 +23,29 @@ import {DefaultPageNumber, DefaultPageSize} from "../../shared/models/pagination
 export class RolesComponent implements OnInit {
 
   role: RoleUpsertModel;
-  roles: RolePaged;
+  roles?: RolePaged;
 
-  selectedRoles:Role[] = [];
+  selectedRoles: Role[] = [];
   showDialog: boolean = false;
   submitted: boolean = false;
   loading: boolean = false;
   selectedSchoolId?: number;
+  schoolsOptions: SchoolBasicInfo[];
+  permissionOptions: Permission[];
+  selectedPermissions: number[];
 
-
-  constructor(private roleService: RoleService, private permissionService: PermissionService, private messageService: MessageService) { }
+  constructor(private roleService: RoleService, private permissionService: PermissionService, private schoolService: SchoolService, private popupService: PopupService) {
+  }
 
 
   ngOnInit(): void {
-    this.refreshGrid();
+    this.refreshGrid(DefaultPageNumber, DefaultPageSize);
+    this.retrieveSchools();
   }
 
   openNew() {
     this.role = {} as RoleUpsertModel;
+    this.retrivePermissions();
     this.showDialog = true;
   }
 
@@ -57,9 +66,9 @@ export class RolesComponent implements OnInit {
   }
 
 
-  refreshGrid() {
+  refreshGrid(pageNumber: number, pageSize: number) {
     this.loading = true;
-    this.roleService.getPaged( DefaultPageNumber, DefaultPageSize, this.selectedSchoolId).subscribe(response => {
+    this.roleService.getPaged(pageNumber, pageSize, this.selectedSchoolId).subscribe(response => {
         this.roles = response;
         this.loading = false;
       },
@@ -69,11 +78,21 @@ export class RolesComponent implements OnInit {
   }
 
   hideDialog() {
-    this.showDialog=false;
+    this.showDialog = false;
     this.submitted = false;
   }
 
   saveContent() {
+    if (!this.role.id) {
+      this.role.permissions = this.selectedPermissions;
+      this.roleService.create(this.role).subscribe(response => {
+          this.popupService.success('Role Created');
+          this.refreshGrid(DefaultPageNumber, DefaultPageSize);
+        },
+        error => {
+          this.popupService.error('Role was not created');
+        })
+    }
   }
 
   nextPage(event: LazyLoadEvent) {
@@ -86,6 +105,25 @@ export class RolesComponent implements OnInit {
         this.loading = false;
       }
     )
+  }
+
+  schoolChanged() {
+    this.refreshGrid(DefaultPageNumber, DefaultPageSize);
+  }
+
+  retrieveSchools() {
+    this.schoolService.getAll().subscribe(response => {
+        this.schoolsOptions = [{name: 'All', id: 0}, ...response];
+      },
+      error => {
+
+      })
+  }
+
+  retrivePermissions() {
+    this.permissionService.get().subscribe(response => {
+      this.permissionOptions = response;
+    })
   }
 
 }
