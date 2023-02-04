@@ -8,6 +8,12 @@ export type Role = {
   permissions: Permission[]
 }
 
+export type RoleCreateModel = {
+  roleName: string,
+  businessUnitId: number
+  permissions: number[]
+}
+
 export type RolePaged = {
   items: Role[]
 } & PaginationModel

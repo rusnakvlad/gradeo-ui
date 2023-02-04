@@ -1,6 +1,6 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 
-import { protectedResources } from '../../auth-config';
+import {protectedResources} from '../../auth-config';
 
 @Injectable({
   providedIn: 'root'
@@ -11,5 +11,9 @@ export class CommonApiService {
   schools: string = this.url + '/api/schools'
   users: string = this.url + '/api/users'
   masterSubjects: string = this.url + '/api/masterSubjects'
-  constructor() { }
+  roles: string = this.url + '/api/roles'
+  permissions: string = this.url + '/api/permissions'
+
+  constructor() {
+  }
 }
