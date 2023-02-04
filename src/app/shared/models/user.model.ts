@@ -9,6 +9,12 @@ export type User = {
   userType?: string
 }
 
+export type CreateUserModel = {
+  userMetadata: User,
+  businessUnitId?: number,
+  roleIds: number[]
+}
+
 export type UsersPaged = {
   items: User[]
 } & PaginationModel;

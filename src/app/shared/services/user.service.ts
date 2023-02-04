@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpParams} from "@angular/common/http";
 import {Observable} from "rxjs";
-import {User, UsersPaged} from "../models/user.model";
+import {CreateUserModel, User, UsersPaged} from "../models/user.model";
 import {CommonApiService} from "./common-api.service";
 
 @Injectable({
@@ -26,10 +26,7 @@ export class UserService {
     return this.httpClient.get<UsersPaged>(this.api.users, {params:params});
   }
 
-  create(user: User, schoolId?: number) {
-    return this.httpClient.post(this.api.users, {
-      userMetadata: user,
-      businessUnitId: schoolId,
-    })
+  create(user: CreateUserModel, schoolId?: number) {
+    return this.httpClient.post(this.api.users, user)
   }
 }

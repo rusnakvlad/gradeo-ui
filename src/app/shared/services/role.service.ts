@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient, HttpParams} from "@angular/common/http";
 import {CommonApiService} from "./common-api.service";
 import {Observable} from "rxjs";
-import {RoleUpsertModel, RolePaged} from "../models/role.model";
+import {RoleUpsertModel, RolePaged, RoleBasicInfo} from "../models/role.model";
 
 @Injectable({
   providedIn: 'root'
@@ -24,6 +24,14 @@ export class RoleService {
     }
 
     return this.httpClient.get<RolePaged>(this.commonApi.roles, {params: params});
+  }
+
+  getAll(businessUnitId?: number): Observable<RoleBasicInfo[]> {
+    return this.httpClient.get<RoleBasicInfo[]>(this.commonApi.roles + '/all', {
+      params: {
+        schoolId: businessUnitId?.toString() || "",
+      }
+    });
   }
 
   create(role: RoleUpsertModel): Observable<any> {

@@ -67,6 +67,10 @@
 <p-dialog [(visible)]="showDialog" [style]="{width: '450px'}" header="User Details" [modal]="true" styleClass="p-fluid">
   <ng-template pTemplate="content">
     <div class="field">
+      <label for="role">Roles</label>
+      <p-multiSelect id="role" [options]="rolesOptions" [(ngModel)]="selectedRoles" defaultLabel="Select Roles" optionLabel="roleName" optionValue="id"></p-multiSelect>
+    </div>
+    <div class="field">
       <label for="userType">User Type</label>
       <p-dropdown [options]="userTypes" id="userType" [(ngModel)]="userType"></p-dropdown>
       <small class="p-error" *ngIf="submitted && !user.userType">City is required.</small>

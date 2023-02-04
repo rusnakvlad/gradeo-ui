@@ -9,10 +9,15 @@ export type Role = {
 }
 
 export type RoleUpsertModel = {
-  id?:number,
+  id?: number,
   roleName: string,
   businessUnitId?: number
   permissions: number[]
+}
+
+export type RoleBasicInfo = {
+  id: number,
+  roleName: string
 }
 
 export type RolePaged = {
