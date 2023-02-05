@@ -13,6 +13,7 @@ export class CommonApiService {
   masterSubjects: string = this.url + '/api/masterSubjects'
   roles: string = this.url + '/api/roles'
   permissions: string = this.url + '/api/permissions'
+  menuItems: string = this.url + '/api/menuItems'
 
   constructor() {
   }

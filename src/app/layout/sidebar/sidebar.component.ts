@@ -1,5 +1,7 @@
 import {Component, EventEmitter, Input, OnInit} from '@angular/core';
 import {LayoutService} from "../../shared/services/layout.service";
+import {MenuItem} from "../../shared/models/menu.model";
+import {MenuService} from "../../shared/services/menu.service";
 
 @Component({
   selector: 'app-sidebar',
@@ -8,14 +10,14 @@ import {LayoutService} from "../../shared/services/layout.service";
 })
 export class SidebarComponent implements OnInit {
 
-  public display: boolean = false;
-
-  constructor(private layoutService: LayoutService) {
+  display: boolean = false;
+  menuItems: MenuItem[];
+  constructor(private layoutService: LayoutService, private menuService: MenuService) {
     layoutService.menuToggled.subscribe(sidebarState => this.display = sidebarState);
   }
 
   ngOnInit(): void {
-
+    this.menuItems = this.menuService.getMenuItems();
   }
 
   closeSidebar(){
