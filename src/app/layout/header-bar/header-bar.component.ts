@@ -80,31 +80,6 @@ export class HeaderBarComponent implements OnInit {
         }
 
         /**
-         * For the purpose of setting an active account for UI update, we want to consider only the auth response resulting
-         * from SUSI flow. "acr" claim in the id token tells us the policy (NOTE: newer policies may use the "tfp" claim instead).
-         * To learn more about B2C tokens, visit https://docs.microsoft.com/en-us/azure/active-directory-b2c/tokens-overview
-         */
-        // if (idtoken.acr === b2cPolicies.names.editProfile || idtoken.tfp === b2cPolicies.names.editProfile) {
-        //
-        //   // retrieve the account from initial sing-in to the app
-        //   const originalSignInAccount = this.authService.instance.getAllAccounts()
-        //     .find((account: AccountInfo) =>
-        //       account.idTokenClaims?.oid === idtoken.oid
-        //       && account.idTokenClaims?.sub === idtoken.sub
-        //       && ((account.idTokenClaims as IdTokenClaimsWithPolicyId).acr === b2cPolicies.names.signUpSignIn
-        //         || (account.idTokenClaims as IdTokenClaimsWithPolicyId).tfp === b2cPolicies.names.signUpSignIn)
-        //     );
-        //
-        //   let signUpSignInFlowRequest: SsoSilentRequest = {
-        //     authority: b2cPolicies.authorities.signUpSignIn.authority,
-        //     account: originalSignInAccount
-        //   };
-        //
-        //   // silently login again with the signUpSignIn policy
-        //   this.authService.ssoSilent(signUpSignInFlowRequest);
-        // }
-
-        /**
          * Below we are checking if the user is returning from the reset password flow.
          * If so, we will ask the user to reauthenticate with their new password.
          * If you do not want this behavior and prefer your users to stay signed in instead,
