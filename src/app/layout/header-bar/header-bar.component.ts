@@ -7,6 +7,7 @@ import { AccountInfo, AuthenticationResult, EventMessage, EventType, Interaction
 import { MsalService, MsalBroadcastService, MSAL_GUARD_CONFIG, MsalGuardConfiguration } from '@azure/msal-angular';
 import { b2cPolicies } from '../../auth-config';
 import {MenuService} from "../../shared/services/menu.service";
+import {UserAuthService} from "../../shared/services/user-auth.service";
 
 type IdTokenClaimsWithPolicyId = IdTokenClaims & {
   acr?: string,
@@ -30,7 +31,8 @@ export class HeaderBarComponent implements OnInit {
               private authService: MsalService,
               private msalBroadcastService: MsalBroadcastService,
               private layoutService: LayoutService,
-              private menuService: MenuService
+              private menuService: MenuService,
+              private userAuthService: UserAuthService
   ) { }
 
   ngOnInit(): void {

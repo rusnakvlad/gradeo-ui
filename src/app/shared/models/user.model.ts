@@ -18,3 +18,11 @@ export type CreateUserModel = {
 export type UsersPaged = {
   items: User[]
 } & PaginationModel;
+
+export type UserDetails = {
+  id: string,
+  userType?: UserType,
+  systemType: number,
+  businessUnitId?: number
+  permissions: number[]
+}

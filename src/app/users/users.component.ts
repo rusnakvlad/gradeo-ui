@@ -4,7 +4,7 @@ import {TableModule} from 'primeng/table';
 import {CardModule} from "primeng/card";
 import {DialogModule} from "primeng/dialog";
 
-import {CreateUserModel, User, UsersPaged} from "../shared/models/user.model";
+import {CreateUserModel, User, UserDetails, UsersPaged} from "../shared/models/user.model";
 import {ConfirmationService, LazyLoadEvent, MessageService} from "primeng/api";
 import {UserService} from "../shared/services/user.service";
 import {DefaultPageNumber, DefaultPageSize} from "../shared/models/pagination.model";
@@ -13,6 +13,7 @@ import {HttpErrorResponse} from "@angular/common/http";
 import {SchoolService} from "../shared/services/school.service";
 import {RoleBasicInfo} from "../shared/models/role.model";
 import {RoleService} from "../shared/services/role.service";
+import {UserAuthService} from "../shared/services/user-auth.service";
 
 @Component({
   selector: 'app-users',
@@ -33,15 +34,18 @@ export class UsersComponent implements OnInit {
   selectedSchoolId?: number;
   rolesOptions: RoleBasicInfo[];
   selectedRoles: number[];
+  currentUser: UserDetails;
 
   constructor(
     private userService: UserService,
     private schoolService: SchoolService,
     private messageService: MessageService,
-    private roleService: RoleService) {
+    private roleService: RoleService,
+    private userAuthService: UserAuthService) {
   }
 
   ngOnInit(): void {
+    this.setCurrentUser();
     this.refreshGrid(DefaultPageNumber, DefaultPageSize);
     this.retrieveSchools();
   }
@@ -75,7 +79,7 @@ export class UsersComponent implements OnInit {
       return;
     }
     this.user.userType = this.userType == 'Other' ? '' : this.userType;
-    if(!this.user.id){
+    if (!this.user.id) {
       let createUserModel = {} as CreateUserModel;
       createUserModel.userMetadata = this.user;
       createUserModel.roleIds = this.selectedRoles;
@@ -124,6 +128,12 @@ export class UsersComponent implements OnInit {
       })
   }
 
+  setCurrentUser() {
+    this.userService.getCurrentUser().subscribe(response => {
+      this.currentUser = response;
+    })
+  }
+
   isModelValid() {
     if (!this.user.firstName || !this.user.lastName || !this.user.email) {
       return false;
@@ -135,7 +145,7 @@ export class UsersComponent implements OnInit {
     this.refreshGrid(DefaultPageNumber, DefaultPageSize);
   }
 
-  retrieveRoles(){
+  retrieveRoles() {
     this.roleService.getAll(this.selectedSchoolId).subscribe(response => {
       this.rolesOptions = response;
     })

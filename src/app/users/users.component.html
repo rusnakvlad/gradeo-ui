@@ -22,7 +22,7 @@
            [rowHover]="true"
            dataKey="id">
 
-    <ng-template pTemplate="caption">
+    <ng-template pTemplate="caption" *ngIf="currentUser.systemType == 1">
       <div class="flex justify-content-between">
         <h5>Manage Users</h5>
         <div>
