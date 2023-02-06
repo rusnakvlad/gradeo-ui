@@ -12,8 +12,10 @@ export class SidebarComponent implements OnInit {
 
   display: boolean = false;
   menuItems: MenuItemModel[];
+
   constructor(private layoutService: LayoutService, private menuService: MenuService) {
     layoutService.menuToggled.subscribe(sidebarState => this.display = sidebarState);
+    menuService.menuUpdated.subscribe(response => this.menuItems = response);
   }
 
   ngOnInit(): void {
@@ -22,7 +24,7 @@ export class SidebarComponent implements OnInit {
     })
   }
 
-  closeSidebar(){
+  closeSidebar() {
     this.layoutService.menuToggled.emit(false);
   }
 }

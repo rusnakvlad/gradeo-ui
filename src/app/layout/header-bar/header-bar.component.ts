@@ -6,6 +6,7 @@ import { filter, takeUntil } from 'rxjs/operators';
 import { AccountInfo, AuthenticationResult, EventMessage, EventType, InteractionStatus, InteractionType, PopupRequest, RedirectRequest, SsoSilentRequest } from '@azure/msal-browser';
 import { MsalService, MsalBroadcastService, MSAL_GUARD_CONFIG, MsalGuardConfiguration } from '@azure/msal-angular';
 import { b2cPolicies } from '../../auth-config';
+import {MenuService} from "../../shared/services/menu.service";
 
 type IdTokenClaimsWithPolicyId = IdTokenClaims & {
   acr?: string,
@@ -28,7 +29,8 @@ export class HeaderBarComponent implements OnInit {
               @Inject(MSAL_GUARD_CONFIG) private msalGuardConfig: MsalGuardConfiguration,
               private authService: MsalService,
               private msalBroadcastService: MsalBroadcastService,
-              private layoutService: LayoutService
+              private layoutService: LayoutService,
+              private menuService: MenuService
   ) { }
 
   ngOnInit(): void {
@@ -98,6 +100,13 @@ export class HeaderBarComponent implements OnInit {
 
         return result;
       });
+
+    this.msalBroadcastService.msalSubject$
+      .pipe(
+        filter((msg: EventMessage) => msg.eventType === EventType.LOGIN_SUCCESS),
+        takeUntil(this._destroying$)
+      )
+      .subscribe((result: EventMessage) => {this.menuService.updateMenuItems()})
 
     this.msalBroadcastService.msalSubject$
       .pipe(
