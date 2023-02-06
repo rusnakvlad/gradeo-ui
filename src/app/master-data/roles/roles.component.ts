@@ -14,6 +14,8 @@ import {SchoolBasicInfo} from "../../shared/models/school.model";
 import {SchoolService} from "../../shared/services/school.service";
 import {PopupService} from "../../shared/services/popup.service";
 import {Permission} from "../../shared/models/permission.model";
+import {UserService} from "../../shared/services/user.service";
+import {UserDetails} from "../../shared/models/user.model";
 
 @Component({
   selector: 'app-roles',
@@ -33,14 +35,28 @@ export class RolesComponent implements OnInit {
   schoolsOptions: SchoolBasicInfo[];
   permissionOptions: Permission[];
   selectedPermissions: number[];
+  currentUser: UserDetails;
 
-  constructor(private roleService: RoleService, private permissionService: PermissionService, private schoolService: SchoolService, private popupService: PopupService) {
+  constructor(private roleService: RoleService,
+              private permissionService: PermissionService,
+              private schoolService: SchoolService,
+              private popupService: PopupService,
+              private userService: UserService) {
   }
 
 
   ngOnInit(): void {
     this.refreshGrid(DefaultPageNumber, DefaultPageSize);
-    this.retrieveSchools();
+    this.setCurrentUser();
+  }
+
+  setCurrentUser() {
+    this.userService.getCurrentUser().subscribe(response => {
+      this.currentUser = response;
+      if(this.currentUser.systemType == 1){
+        this.retrieveSchools();
+      }
+    })
   }
 
   openNew() {

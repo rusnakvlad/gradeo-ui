@@ -47,7 +47,6 @@ export class UsersComponent implements OnInit {
   ngOnInit(): void {
     this.setCurrentUser();
     this.refreshGrid(DefaultPageNumber, DefaultPageSize);
-    this.retrieveSchools();
   }
 
   deleteSelected() {
@@ -131,6 +130,9 @@ export class UsersComponent implements OnInit {
   setCurrentUser() {
     this.userService.getCurrentUser().subscribe(response => {
       this.currentUser = response;
+      if(this.currentUser.systemType == 1){
+        this.retrieveSchools();
+      }
     })
   }
 
