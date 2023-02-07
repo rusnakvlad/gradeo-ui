@@ -4,6 +4,7 @@ import {PaginationModel} from "./pagination.model";
 export type Role = {
   id: number,
   roleName: string,
+  isDefault:boolean,
   businessUnitId?: number,
   permissions: Permission[]
 }

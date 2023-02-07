@@ -44,12 +44,12 @@
     <ng-template pTemplate="body" let-role>
       <tr>
         <td>
-          <p-tableCheckbox [value]="role"></p-tableCheckbox>
+          <p-tableCheckbox [disabled]="role.isDefault" [value]="role"></p-tableCheckbox>
         </td>
         <td>{{role.roleName}}</td>
         <td class="flex justify-content-center flex-wrap gap-1">
-          <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success p-mr-2" (click) = "edit(role)"></button>
-          <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="deleteSingle(role.id)"></button>
+          <button [disabled]="role.isDefault" pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success p-mr-2" (click) = "edit(role)"></button>
+          <button [disabled]="role.isDefault" pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="deleteSingle(role.id)"></button>
         </td>
       </tr>
     </ng-template>
