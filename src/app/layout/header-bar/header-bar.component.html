@@ -5,6 +5,10 @@
   </ng-template>
   <ng-template pTemplate="end">
     <p-button *ngIf="!loginDisplay" (click)="login()">Login</p-button>
-    <p-button *ngIf="loginDisplay" (click)="logout()">Logout</p-button>
+    <ng-container *ngIf="loginDisplay">
+      <button type="button" pButton class="p-button-text" icon="pi pi-angle-down" iconPos="right" label="{{userDisplayName}}" (click)="menu.toggle($event)"></button>
+      <p-tieredMenu #menu [model]="items" [popup]="true"></p-tieredMenu>
+    </ng-container>
   </ng-template>
 </p-menubar>
+

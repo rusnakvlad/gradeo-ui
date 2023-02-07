@@ -1,13 +1,24 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {LayoutService} from "../../shared/services/layout.service";
-import { IdTokenClaims, PromptValue } from '@azure/msal-common';
+import {IdTokenClaims, PromptValue} from '@azure/msal-common';
 import {Subject} from "rxjs";
-import { filter, takeUntil } from 'rxjs/operators';
-import { AccountInfo, AuthenticationResult, EventMessage, EventType, InteractionStatus, InteractionType, PopupRequest, RedirectRequest, SsoSilentRequest } from '@azure/msal-browser';
-import { MsalService, MsalBroadcastService, MSAL_GUARD_CONFIG, MsalGuardConfiguration } from '@azure/msal-angular';
-import { b2cPolicies } from '../../auth-config';
+import {filter, takeUntil} from 'rxjs/operators';
+import {
+  AccountInfo,
+  AuthenticationResult,
+  EventMessage,
+  EventType,
+  InteractionStatus,
+  InteractionType,
+  PopupRequest,
+  RedirectRequest,
+  SsoSilentRequest
+} from '@azure/msal-browser';
+import {MsalService, MsalBroadcastService, MSAL_GUARD_CONFIG, MsalGuardConfiguration} from '@azure/msal-angular';
+import {b2cPolicies} from '../../auth-config';
 import {MenuService} from "../../shared/services/menu.service";
 import {UserAuthService} from "../../shared/services/user-auth.service";
+import {MenuItem} from "primeng/api";
 
 type IdTokenClaimsWithPolicyId = IdTokenClaims & {
   acr?: string,
@@ -24,16 +35,19 @@ export class HeaderBarComponent implements OnInit {
   public logoUrl: string = "https://www.figma.com/file/IMkmmmjNK2z2e2Cx8NGlZL/Untitled?node-id=4%3A15&t=UODtvCO568UJFrpA-4";
   isIframe = false;
   loginDisplay = false;
+  userDisplayName?: string;
+  items: MenuItem[];
   private readonly _destroying$ = new Subject<void>();
 
   constructor(
-              @Inject(MSAL_GUARD_CONFIG) private msalGuardConfig: MsalGuardConfiguration,
-              private authService: MsalService,
-              private msalBroadcastService: MsalBroadcastService,
-              private layoutService: LayoutService,
-              private menuService: MenuService,
-              private userAuthService: UserAuthService
-  ) { }
+    @Inject(MSAL_GUARD_CONFIG) private msalGuardConfig: MsalGuardConfiguration,
+    private authService: MsalService,
+    private msalBroadcastService: MsalBroadcastService,
+    private layoutService: LayoutService,
+    private menuService: MenuService,
+    private userAuthService: UserAuthService
+  ) {
+  }
 
   ngOnInit(): void {
     this.isIframe = window !== window.parent && !window.opener;
@@ -81,6 +95,8 @@ export class HeaderBarComponent implements OnInit {
 
         if (idtoken.acr === b2cPolicies.names.signUpSignIn || idtoken.tfp === b2cPolicies.names.signUpSignIn) {
           this.authService.instance.setActiveAccount(payload.account);
+          this.userDisplayName = payload.account?.username;
+          this.setHeaderItems();
         }
 
         /**
@@ -108,7 +124,9 @@ export class HeaderBarComponent implements OnInit {
         filter((msg: EventMessage) => msg.eventType === EventType.LOGIN_SUCCESS),
         takeUntil(this._destroying$)
       )
-      .subscribe((result: EventMessage) => {this.menuService.updateMenuItems()})
+      .subscribe((result: EventMessage) => {
+        this.menuService.updateMenuItems()
+      })
 
     this.msalBroadcastService.msalSubject$
       .pipe(
@@ -125,12 +143,22 @@ export class HeaderBarComponent implements OnInit {
           };
 
           this.login(resetPasswordFlowRequest);
-        };
+        }
+        ;
       });
   }
 
   setLoginDisplay() {
     this.loginDisplay = this.authService.instance.getAllAccounts().length > 0;
+  }
+
+  setHeaderItems() {
+    this.items = [
+      {
+        label: 'Logout',
+        icon: 'pi pi-fw pi-power-off',
+        command: () => this.logout()
+      }]
   }
 
   checkAndSetActiveAccount() {
@@ -151,7 +179,7 @@ export class HeaderBarComponent implements OnInit {
   login(userFlowRequest?: RedirectRequest | PopupRequest) {
     if (this.msalGuardConfig.interactionType === InteractionType.Popup) {
       if (this.msalGuardConfig.authRequest) {
-        this.authService.loginPopup({ ...this.msalGuardConfig.authRequest, ...userFlowRequest } as PopupRequest)
+        this.authService.loginPopup({...this.msalGuardConfig.authRequest, ...userFlowRequest} as PopupRequest)
           .subscribe((response: AuthenticationResult) => {
             this.authService.instance.setActiveAccount(response.account);
           });
@@ -163,7 +191,7 @@ export class HeaderBarComponent implements OnInit {
       }
     } else {
       if (this.msalGuardConfig.authRequest) {
-        this.authService.loginRedirect({ ...this.msalGuardConfig.authRequest, ...userFlowRequest } as RedirectRequest);
+        this.authService.loginRedirect({...this.msalGuardConfig.authRequest, ...userFlowRequest} as RedirectRequest);
       } else {
         this.authService.loginRedirect(userFlowRequest);
       }
@@ -185,6 +213,7 @@ export class HeaderBarComponent implements OnInit {
       });
     }
   }
+
   //
   // editProfile() {
   //   let editProfileFlowRequest: RedirectRequest | PopupRequest = {
