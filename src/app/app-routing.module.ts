@@ -8,7 +8,6 @@ import {UsersComponent} from "./users/users.component";
 import {MasterDataComponent} from "./master-data/master-data.component";
 import {MasterSubjectsComponent} from "./master-data/master-subjects/master-subjects.component";
 import {RolesComponent} from "./master-data/roles/roles.component";
-import {AssignedSubjectsComponent} from "./master-data/assigned-subjects/assigned-subjects.component";
 
 const routes: Routes = [
   {
@@ -37,10 +36,6 @@ const routes: Routes = [
           {
             path: 'subjects',
             component: MasterSubjectsComponent,
-          },
-          {
-            path: 'assignedSubjects',
-            component: AssignedSubjectsComponent,
           },
           {
             path: 'roles',
