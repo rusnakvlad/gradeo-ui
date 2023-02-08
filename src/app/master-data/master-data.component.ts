@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {TabMenuModule} from "primeng/tabmenu";
 import {MenuItem} from "primeng/api";
 import {Router} from "@angular/router";
@@ -13,14 +13,16 @@ export class MasterDataComponent implements OnInit {
   items: MenuItem[];
   activeItem: MenuItem;
 
-  constructor(private router: Router) { }
+  constructor(private router: Router) {
+  }
 
   ngOnInit(): void {
     this.items = [
       {label: 'Subjects', icon: 'pi pi-fw pi-book', routerLink: 'subjects'},
-      {label: 'Roles', icon: 'pi pi-fw pi-sitemap', routerLink: 'roles'},
+      {label: 'Assigned Subjects', icon: 'pi pi-fw pi-book', routerLink: 'assignedSubjects'},
+      {label: 'Roles', icon: 'pi pi-fw pi-sitemap', routerLink: 'roles'}
     ];
     this.activeItem = this.items[0];
-    this.router.navigate(['admin/subjects'])
+    this.router.navigate(['admin/' + this.items[0].routerLink])
   }
 }
