@@ -101,6 +101,7 @@ export class RolesComponent implements OnInit {
   saveContent() {
     if (!this.role.id) {
       this.role.permissions = this.selectedPermissions;
+      this.role.businessUnitId = this.selectedSchoolId;
       this.roleService.create(this.role).subscribe(response => {
           this.popupService.success('Role Created');
           this.refreshGrid(DefaultPageNumber, DefaultPageSize);
