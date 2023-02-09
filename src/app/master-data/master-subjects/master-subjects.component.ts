@@ -6,6 +6,7 @@ import {MasterSubjectService} from "../../shared/services/master-subject.service
 import {DefaultPageNumber, DefaultPageSize} from "../../shared/models/pagination.model";
 import {HttpErrorResponse} from "@angular/common/http";
 import {MessageService} from "primeng/api";
+import {SpinnerService} from "../../shared/services/spinner.service";
 
 @Component({
   selector: 'app-master-subjects',
@@ -21,7 +22,7 @@ export class MasterSubjectsComponent implements OnInit {
   loading: boolean = false;
 
 
-  constructor(private masterSubjectService: MasterSubjectService, private messageService: MessageService,) {
+  constructor(private masterSubjectService: MasterSubjectService, private messageService: MessageService, private spinner: SpinnerService) {
   }
 
   openNew() {
@@ -63,9 +64,11 @@ export class MasterSubjectsComponent implements OnInit {
   }
 
   saveContent() {
+    this.spinner.show();
     this.masterSubjectService.upsert(this.subject).subscribe(response => {
         this.messageService.add({severity: 'success', summary: 'Successful', detail: 'Record saved', life: 3000});
         this.showDialog = false;
+        this.spinner.hide();
         this.refreshGrid();
       },
       (error: HttpErrorResponse) => {

@@ -10,7 +10,10 @@ export class SpinnerService {
 
   constructor() { }
 
-  setState(state: boolean){
-    this.stateChanged.emit(state);
+  show(){
+    this.stateChanged.emit(true);
+  }
+  hide(){
+    this.stateChanged.emit(false);
   }
 }

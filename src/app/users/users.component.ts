@@ -14,6 +14,7 @@ import {SchoolService} from "../shared/services/school.service";
 import {RoleBasicInfo} from "../shared/models/role.model";
 import {RoleService} from "../shared/services/role.service";
 import {UserAuthService} from "../shared/services/user-auth.service";
+import {SpinnerService} from "../shared/services/spinner.service";
 
 @Component({
   selector: 'app-users',
@@ -41,7 +42,7 @@ export class UsersComponent implements OnInit {
     private schoolService: SchoolService,
     private messageService: MessageService,
     private roleService: RoleService,
-    private userAuthService: UserAuthService) {
+    private spinner: SpinnerService) {
   }
 
   ngOnInit(): void {
@@ -83,9 +84,11 @@ export class UsersComponent implements OnInit {
       createUserModel.userMetadata = this.user;
       createUserModel.roleIds = this.selectedRoles;
       createUserModel.businessUnitId = this.selectedSchoolId;
+      this.spinner.show();
       this.userService.create(createUserModel, this.selectedSchoolId).subscribe(response => {
           this.messageService.add({severity: 'success', summary: 'Successful', detail: 'Record saved', life: 3000});
           this.showDialog = false;
+          this.spinner.hide();
           this.refreshGrid(DefaultPageNumber, DefaultPageSize);
         },
         (error: HttpErrorResponse) => {
