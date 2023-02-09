@@ -13,7 +13,7 @@ export class StudyGroupService {
   constructor(private httpClient: HttpClient, private api: CommonApiService) {
   }
 
-  get(): Observable<StudyGroupPaged> {
+  get(pageNumber: number, pageSize: number): Observable<StudyGroupPaged> {
     return this.httpClient.get<StudyGroupPaged>(this.api.studyGroups);
   }
 

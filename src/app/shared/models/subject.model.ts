@@ -1,4 +1,4 @@
 export type MasterSubject = {
-  id:string,
+  id:number,
   name:string
 }
