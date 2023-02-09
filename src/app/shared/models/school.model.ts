@@ -15,3 +15,9 @@ export type SchoolBasicInfo = {
 export type SchoolInfoPaged = {
   items: SchoolInfo[]
 } & PaginationModel;
+
+export type StudyGroupUpsertModel = {
+  id?: number,
+  name: string,
+  subjectIds: number[]
+}

@@ -14,6 +14,7 @@ export class CommonApiService {
   roles: string = this.url + '/api/roles'
   permissions: string = this.url + '/api/permissions'
   menuItems: string = this.url + '/api/menuItems'
+  studyGroups: string = this.url + '/api/studyGroups'
 
   constructor() {
   }
