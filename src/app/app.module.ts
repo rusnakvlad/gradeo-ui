@@ -43,6 +43,7 @@ import {TabMenuModule} from "primeng/tabmenu";
 import { MasterSubjectsComponent } from './master-data/master-subjects/master-subjects.component';
 import { RolesComponent } from './master-data/roles/roles.component';
 import {MultiSelectModule} from "primeng/multiselect";
+import { StudyGroupsComponent } from './master-data/study-groups/study-groups.component';
 
 export function MSALInstanceFactory(): IPublicClientApplication {
   return new PublicClientApplication(msalConfig);
@@ -87,6 +88,7 @@ export function MSALGuardConfigFactory(): MsalGuardConfiguration {
     MasterDataComponent,
     MasterSubjectsComponent,
     RolesComponent,
+    StudyGroupsComponent,
   ],
   imports: [
     BrowserModule,
