@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {ConfirmDialogModule} from "primeng/confirmdialog";
+import {SpinnerService} from "../shared/services/spinner.service";
 
 @Component({
   selector: 'app-layout',
@@ -8,7 +9,13 @@ import {ConfirmDialogModule} from "primeng/confirmdialog";
 })
 export class LayoutComponent implements OnInit {
 
-  constructor() { }
+  showSpinner: boolean = false;
+
+  constructor(private spinnerService: SpinnerService) {
+    this.spinnerService.stateChanged.subscribe(newState => {
+      this.showSpinner = newState;
+    })
+  }
 
   ngOnInit(): void {
   }

@@ -44,6 +44,7 @@ import { MasterSubjectsComponent } from './master-data/master-subjects/master-su
 import { RolesComponent } from './master-data/roles/roles.component';
 import {MultiSelectModule} from "primeng/multiselect";
 import { StudyGroupsComponent } from './master-data/study-groups/study-groups.component';
+import {ProgressSpinnerModule} from "primeng/progressspinner";
 
 export function MSALInstanceFactory(): IPublicClientApplication {
   return new PublicClientApplication(msalConfig);
@@ -90,31 +91,32 @@ export function MSALGuardConfigFactory(): MsalGuardConfiguration {
     RolesComponent,
     StudyGroupsComponent,
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    HttpClientModule,
-    BrowserAnimationsModule,
-    SidebarModule,
-    ButtonModule,
-    MenubarModule,
-    DropdownModule,
-    FormsModule,
-    MenuModule,
-    TieredMenuModule,
-    TableModule,
-    ToastModule,
-    ToolbarModule,
-    FileUploadModule,
-    CardModule,
-    InputTextModule,
-    RippleModule,
-    MsalModule,
-    DialogModule,
-    ConfirmDialogModule,
-    TabMenuModule,
-    MultiSelectModule,
-  ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        HttpClientModule,
+        BrowserAnimationsModule,
+        SidebarModule,
+        ButtonModule,
+        MenubarModule,
+        DropdownModule,
+        FormsModule,
+        MenuModule,
+        TieredMenuModule,
+        TableModule,
+        ToastModule,
+        ToolbarModule,
+        FileUploadModule,
+        CardModule,
+        InputTextModule,
+        RippleModule,
+        MsalModule,
+        DialogModule,
+        ConfirmDialogModule,
+        TabMenuModule,
+        MultiSelectModule,
+        ProgressSpinnerModule,
+    ],
   providers: [
     {
       provide: HTTP_INTERCEPTORS,
