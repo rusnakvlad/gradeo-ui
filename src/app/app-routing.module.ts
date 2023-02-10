@@ -11,6 +11,7 @@ import {RolesComponent} from "./master-data/roles/roles.component";
 import {StudyGroupsComponent} from "./master-data/study-groups/study-groups.component";
 import {StudentProfilesComponent} from "./student-profiles/student-profiles.component";
 import {TeacherProfilesComponent} from "./teacher-profiles/teacher-profiles.component";
+import {SchoolProfileComponent} from "./school-profile/school-profile.component";
 
 const routes: Routes = [
   {
@@ -24,6 +25,11 @@ const routes: Routes = [
       {
         path: 'schools',
         component: SchoolsComponent,
+        canActivate: [MsalGuard]
+      },
+      {
+        path: 'schoolProfile',
+        component: SchoolProfileComponent,
         canActivate: [MsalGuard]
       },
       {
