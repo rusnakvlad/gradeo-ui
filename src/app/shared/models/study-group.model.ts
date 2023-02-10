@@ -10,3 +10,8 @@ export type StudyGroup = {
 export type StudyGroupPaged = {
   items: StudyGroup[]
 } & PaginationModel
+
+export type StudyGroupBasicInfo = {
+  id: number,
+  name: string
+}

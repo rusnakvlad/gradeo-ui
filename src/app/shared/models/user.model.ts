@@ -26,3 +26,8 @@ export type UserDetails = {
   businessUnitId?: number
   permissions: number[]
 }
+
+export type UserFilterModel = {
+  searchTerm?: string,
+  userType?: UserType
+}
