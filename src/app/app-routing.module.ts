@@ -10,6 +10,7 @@ import {MasterSubjectsComponent} from "./master-data/master-subjects/master-subj
 import {RolesComponent} from "./master-data/roles/roles.component";
 import {StudyGroupsComponent} from "./master-data/study-groups/study-groups.component";
 import {StudentProfilesComponent} from "./student-profiles/student-profiles.component";
+import {TeacherProfilesComponent} from "./teacher-profiles/teacher-profiles.component";
 
 const routes: Routes = [
   {
@@ -33,6 +34,11 @@ const routes: Routes = [
       {
         path: 'students',
         component: StudentProfilesComponent,
+        canActivate: [MsalGuard]
+      },
+      {
+        path: 'teachers',
+        component: TeacherProfilesComponent,
         canActivate: [MsalGuard]
       },
       {

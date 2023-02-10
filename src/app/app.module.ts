@@ -46,6 +46,7 @@ import {MultiSelectModule} from "primeng/multiselect";
 import { StudyGroupsComponent } from './master-data/study-groups/study-groups.component';
 import {ProgressSpinnerModule} from "primeng/progressspinner";
 import { StudentProfilesComponent } from './student-profiles/student-profiles.component';
+import { TeacherProfilesComponent } from './teacher-profiles/teacher-profiles.component';
 
 export function MSALInstanceFactory(): IPublicClientApplication {
   return new PublicClientApplication(msalConfig);
@@ -92,6 +93,7 @@ export function MSALGuardConfigFactory(): MsalGuardConfiguration {
     RolesComponent,
     StudyGroupsComponent,
     StudentProfilesComponent,
+    TeacherProfilesComponent,
   ],
     imports: [
         BrowserModule,
