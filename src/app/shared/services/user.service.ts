@@ -35,7 +35,7 @@ export class UserService {
     return this.httpClient.get<UserDetails>(this.api.users + '/currentUser');
   }
 
-  getFilteredEmails(searchTerm?: string, userType?: UserType): Observable<string>{
+  getFilteredEmails(searchTerm?: string, userType?: UserType): Observable<string[]>{
     let params = new HttpParams();
     if (searchTerm) {
       params = params.set('searchTerm', searchTerm);
@@ -44,6 +44,6 @@ export class UserService {
       params = params.set('userType', userType);
     }
 
-    return this.httpClient.get<string>(this.api.users + '/filteredEmails', {params: params});
+    return this.httpClient.get<string[]>(this.api.users + '/filteredEmails', {params: params});
   }
 }

@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {CommonApiService} from "./common-api.service";
 import {Observable} from "rxjs";
-import {StudyGroupPaged} from "../models/study-group.model";
+import {StudyGroupBasicInfo, StudyGroupPaged} from "../models/study-group.model";
 import {StudyGroupUpsertModel} from "../models/school.model";
 
 @Injectable({
@@ -19,5 +19,9 @@ export class StudyGroupService {
 
   upsert(studyGroup: StudyGroupUpsertModel): Observable<any> {
     return this.httpClient.post(this.api.studyGroups, studyGroup);
+  }
+
+  getAll(): Observable<StudyGroupBasicInfo[]>{
+    return this.httpClient.get<StudyGroupBasicInfo[]>(this.api.studyGroups + '/options')
   }
 }
