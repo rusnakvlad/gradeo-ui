@@ -1,1 +1,72 @@
-<p>teacher-profiles works!</p>
+<p-card>
+  <p-toolbar styleClass="p-mb-4">
+    <ng-template pTemplate="left">
+      <button pButton pRipple label="New" (click)="openNew()" icon="pi pi-plus" class="p-button-success p-mr-2" style="margin-right:10px"></button>
+      <button pButton pRipple label="Delete" (click)="deleteSelected()" icon="pi pi-trash" class="p-button-danger" [disabled]="!selectedTeachers || !selectedTeachers.length"></button>
+    </ng-template>
+  </p-toolbar>
+  <br>
+
+  <p-table [value]="teachers?.items || []"
+           [paginator]="true"
+           [rows]="5"
+           [rowsPerPageOptions]="[5]"
+           [lazy]="true"
+           [loading]="loading"
+           [lazyLoadOnInit]="false"
+           (onLazyLoad)="nextPage($event)"
+           [totalRecords]="teachers?.totalCount || 0"
+           [showCurrentPageReport]=true
+           [(selection)]="selectedTeachers"
+           [rowHover]="true"
+           dataKey="id">
+
+    <ng-template pTemplate="header">
+      <tr>
+        <th style="width: 3rem">
+          <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+        </th>
+        <th pSortableColumn="firstName">First Name</th>
+        <th pSortableColumn="lastName">Last Name</th>
+        <th pSortableColumn="studyGroup">Study Groups</th>
+        <th></th>
+      </tr>
+    </ng-template>
+
+    <ng-template pTemplate="body" let-teacher>
+      <tr>
+        <td>
+          <p-tableCheckbox></p-tableCheckbox>
+        </td>
+        <td>{{teacher.firstName}}</td>
+        <td>{{teacher.lastName}}</td>
+        <td><span *ngFor="let group of teacher.studyGroups; let i = index;" [attr.data-index]="i">{{group.name}}{{i == teacher.studyGroups.length - 1 ? "" : ", "}}</span></td>
+        <td class="flex justify-content-center flex-wrap gap-1">
+          <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success p-mr-2" (click) = "edit(teacher)"></button>
+          <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="deleteSingle(teacher.id)"></button>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</p-card>
+
+<p-dialog [(visible)]="showDialog" [style]="{width: '450px', height:'500px'}" header="Study group details" [modal]="true" styleClass="p-fluid">
+  <ng-template pTemplate="content">
+    <div class="field">
+      <label for="emailOptions">Teacher Email</label>
+      <p-dropdown [options]="userEmailOptions" id="emailOptions" [(ngModel)]="teacher.userEmail" [style]="{'width':'20rem'}"></p-dropdown>
+      <small class="p-error" *ngIf="submitted && !teacher.userEmail">User email required</small>
+    </div>
+
+    <div class="field">
+      <label for="studyGroup">Study Group</label>
+      <p-multiSelect [options]="studyGroupOptions" id="studyGroup" [(ngModel)]="teacher.studyGroupIds" optionLabel="name" optionValue="id" [style]="{'width':'20rem'}"></p-multiSelect>
+      <small class="p-error" *ngIf="submitted && !teacher.studyGroupIds">Study group required</small>
+    </div>
+  </ng-template>
+
+  <ng-template pTemplate="footer">
+    <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
+    <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="saveContent()"></button>
+  </ng-template>
+</p-dialog>
