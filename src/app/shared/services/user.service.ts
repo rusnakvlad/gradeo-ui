@@ -44,6 +44,6 @@ export class UserService {
       params = params.set('userType', userType);
     }
 
-    return this.httpClient.get<string>(this.api.users + '/filteredEmails');
+    return this.httpClient.get<string>(this.api.users + '/filteredEmails', {params: params});
   }
 }
