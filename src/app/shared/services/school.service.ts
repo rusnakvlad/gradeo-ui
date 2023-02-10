@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
-import {SchoolBasicInfo, SchoolInfo, SchoolInfoPaged} from "../models/school.model";
+import {SchoolBasicInfo, SchoolInfo, SchoolInfoPaged, SchoolProfile} from "../models/school.model";
 import {CommonApiService} from "./common-api.service";
 
 @Injectable({
@@ -31,5 +31,9 @@ export class SchoolService {
 
   getAll(): Observable<SchoolBasicInfo[]> {
     return this.httpClient.get<SchoolBasicInfo[]>(this.commonApi.schools + '/all');
+  }
+
+  getSchoolProfile():Observable<SchoolProfile>{
+    return this.httpClient.get<SchoolProfile>(this.commonApi.schools + '/profile')
   }
 }

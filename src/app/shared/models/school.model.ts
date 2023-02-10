@@ -21,3 +21,12 @@ export type StudyGroupUpsertModel = {
   name: string,
   subjectIds: number[]
 }
+
+export type SchoolProfile = {
+  id: number,
+  name: string,
+  country: string,
+  city: string,
+  teachersCount: number,
+  studentsCount: number
+}

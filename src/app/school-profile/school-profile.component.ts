@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {SchoolService} from "../shared/services/school.service";
+import {SchoolProfile} from "../shared/models/school.model";
 
 @Component({
   selector: 'app-school-profile',
@@ -7,9 +9,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SchoolProfileComponent implements OnInit {
 
-  constructor() { }
+  school: SchoolProfile;
+  constructor(private schoolService: SchoolService) { }
 
   ngOnInit(): void {
+    this.schoolService.getSchoolProfile().subscribe(response => {
+      this.school = response;
+    })
   }
 
 }
