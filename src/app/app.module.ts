@@ -50,6 +50,8 @@ import { TeacherProfilesComponent } from './teacher-profiles/teacher-profiles.co
 import { SchoolProfileComponent } from './school-profile/school-profile.component';
 import {InputSwitchModule} from "primeng/inputswitch";
 import { StudentProfileComponent } from './student-profile/student-profile.component';
+import { TeacherProfileComponent } from './teacher-profile/teacher-profile.component';
+import {ChipModule} from "primeng/chip";
 
 export function MSALInstanceFactory(): IPublicClientApplication {
   return new PublicClientApplication(msalConfig);
@@ -99,6 +101,7 @@ export function MSALGuardConfigFactory(): MsalGuardConfiguration {
     TeacherProfilesComponent,
     SchoolProfileComponent,
     StudentProfileComponent,
+    TeacherProfileComponent,
   ],
   imports: [
     BrowserModule,
@@ -126,6 +129,7 @@ export function MSALGuardConfigFactory(): MsalGuardConfiguration {
     MultiSelectModule,
     ProgressSpinnerModule,
     InputSwitchModule,
+    ChipModule,
   ],
   providers: [
     {

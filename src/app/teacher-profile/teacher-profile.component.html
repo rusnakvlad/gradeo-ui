@@ -1,0 +1,18 @@
+<p-card>
+  <div class="flex align-items-stretch gap-2">
+    <h2>First Name:</h2>
+    <h2 class="text-primary">{{teacher?.firstName}}</h2>
+  </div>
+
+  <div class="flex align-items-stretch gap-2">
+    <h2>Last Name:</h2>
+    <h2 class="text-primary">{{teacher?.lastName}}</h2>
+  </div>
+
+  <div class="flex align-items-stretch gap-2">
+    <h2>Study Group:</h2>
+    <h2 class="text-primary"><p-chip styleClass="mr-2 custom-chip" *ngFor="let studyGroup of teacher?.studyGroups let i = index;" [attr.data-index]="i">{{studyGroup.name}}</p-chip></h2>
+  </div>
+
+</p-card>
+

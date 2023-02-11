@@ -13,6 +13,7 @@ import {StudentProfilesComponent} from "./student-profiles/student-profiles.comp
 import {TeacherProfilesComponent} from "./teacher-profiles/teacher-profiles.component";
 import {SchoolProfileComponent} from "./school-profile/school-profile.component";
 import {StudentProfileComponent} from "./student-profile/student-profile.component";
+import {TeacherProfileComponent} from "./teacher-profile/teacher-profile.component";
 
 const routes: Routes = [
   {
@@ -51,6 +52,11 @@ const routes: Routes = [
       {
         path: 'teachers',
         component: TeacherProfilesComponent,
+        canActivate: [MsalGuard]
+      },
+      {
+        path: 'teacherProfile',
+        component: TeacherProfileComponent,
         canActivate: [MsalGuard]
       },
       {
