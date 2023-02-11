@@ -49,6 +49,7 @@ import { StudentProfilesComponent } from './student-profiles/student-profiles.co
 import { TeacherProfilesComponent } from './teacher-profiles/teacher-profiles.component';
 import { SchoolProfileComponent } from './school-profile/school-profile.component';
 import {InputSwitchModule} from "primeng/inputswitch";
+import { StudentProfileComponent } from './student-profile/student-profile.component';
 
 export function MSALInstanceFactory(): IPublicClientApplication {
   return new PublicClientApplication(msalConfig);
@@ -97,6 +98,7 @@ export function MSALGuardConfigFactory(): MsalGuardConfiguration {
     StudentProfilesComponent,
     TeacherProfilesComponent,
     SchoolProfileComponent,
+    StudentProfileComponent,
   ],
   imports: [
     BrowserModule,
