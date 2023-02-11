@@ -9,7 +9,7 @@ import {SchoolProfile} from "../shared/models/school.model";
 })
 export class SchoolProfileComponent implements OnInit {
 
-  school: SchoolProfile;
+  school?: SchoolProfile;
   constructor(private schoolService: SchoolService) { }
 
   ngOnInit(): void {
