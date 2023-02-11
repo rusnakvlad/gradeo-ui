@@ -54,7 +54,7 @@
   <ng-template pTemplate="content">
     <div class="field">
       <label for="emailOptions">Teacher Email</label>
-      <p-dropdown [options]="userEmailOptions" id="emailOptions" [(ngModel)]="teacher.userEmail" [style]="{'width':'20rem'}"></p-dropdown>
+      <p-dropdown [disabled]="isEditMode" [options]="userEmailOptions" id="emailOptions" [(ngModel)]="teacher.userEmail" [style]="{'width':'20rem'}" (onHide)="hideDialog()"></p-dropdown>
       <small class="p-error" *ngIf="submitted && !teacher.userEmail">User email required</small>
     </div>
 
