@@ -34,7 +34,11 @@ export class RoleService {
     });
   }
 
-  create(role: RoleUpsertModel): Observable<any> {
+  upsert(role: RoleUpsertModel): Observable<any> {
     return this.httpClient.post(this.commonApi.roles, role);
+  }
+
+  delete(id: number): Observable<any> {
+    return this.httpClient.delete(this.commonApi.roles + '/' + id);
   }
 }

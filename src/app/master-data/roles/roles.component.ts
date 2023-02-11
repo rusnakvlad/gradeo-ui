@@ -16,6 +16,7 @@ import {PopupService} from "../../shared/services/popup.service";
 import {Permission} from "../../shared/models/permission.model";
 import {UserService} from "../../shared/services/user.service";
 import {UserDetails} from "../../shared/models/user.model";
+import {SpinnerService} from "../../shared/services/spinner.service";
 
 @Component({
   selector: 'app-roles',
@@ -34,14 +35,14 @@ export class RolesComponent implements OnInit {
   selectedSchoolId?: number;
   schoolsOptions: SchoolBasicInfo[];
   permissionOptions: Permission[];
-  selectedPermissions: number[];
   currentUser: UserDetails;
 
   constructor(private roleService: RoleService,
               private permissionService: PermissionService,
               private schoolService: SchoolService,
               private popupService: PopupService,
-              private userService: UserService) {
+              private userService: UserService,
+              private spinner: SpinnerService) {
   }
 
 
@@ -53,7 +54,7 @@ export class RolesComponent implements OnInit {
   setCurrentUser() {
     this.userService.getCurrentUser().subscribe(response => {
       this.currentUser = response;
-      if(this.currentUser.systemType == 1){
+      if (this.currentUser.systemType == 1) {
         this.retrieveSchools();
       }
     })
@@ -74,11 +75,13 @@ export class RolesComponent implements OnInit {
   }
 
   deleteSingle(id: number) {
-
-  }
-
-  deleteSelected() {
-
+    this.roleService.delete(id).subscribe(response => {
+      this.popupService.success();
+      this.refreshGrid(DefaultPageNumber, DefaultPageSize);
+    },
+      error => {
+      this.popupService.error();
+      })
   }
 
 
@@ -99,17 +102,19 @@ export class RolesComponent implements OnInit {
   }
 
   saveContent() {
-    if (!this.role.id) {
-      this.role.permissions = this.selectedPermissions;
-      this.role.businessUnitId = this.selectedSchoolId;
-      this.roleService.create(this.role).subscribe(response => {
-          this.popupService.success('Role Created');
-          this.refreshGrid(DefaultPageNumber, DefaultPageSize);
-        },
-        error => {
-          this.popupService.error('Role was not created');
-        })
-    }
+    this.role.businessUnitId = this.selectedSchoolId;
+    this.spinner.show();
+    this.roleService.upsert(this.role).subscribe(response => {
+        this.popupService.success();
+        this.spinner.hide();
+        this.hideDialog();
+        this.refreshGrid(DefaultPageNumber, DefaultPageSize);
+      },
+      error => {
+        this.spinner.hide();
+        this.hideDialog();
+        this.popupService.error();
+      })
   }
 
   nextPage(event: LazyLoadEvent) {

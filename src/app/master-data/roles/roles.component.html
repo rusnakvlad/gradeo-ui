@@ -2,7 +2,6 @@
   <p-toolbar styleClass="p-mb-4">
     <ng-template pTemplate="left">
       <button pButton pRipple label="New" (click)="openNew()" icon="pi pi-plus" class="p-button-success p-mr-2" style="margin-right:10px"></button>
-      <button pButton pRipple label="Delete" (click)="deleteSelected()" icon="pi pi-trash" class="p-button-danger" [disabled]="!selectedRoles || !selectedRoles.length"></button>
     </ng-template>
   </p-toolbar>
   <br>
@@ -33,9 +32,6 @@
 
     <ng-template pTemplate="header">
       <tr>
-        <th style="width: 3rem">
-          <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
-        </th>
         <th pSortableColumn="name">Role Name</th>
         <th></th>
       </tr>
@@ -43,9 +39,6 @@
 
     <ng-template pTemplate="body" let-role>
       <tr>
-        <td>
-          <p-tableCheckbox [disabled]="role.isDefault" [value]="role"></p-tableCheckbox>
-        </td>
         <td>{{role.roleName}}</td>
         <td class="flex justify-content-center flex-wrap gap-1">
           <button [disabled]="role.isDefault" pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success p-mr-2" (click) = "edit(role)"></button>
@@ -60,7 +53,7 @@
   <ng-template pTemplate="content">
     <div class="field">
       <label for="permission">Permissions</label>
-      <p-multiSelect id="permission" [options]="permissionOptions" [(ngModel)]="selectedPermissions" defaultLabel="Select Permissions" optionLabel="name" optionValue="permissionId"></p-multiSelect>
+      <p-multiSelect id="permission" [options]="permissionOptions" [(ngModel)]="this.role.permissions" defaultLabel="Select Permissions" optionLabel="name" optionValue="permissionId"></p-multiSelect>
       <small class="p-error" *ngIf="submitted && !role.roleName">Name is required.</small>
     </div>
     <div class="field">
