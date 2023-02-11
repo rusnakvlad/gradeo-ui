@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {StudentProfile, StudentProfileCreateModel, StudentProfilePaged} from "../shared/models/student-profile.model";
+import {StudentProfile, StudentProfileUpsertModel, StudentProfilePaged} from "../shared/models/student-profile.model";
 import {PopupService} from "../shared/services/popup.service";
 import {StudentProfileService} from "../shared/services/student-profile.service";
 import {DefaultPageNumber, DefaultPageSize} from "../shared/models/pagination.model";
@@ -17,7 +17,7 @@ import {SpinnerService} from "../shared/services/spinner.service";
 })
 export class StudentProfilesComponent implements OnInit {
 
-  student: StudentProfileCreateModel;
+  student: StudentProfileUpsertModel;
   students?: StudentProfilePaged;
   selectedStudents: StudentProfile[] = [];
   showDialog: boolean = false;
@@ -25,6 +25,7 @@ export class StudentProfilesComponent implements OnInit {
   loading: boolean = false;
   studyGroupOptions: StudyGroupBasicInfo[];
   userEmailOptions: string[];
+  isEditMode: boolean;
 
   constructor(private popupService: PopupService,
               private studentService: StudentProfileService,
@@ -39,13 +40,15 @@ export class StudentProfilesComponent implements OnInit {
   openNew() {
     this.retrieveStudyGroups();
     this.getStudentsEmails();
-    this.student = {} as StudentProfileCreateModel;
+    this.student = {} as StudentProfileUpsertModel;
     this.showDialog = true;
   }
 
   edit(studentProfile: StudentProfile) {
-    this.student.studyGroupId = studentProfile.studyGroups[0].id;
+    this.isEditMode=true;
     this.openNew();
+    this.student.studyGroupId = studentProfile.studyGroups[0].id;
+    this.student.id = studentProfile.id;
   }
 
   deleteSingle(id: number) {
@@ -70,15 +73,16 @@ export class StudentProfilesComponent implements OnInit {
 
   hideDialog() {
     this.showDialog = false;
+    this.isEditMode = false;
     this.submitted = false;
   }
 
   saveContent() {
     this.spinner.show();
-    this.studentService.create(this.student).subscribe(response => {
+    this.studentService.upsert(this.student).subscribe(response => {
         this.popupService.success('Student Profile Created');
         this.refreshGrid(DefaultPageNumber, DefaultPageSize);
-        this.showDialog=false;
+        this.hideDialog();
         this.spinner.hide();
       },
       error => {

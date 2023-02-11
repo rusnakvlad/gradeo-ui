@@ -2,7 +2,7 @@ import {StudyGroupBasicInfo} from "./study-group.model";
 import {PaginationModel} from "./pagination.model";
 
 export type StudentProfile = {
-  id: string,
+  id: number,
   firstName: string
   lastName: string,
   email: string,
@@ -13,7 +13,8 @@ export type StudentProfilePaged = {
   items:StudentProfile[]
 } & PaginationModel
 
-export type StudentProfileCreateModel = {
+export type StudentProfileUpsertModel = {
+  id?:number,
   userEmail: string,
   studyGroupId: number
 }
