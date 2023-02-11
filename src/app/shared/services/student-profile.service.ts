@@ -3,6 +3,7 @@ import {HttpClient} from "@angular/common/http";
 import {CommonApiService} from "./common-api.service";
 import {Observable} from "rxjs";
 import {
+  StudentProfile,
   StudentProfilePaged,
   StudentProfileUpsertModel
 } from "../models/student-profile.model";
@@ -21,5 +22,9 @@ export class StudentProfileService {
 
   upsert(studentProfile: StudentProfileUpsertModel): Observable<any> {
     return this.httpClient.post(this.api.studentProfiles, studentProfile);
+  }
+
+  getProfile(): Observable<StudentProfile>{
+    return this.httpClient.get<StudentProfile>(this.api.studentProfiles + '/profile');
   }
 }

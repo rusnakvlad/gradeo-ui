@@ -1,1 +1,18 @@
-<p>student-profile works!</p>
+<p-card>
+  <div class="flex align-items-stretch gap-2">
+    <h2>First Name:</h2>
+    <h2 class="text-primary">{{student?.firstName}}</h2>
+  </div>
+
+  <div class="flex align-items-stretch gap-2">
+    <h2>Last Name:</h2>
+    <h2 class="text-primary">{{student?.firstName}}</h2>
+  </div>
+
+  <div class="flex align-items-stretch gap-2">
+    <h2>Study Group:</h2>
+    <h2 class="text-primary"><span *ngFor="let studyGroup of student?.studyGroups">{{studyGroup.name}}</span></h2>
+  </div>
+
+</p-card>
+
