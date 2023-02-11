@@ -23,4 +23,7 @@ export class MenuService {
     });
   }
 
+  public getAdminDataTabs(): Observable<MenuItemModel[]> {
+    return this.httpClient.get<MenuItemModel[]>(this.commonApi.menuItems + '/adminData');
+  }
 }
