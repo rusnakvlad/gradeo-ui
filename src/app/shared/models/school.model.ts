@@ -19,6 +19,7 @@ export type SchoolInfoPaged = {
 export type StudyGroupUpsertModel = {
   id?: number,
   name: string,
+  isActive: boolean,
   subjectIds: number[]
 }
 

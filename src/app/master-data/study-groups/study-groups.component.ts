@@ -9,6 +9,7 @@ import {DefaultPageNumber, DefaultPageSize} from "../../shared/models/pagination
 import {LazyLoadEvent} from "primeng/api";
 import {MasterSubjectService} from "../../shared/services/master-subject.service";
 import {StudyGroupUpsertModel} from "../../shared/models/school.model";
+import {SpinnerService} from "../../shared/services/spinner.service";
 
 @Component({
   selector: 'app-study-groups',
@@ -31,7 +32,8 @@ export class StudyGroupsComponent implements OnInit {
   constructor( private popupService: PopupService,
                private userService: UserService,
                private masterSubjectService: MasterSubjectService,
-               private studyGroupService: StudyGroupService) { }
+               private studyGroupService: StudyGroupService,
+               private spinner: SpinnerService) { }
 
   ngOnInit(): void {
     this.refreshGrid(DefaultPageNumber, DefaultPageSize)
@@ -46,7 +48,8 @@ export class StudyGroupsComponent implements OnInit {
   edit(studyGroup: StudyGroup) {
     this.selectedSubjects = studyGroup.subjects.map(x => x.id);
     this.openNew();
-    this.studyGroup.id = studyGroup.id,
+    this.studyGroup.id = studyGroup.id;
+    this.studyGroup.isActive = studyGroup.isActive;
     this.studyGroup.name = studyGroup.name;
     this.studyGroup.subjectIds = studyGroup.subjects.map(x => x.id);
   }
@@ -77,13 +80,18 @@ export class StudyGroupsComponent implements OnInit {
   }
 
   saveContent() {
+    this.spinner.show();
       this.studyGroup.subjectIds = this.selectedSubjects;
       this.studyGroupService.upsert(this.studyGroup).subscribe(response => {
           this.popupService.success('Study Group Created');
           this.refreshGrid(DefaultPageNumber, DefaultPageSize);
+          this.spinner.hide();
+          this.hideDialog();
         },
         error => {
           this.popupService.error('Study Group was not created');
+          this.hideDialog();
+          this.spinner.hide();
         })
 
   }

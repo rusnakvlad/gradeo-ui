@@ -64,6 +64,10 @@
       <input type="text" pInputText id="groupName" [(ngModel)]="studyGroup.name" required autofocus />
       <small class="p-error" *ngIf="submitted && !studyGroup.name">Name is required.</small>
     </div>
+    <div class="flex align-items-stretch flex-wrap">
+      <label for="isActive">Is Active:</label>
+      <p-inputSwitch id="isActive" [(ngModel)]="studyGroup.isActive" style="margin-left: 2px"></p-inputSwitch>
+    </div>
   </ng-template>
 
   <ng-template pTemplate="footer">

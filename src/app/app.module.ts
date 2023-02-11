@@ -48,6 +48,7 @@ import {ProgressSpinnerModule} from "primeng/progressspinner";
 import { StudentProfilesComponent } from './student-profiles/student-profiles.component';
 import { TeacherProfilesComponent } from './teacher-profiles/teacher-profiles.component';
 import { SchoolProfileComponent } from './school-profile/school-profile.component';
+import {InputSwitchModule} from "primeng/inputswitch";
 
 export function MSALInstanceFactory(): IPublicClientApplication {
   return new PublicClientApplication(msalConfig);
@@ -97,32 +98,33 @@ export function MSALGuardConfigFactory(): MsalGuardConfiguration {
     TeacherProfilesComponent,
     SchoolProfileComponent,
   ],
-    imports: [
-        BrowserModule,
-        AppRoutingModule,
-        HttpClientModule,
-        BrowserAnimationsModule,
-        SidebarModule,
-        ButtonModule,
-        MenubarModule,
-        DropdownModule,
-        FormsModule,
-        MenuModule,
-        TieredMenuModule,
-        TableModule,
-        ToastModule,
-        ToolbarModule,
-        FileUploadModule,
-        CardModule,
-        InputTextModule,
-        RippleModule,
-        MsalModule,
-        DialogModule,
-        ConfirmDialogModule,
-        TabMenuModule,
-        MultiSelectModule,
-        ProgressSpinnerModule,
-    ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    HttpClientModule,
+    BrowserAnimationsModule,
+    SidebarModule,
+    ButtonModule,
+    MenubarModule,
+    DropdownModule,
+    FormsModule,
+    MenuModule,
+    TieredMenuModule,
+    TableModule,
+    ToastModule,
+    ToolbarModule,
+    FileUploadModule,
+    CardModule,
+    InputTextModule,
+    RippleModule,
+    MsalModule,
+    DialogModule,
+    ConfirmDialogModule,
+    TabMenuModule,
+    MultiSelectModule,
+    ProgressSpinnerModule,
+    InputSwitchModule,
+  ],
   providers: [
     {
       provide: HTTP_INTERCEPTORS,

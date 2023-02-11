@@ -4,6 +4,7 @@ import {PaginationModel} from "./pagination.model";
 export type StudyGroup = {
   id: number,
   name: string,
+  isActive: boolean,
   subjects: MasterSubject[]
 }
 
