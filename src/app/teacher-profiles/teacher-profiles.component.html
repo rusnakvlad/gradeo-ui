@@ -50,18 +50,24 @@
   </p-table>
 </p-card>
 
-<p-dialog [(visible)]="showDialog" [style]="{width: '450px', height:'500px'}" header="Study group details" [modal]="true" styleClass="p-fluid" (onHide)="hideDialog()">
+<p-dialog [(visible)]="showDialog" [style]="{width: '450px', height:'700px'}" header="Study group details" [modal]="true" styleClass="p-fluid" (onHide)="hideDialog()">
   <ng-template pTemplate="content">
     <div class="field">
       <label for="emailOptions">Teacher Email</label>
-      <p-dropdown [disabled]="isEditMode" [options]="userEmailOptions" id="emailOptions" [(ngModel)]="teacher.userEmail" [style]="{'width':'20rem'}"></p-dropdown>
+      <p-dropdown [disabled]="isEditMode" [options]="userEmailOptions" id="emailOptions" [(ngModel)]="teacher.userEmail"></p-dropdown>
       <small class="p-error" *ngIf="submitted && !teacher.userEmail">User email required</small>
     </div>
 
     <div class="field">
       <label for="studyGroup">Study Group</label>
-      <p-multiSelect [options]="studyGroupOptions" id="studyGroup" [(ngModel)]="teacher.studyGroupIds" optionLabel="name" optionValue="id" [style]="{'width':'20rem'}"></p-multiSelect>
+      <p-multiSelect [options]="studyGroupOptions" id="studyGroup" [(ngModel)]="teacher.studyGroupIds" optionLabel="name" optionValue="id"></p-multiSelect>
       <small class="p-error" *ngIf="submitted && !teacher.studyGroupIds">Study group required</small>
+    </div>
+
+    <div class="field">
+      <label for="subjects">Subjects</label>
+      <p-multiSelect [options]="subjectOptions" id="subjects" [(ngModel)]="teacher.subjectIds" optionLabel="name" optionValue="id"></p-multiSelect>
+      <small class="p-error" *ngIf="submitted && !teacher.subjectIds">Subject required</small>
     </div>
   </ng-template>
 

@@ -9,6 +9,8 @@ import {LazyLoadEvent} from "primeng/api";
 import {UserType} from "../shared/enums/user-type";
 import {TeacherProfile, TeacherProfileUpsertModel, TeacherProfilePaged} from "../shared/models/teacher-profile.model";
 import {TeacherProfileService} from "../shared/services/teacher-profile.service";
+import {MasterSubject} from "../shared/models/subject.model";
+import {MasterSubjectService} from "../shared/services/master-subject.service";
 
 @Component({
   selector: 'app-teacher-profiles',
@@ -24,12 +26,14 @@ export class TeacherProfilesComponent implements OnInit {
   submitted: boolean = false;
   loading: boolean = false;
   studyGroupOptions: StudyGroupBasicInfo[];
+  subjectOptions: MasterSubject[];
   userEmailOptions: string[];
   isEditMode: boolean = false;
 
   constructor(private popupService: PopupService,
               private teacherService: TeacherProfileService,
               private studyGroupService: StudyGroupService,
+              private masterSubjectService: MasterSubjectService,
               private userService: UserService,
               private spinner: SpinnerService) {
   }
@@ -40,6 +44,7 @@ export class TeacherProfilesComponent implements OnInit {
 
   openNew() {
     this.retrieveStudyGroups();
+    this.retrieveMasterSubjects();
     this.getTeachersEmails();
     this.teacher = {} as TeacherProfileUpsertModel;
     this.showDialog = true;
@@ -49,6 +54,7 @@ export class TeacherProfilesComponent implements OnInit {
     this.openNew();
     this.isEditMode = true;
     this.teacher.studyGroupIds = teacherProfile.studyGroups.map(x => x.id);
+    this.teacher.subjectIds = teacherProfile.subjects.map(x => x.id);
     this.teacher.id = teacherProfile.id;
   }
 
@@ -108,6 +114,12 @@ export class TeacherProfilesComponent implements OnInit {
   retrieveStudyGroups() {
     this.studyGroupService.getAll().subscribe(response => {
       this.studyGroupOptions = response;
+    })
+  }
+
+  retrieveMasterSubjects() {
+    this.masterSubjectService.get().subscribe(response => {
+      this.subjectOptions = response;
     })
   }
 
