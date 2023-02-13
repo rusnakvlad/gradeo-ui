@@ -6,3 +6,11 @@ export type Grade = {
   studentId: number,
   date: string
 }
+
+
+export type StudentWithGrades = {
+  studentId: number,
+  studentFirstName: string,
+  studentLastName: string
+  grades: Grade[]
+}

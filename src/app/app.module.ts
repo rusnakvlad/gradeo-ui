@@ -55,6 +55,7 @@ import {ChipModule} from "primeng/chip";
 import { StudentGradesComponent } from './student-grades/student-grades.component';
 import { FullCalendarModule } from '@fullcalendar/angular';
 import { StudentsGradesComponent } from './students-grades/students-grades.component';
+import {CalendarModule} from "primeng/calendar";
 
 export function MSALInstanceFactory(): IPublicClientApplication {
   return new PublicClientApplication(msalConfig);
@@ -135,7 +136,8 @@ export function MSALGuardConfigFactory(): MsalGuardConfiguration {
     ProgressSpinnerModule,
     InputSwitchModule,
     ChipModule,
-    FullCalendarModule
+    FullCalendarModule,
+    CalendarModule
   ],
   providers: [
     {

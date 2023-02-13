@@ -1,1 +1,44 @@
-<p>students-grades works!</p>
+<p-card>
+  <p-table
+    [value]="studentWithGrades"
+    [scrollable]="true"
+    [columns]="cols"
+    styleClass="p-datatable-gridlines"
+  >
+    <ng-template pTemplate="caption">
+      <div class="field col-12 md:col-4">
+        <p-calendar [(ngModel)]="minDate" [defaultDate]="minDate" id="minDate" placeholder="From" [showIcon]="true"
+                    (onSelect)="changeRange()" dateFormat="yy-mm-dd"></p-calendar>
+        -
+        <p-calendar [(ngModel)]="maxDate" [defaultDate]="maxDate" id="maxDate" placeholder="To" [showIcon]="true"
+                    (onSelect)="changeRange()" dateFormat="yy-mm-dd"></p-calendar>
+      </div>
+    </ng-template>
+
+    <ng-template pTemplate="header" let-columns>
+      <tr>
+        <th *ngFor="let col of columns">
+          {{ col.header }}
+        </th>
+      </tr>
+    </ng-template>
+
+    <ng-template pTemplate="body"
+                 let-student>
+      <tr>
+        <td>
+          {{ student.studentFirstName + ' ' + student.studentLastName }}
+        </td>
+        <td *ngFor="let date of daysRange"
+            (click)="createGrade(student.studentId,10,date)">
+          {{getStudentGradeForDate(student.grades, date)}}
+          <i *ngIf="getStudentGradeForDate(student.grades, date) else createGradeBlock" class="pi pi-pencil"
+             style="color: lightskyblue; cursor: pointer"></i>
+          <ng-template #createGradeBlock>
+            <i class="pi pi-plus-circle" style="color: lightskyblue; cursor: pointer"></i>
+          </ng-template>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</p-card>
