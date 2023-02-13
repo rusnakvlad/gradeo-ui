@@ -51,11 +51,15 @@ export class TeacherProfilesComponent implements OnInit {
   }
 
   edit(teacherProfile: TeacherProfile) {
-    this.openNew();
+    this.retrieveStudyGroups();
+    this.retrieveMasterSubjects();
     this.isEditMode = true;
+    this.teacher = {} as TeacherProfileUpsertModel;
+    this.teacher.userEmail = teacherProfile.email;
     this.teacher.studyGroupIds = teacherProfile.studyGroups.map(x => x.id);
     this.teacher.subjectIds = teacherProfile.subjects.map(x => x.id);
     this.teacher.id = teacherProfile.id;
+    this.showDialog = true;
   }
 
   deleteSingle(id: number) {

@@ -52,7 +52,13 @@
 
 <p-dialog [(visible)]="showDialog" [style]="{width: '450px', height:'700px'}" header="Study group details" [modal]="true" styleClass="p-fluid" (onHide)="hideDialog()">
   <ng-template pTemplate="content">
-    <div class="field">
+
+    <div class="field" *ngIf="isEditMode">
+      <label for="email">Teacher Email</label>
+      <input disabled type="text" pInputText id="email" [(ngModel)]="teacher.userEmail" />
+    </div>
+
+    <div class="field" *ngIf="isEditMode == false">
       <label for="emailOptions">Teacher Email</label>
       <p-dropdown [disabled]="isEditMode" [options]="userEmailOptions" id="emailOptions" [(ngModel)]="teacher.userEmail"></p-dropdown>
       <small class="p-error" *ngIf="submitted && !teacher.userEmail">User email required</small>

@@ -46,9 +46,12 @@ export class StudentProfilesComponent implements OnInit {
 
   edit(studentProfile: StudentProfile) {
     this.isEditMode=true;
-    this.openNew();
+    this.student = {} as StudentProfileUpsertModel;
+    this.student.userEmail = studentProfile.email;
     this.student.studyGroupId = studentProfile.studyGroups[0].id;
     this.student.id = studentProfile.id;
+    this.retrieveStudyGroups();
+    this.showDialog = true;
   }
 
   deleteSingle(id: number) {

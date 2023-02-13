@@ -45,15 +45,21 @@
 
 <p-dialog [(visible)]="showDialog" [style]="{width: '450px', height:'500px'}" header="Study group details" [modal]="true" styleClass="p-fluid" (onHide)="hideDialog()">
   <ng-template pTemplate="content">
-    <div class="field">
+
+    <div class="field" *ngIf="isEditMode">
+      <label for="email">Student Email</label>
+      <input disabled type="text" pInputText id="email" [(ngModel)]="student.userEmail" />
+    </div>
+
+    <div class="field" *ngIf="isEditMode == false">
       <label for="emailOptions">Student Email</label>
-      <p-dropdown [disabled]="isEditMode" [options]="userEmailOptions" id="emailOptions" [(ngModel)]="student.userEmail" [style]="{'width':'20rem'}"></p-dropdown>
+      <p-dropdown [disabled]="isEditMode" [options]="userEmailOptions" id="emailOptions" [(ngModel)]="student.userEmail"></p-dropdown>
       <small class="p-error" *ngIf="submitted && !student.userEmail">User email required</small>
     </div>
 
     <div class="field">
       <label for="studyGroup">Study Group</label>
-      <p-dropdown [options]="studyGroupOptions" id="studyGroup" [(ngModel)]="student.studyGroupId" optionLabel="name" optionValue="id" [style]="{'width':'20rem'}"></p-dropdown>
+      <p-dropdown [options]="studyGroupOptions" id="studyGroup" [(ngModel)]="student.studyGroupId" optionLabel="name" optionValue="id"></p-dropdown>
       <small class="p-error" *ngIf="submitted && !student.studyGroupId">Study group required</small>
     </div>
   </ng-template>
