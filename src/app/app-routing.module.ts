@@ -15,6 +15,7 @@ import {SchoolProfileComponent} from "./school-profile/school-profile.component"
 import {StudentProfileComponent} from "./student-profile/student-profile.component";
 import {TeacherProfileComponent} from "./teacher-profile/teacher-profile.component";
 import {StudentGradesComponent} from "./student-grades/student-grades.component";
+import {StudentsGradesComponent} from "./students-grades/students-grades.component";
 
 const routes: Routes = [
   {
@@ -43,6 +44,11 @@ const routes: Routes = [
       {
         path: 'myGrades',
         component: StudentGradesComponent,
+        canActivate: [MsalGuard]
+      },
+      {
+        path: 'studentsGrades',
+        component: StudentsGradesComponent,
         canActivate: [MsalGuard]
       },
       {

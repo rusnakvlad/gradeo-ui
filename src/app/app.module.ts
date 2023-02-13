@@ -54,6 +54,7 @@ import { TeacherProfileComponent } from './teacher-profile/teacher-profile.compo
 import {ChipModule} from "primeng/chip";
 import { StudentGradesComponent } from './student-grades/student-grades.component';
 import { FullCalendarModule } from '@fullcalendar/angular';
+import { StudentsGradesComponent } from './students-grades/students-grades.component';
 
 export function MSALInstanceFactory(): IPublicClientApplication {
   return new PublicClientApplication(msalConfig);
@@ -105,6 +106,7 @@ export function MSALGuardConfigFactory(): MsalGuardConfiguration {
     StudentProfileComponent,
     TeacherProfileComponent,
     StudentGradesComponent,
+    StudentsGradesComponent,
   ],
   imports: [
     BrowserModule,
