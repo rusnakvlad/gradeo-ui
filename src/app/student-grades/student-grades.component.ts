@@ -1,6 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {CalendarOptions} from "@fullcalendar/core";
 import dayGridPlugin from '@fullcalendar/daygrid';
+import {GradeService} from "../shared/services/grade.service";
+import {formatDate} from "@angular/common";
+import {SpinnerService} from "../shared/services/spinner.service";
 
 @Component({
   selector: 'app-student-grades',
@@ -10,20 +13,31 @@ import dayGridPlugin from '@fullcalendar/daygrid';
 export class StudentGradesComponent implements OnInit {
 
   calendarOptions: CalendarOptions;
-  constructor() { }
+  events: { title: string, date: string }[]
 
-  ngOnInit(): void {
-    this.calendarOptions = {
-      plugins: [dayGridPlugin],
-      events:[
-        {
-          title: 'Math - 12', date:'2023-02-13',
-        },
-        {
-          title: 'Math - 12', date:'2023-02-13',
-        }
-      ]
-    };
+  constructor(private gradeService: GradeService, private spinner: SpinnerService) {
   }
 
+  ngOnInit(): void {
+
+    this.calendarOptions = {
+      plugins: [dayGridPlugin]
+    };
+
+    this.spinner.show();
+    this.gradeService.getStudentGrades().subscribe(response => {
+        console.log(response);
+        this.events = response.map(x => {
+          return {
+            title: x.subjectName + ' - ' + x.grade,
+            date: x.date.substring(0, 10)
+          }
+        });
+        this.calendarOptions.events = this.events
+        this.spinner.hide();
+      },
+      error => {
+        this.spinner.hide();
+      })
+  }
 }

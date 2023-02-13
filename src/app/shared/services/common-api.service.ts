@@ -17,6 +17,7 @@ export class CommonApiService {
   studyGroups: string = this.url + '/api/studyGroups'
   studentProfiles: string = this.url + '/api/studentProfiles'
   teacherProfiles: string = this.url + '/api/teacherProfiles'
+  grades: string = this.url + '/api/grades'
 
   constructor() {
   }
