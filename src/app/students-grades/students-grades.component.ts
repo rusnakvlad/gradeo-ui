@@ -1,6 +1,18 @@
 import {Component, OnInit} from '@angular/core';
-import {Grade, GradeCreateModel, GradeUpdateModel, StudentWithGrades} from "../shared/models/grade.model";
+import {
+  Grade,
+  GradeCreateModel,
+  GradeFilterModel,
+  GradeUpdateModel,
+  StudentWithGrades
+} from "../shared/models/grade.model";
 import {CalendarModule} from "primeng/calendar";
+import {GradeService} from "../shared/services/grade.service";
+import {StudyGroupBasicInfo} from "../shared/models/study-group.model";
+import {MasterSubject} from "../shared/models/subject.model";
+import {MasterSubjectService} from "../shared/services/master-subject.service";
+import {StudyGroupService} from "../shared/services/study-group.service";
+import {SpinnerService} from "../shared/services/spinner.service";
 
 @Component({
   selector: 'app-students-grades',
@@ -18,54 +30,25 @@ export class StudentsGradesComponent implements OnInit {
   daysRange: string[];
   showDialog: boolean = false;
   submitted: boolean = false;
-  studentWithGrades: StudentWithGrades[] = [
-    {
-      studentId: 1,
-      studentFirstName: "Jon",
-      studentLastName: "Brox",
-      grades: [{
-        id: '2aeeeead-334343-dfdgadss-444ggfdfd',
-        grade: 12,
-        subjectName: 'Math',
-        subjectId: 1,
-        date: '2023-02-13',
-        studentId: 1,
+  studyGroupOptions: StudyGroupBasicInfo[];
+  subjectOptions: MasterSubject[];
+  selectedGroupId: number;
+  selectedSubjectId: number;
 
-      },
-        {
-          id: '2aeeeead-334343-dfdg444s-444ggfdfd',
-          grade: 12,
-          subjectName: 'PE',
-          subjectId: 1,
-          date: '2023-02-14',
-          studentId: 1,
-
-        }]
-    },
-    {
-      studentId: 1,
-      studentFirstName: "Jon",
-      studentLastName: "Brox",
-      grades: [{
-        id: '2aeeeead-334343-dfdgadss-444ggfdfd',
-        grade: 12,
-        subjectName: 'Math',
-        subjectId: 1,
-        date: '2023-02-13',
-        studentId: 1,
-
-      }]
-    }
-  ]
+  studentWithGrades: StudentWithGrades[];
   selectedGrade: number;
   isEditMode: boolean;
-  constructor() {
+
+  constructor(private gradeService: GradeService,
+              private masterSubjectService: MasterSubjectService,
+              private studyGroupService: StudyGroupService,
+              private spinner: SpinnerService) {
   }
 
   ngOnInit(): void {
     this.minDate.setDate(this.minDate.getDate() - 5);
     this.maxDate.setDate(this.maxDate.getDate() + 5);
-    this.setTableContent();
+    this.retrieveStudyGroupsOptions();
   }
 
   changeRange() {
@@ -79,8 +62,8 @@ export class StudentsGradesComponent implements OnInit {
     return arr;
   }
 
-  getStudentGradeForDate(grades: Grade[], date: string): number {
-    return grades.filter(x => x.date == date ? x : null)[0]?.grade;
+  getStudentGradeForDate(grades: Grade[], date: string): Grade {
+    return grades.filter(x => x.date.substring(0, 10) == date ? x : null)[0];
   }
 
   setTableContent() {
@@ -94,38 +77,100 @@ export class StudentsGradesComponent implements OnInit {
     this.cols = [...definedCols, ...dateCols]
   }
 
-  openNew(){
+  openNew() {
     this.showDialog = true;
   }
+
   createGrade(studentId: number, gradeValue: number, date: string) {
     this.selectedGrade = 0;
     this.isEditMode = false;
     this.openNew();
     this.gradeCreateModel = {} as GradeCreateModel;
+    this.gradeCreateModel.studentId = studentId;
+    this.gradeCreateModel.subjectId = this.selectedSubjectId;
+    this.gradeCreateModel.studyGroupId = this.selectedGroupId;
+    this.gradeCreateModel.date = date;
   }
 
-  editGrade(gradeId: string, gradeValue: number) {
-    this.selectedGrade = gradeValue;
+  editGrade(grade: Grade) {
+    this.selectedGrade = grade.grade;
     this.isEditMode = true;
     this.openNew();
     this.gradeUpdateModel = {} as GradeUpdateModel;
-    this.gradeUpdateModel.id = gradeId;
+    this.gradeUpdateModel.id = grade.id;
   }
 
   hideDialog() {
     this.showDialog = false;
     this.submitted = false;
+    this.selectedGrade = 0;
   }
 
   saveContent() {
-    if(this.isEditMode){
+    if (this.isEditMode) {
       this.gradeUpdateModel.grade = this.selectedGrade;
-      // request
-    }
-    else{
+      this.spinner.show();
+      this.gradeService.update(this.gradeUpdateModel).subscribe(response => {
+        this.spinner.hide();
+        this.hideDialog();
+        this.retrieveStudentsWithGrades()
+        },
+        error => {
+          this.spinner.hide();
+          this.hideDialog();
+
+        });
+    } else {
       this.gradeCreateModel.grade = this.selectedGrade;
-      // request
+      this.spinner.show()
+      this.gradeService.create(this.gradeCreateModel).subscribe(response => {
+          this.spinner.hide();
+          this.hideDialog();
+          this.retrieveStudentsWithGrades();
+        },
+        error => {
+          this.spinner.hide();
+          this.hideDialog();
+
+        });
     }
+  }
+
+  retrieveStudyGroupsOptions() {
+    this.studyGroupService.getAll().subscribe(response => {
+      this.studyGroupOptions = response;
+      this.retrieveSubjectOptions(this.studyGroupOptions[0].id)
+    })
+  }
+
+  retrieveSubjectOptions(subjectId: number) {
+    this.studyGroupService.getGroupSubjects(subjectId).subscribe(response => {
+      this.subjectOptions = response;
+      this.selectedSubjectId = this.subjectOptions[0].id;
+      this.retrieveStudentsWithGrades();
+    })
+  }
+
+  onChangeStudyGroup() {
+    this.retrieveSubjectOptions(this.selectedGroupId);
+  }
+
+  onChangeSubject(){
+    this.retrieveStudentsWithGrades();
+}
+  retrieveStudentsWithGrades() {
+
+    let filterModel = {} as GradeFilterModel;
+    filterModel.studyGroupId = this.selectedGroupId;
+    filterModel.subjectId = this.selectedSubjectId;
+    filterModel.startDate = this.minDate;
+    filterModel.endDate = this.maxDate;
+    this.spinner.show();
+    this.gradeService.getStudentsWithGrades(filterModel).subscribe(response => {
+      this.studentWithGrades = response;
+      this.setTableContent();
+      this.spinner.hide();
+    })
   }
 
 }

@@ -6,12 +6,27 @@
     styleClass="p-datatable-gridlines"
   >
     <ng-template pTemplate="caption">
-      <div class="field col-12 md:col-4">
+      <div class="flex justify-content-start gap-2">
+
+        <div class="field">
+          <label for="minDate">From:</label>
         <p-calendar [(ngModel)]="minDate" [defaultDate]="minDate" id="minDate" placeholder="From" [showIcon]="true"
                     (onSelect)="changeRange()" dateFormat="yy-mm-dd"></p-calendar>
-        -
+        </div>
+        <div class="field">
+        <label for="maxDate">To:</label>
         <p-calendar [(ngModel)]="maxDate" [defaultDate]="maxDate" id="maxDate" placeholder="To" [showIcon]="true"
                     (onSelect)="changeRange()" dateFormat="yy-mm-dd"></p-calendar>
+        </div>
+
+        <div class="field">
+          <label for="studyGroup">Study Group: </label>
+          <p-dropdown [options]="studyGroupOptions" id="studyGroup" [(ngModel)]="selectedGroupId" (onChange)="onChangeStudyGroup()" optionLabel="name" optionValue="id"></p-dropdown>
+        </div>
+        <div class="field">
+          <label for="subject">Subject: </label>
+          <p-dropdown [options]="subjectOptions" id="subject" [(ngModel)]="selectedSubjectId" (onChange)="onChangeSubject()" optionLabel="name" optionValue="id"></p-dropdown>
+        </div>
       </div>
     </ng-template>
 
@@ -30,11 +45,11 @@
           {{ student.studentFirstName + ' ' + student.studentLastName }}
         </td>
         <td *ngFor="let date of daysRange">
-          {{getStudentGradeForDate(student.grades, date)}}
+          {{getStudentGradeForDate(student.grades, date)?.grade}}
 
           <i *ngIf="getStudentGradeForDate(student.grades, date) else createGradeBlock"
              class="pi pi-pencil"
-             (click)="editGrade(student.studentId,getStudentGradeForDate(student.grades, date))"
+             (click)="editGrade(getStudentGradeForDate(student.grades, date))"
              style="color: lightskyblue; cursor: pointer"></i>
 
           <ng-template #createGradeBlock>

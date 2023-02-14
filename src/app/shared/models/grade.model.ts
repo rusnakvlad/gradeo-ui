@@ -7,7 +7,6 @@ export type Grade = {
   date: string
 }
 
-
 export type StudentWithGrades = {
   studentId: number,
   studentFirstName: string,
@@ -26,4 +25,11 @@ export type GradeCreateModel = {
 export type GradeUpdateModel = {
   id: string,
   grade: number
+}
+
+export type GradeFilterModel = {
+  studyGroupId: number,
+  subjectId: number,
+  startDate: Date,
+  endDate: Date,
 }
