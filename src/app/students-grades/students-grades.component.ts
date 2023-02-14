@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {Grade, StudentWithGrades} from "../shared/models/grade.model";
+import {Grade, GradeCreateModel, GradeUpdateModel, StudentWithGrades} from "../shared/models/grade.model";
 import {CalendarModule} from "primeng/calendar";
 
 @Component({
@@ -10,10 +10,14 @@ import {CalendarModule} from "primeng/calendar";
 export class StudentsGradesComponent implements OnInit {
 
   cols: { header: string }[] = [];
+  gradeCreateModel: GradeCreateModel;
+  gradeUpdateModel: GradeUpdateModel;
 
   minDate: Date = new Date();
   maxDate: Date = new Date();
   daysRange: string[];
+  showDialog: boolean = false;
+  submitted: boolean = false;
   studentWithGrades: StudentWithGrades[] = [
     {
       studentId: 1,
@@ -53,7 +57,8 @@ export class StudentsGradesComponent implements OnInit {
       }]
     }
   ]
-
+  selectedGrade: number;
+  isEditMode: boolean;
   constructor() {
   }
 
@@ -89,8 +94,38 @@ export class StudentsGradesComponent implements OnInit {
     this.cols = [...definedCols, ...dateCols]
   }
 
+  openNew(){
+    this.showDialog = true;
+  }
   createGrade(studentId: number, gradeValue: number, date: string) {
-    alert(studentId + ' ' + gradeValue + ' ' + ' ' + date)
+    this.selectedGrade = 0;
+    this.isEditMode = false;
+    this.openNew();
+    this.gradeCreateModel = {} as GradeCreateModel;
+  }
+
+  editGrade(gradeId: string, gradeValue: number) {
+    this.selectedGrade = gradeValue;
+    this.isEditMode = true;
+    this.openNew();
+    this.gradeUpdateModel = {} as GradeUpdateModel;
+    this.gradeUpdateModel.id = gradeId;
+  }
+
+  hideDialog() {
+    this.showDialog = false;
+    this.submitted = false;
+  }
+
+  saveContent() {
+    if(this.isEditMode){
+      this.gradeUpdateModel.grade = this.selectedGrade;
+      // request
+    }
+    else{
+      this.gradeCreateModel.grade = this.selectedGrade;
+      // request
+    }
   }
 
 }

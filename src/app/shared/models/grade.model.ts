@@ -14,3 +14,16 @@ export type StudentWithGrades = {
   studentLastName: string
   grades: Grade[]
 }
+
+export type GradeCreateModel = {
+  grade: number,
+  studentId: number,
+  studyGroupId: number
+  subjectId: number,
+  date: string
+}
+
+export type GradeUpdateModel = {
+  id: string,
+  grade: number
+}
