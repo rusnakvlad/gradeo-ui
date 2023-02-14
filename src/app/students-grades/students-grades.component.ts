@@ -52,7 +52,7 @@ export class StudentsGradesComponent implements OnInit {
   }
 
   changeRange() {
-    this.setTableContent();
+    this.retrieveStudentsWithGrades();
   }
 
   getDaysArray(start: Date, end: Date) {
