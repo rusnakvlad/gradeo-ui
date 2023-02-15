@@ -17,7 +17,12 @@ export class StudentProfileService {
   }
 
   get(pageNumber: number, pageSize: number): Observable<StudentProfilePaged> {
-    return this.httpClient.get<StudentProfilePaged>(this.api.studentProfiles)
+    return this.httpClient.get<StudentProfilePaged>(this.api.studentProfiles,{
+      params: {
+        PageNumber: pageNumber,
+        PageSize: pageSize
+      }
+    })
   }
 
   upsert(studentProfile: StudentProfileUpsertModel): Observable<any> {

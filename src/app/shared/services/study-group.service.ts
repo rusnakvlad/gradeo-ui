@@ -15,7 +15,12 @@ export class StudyGroupService {
   }
 
   get(pageNumber: number, pageSize: number): Observable<StudyGroupPaged> {
-    return this.httpClient.get<StudyGroupPaged>(this.api.studyGroups);
+    return this.httpClient.get<StudyGroupPaged>(this.api.studyGroups,{
+      params: {
+        PageNumber: pageNumber,
+        PageSize: pageSize
+      }
+    });
   }
 
   upsert(studyGroup: StudyGroupUpsertModel): Observable<any> {
