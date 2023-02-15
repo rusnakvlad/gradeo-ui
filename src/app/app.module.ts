@@ -56,6 +56,7 @@ import { StudentGradesComponent } from './student-grades/student-grades.componen
 import { FullCalendarModule } from '@fullcalendar/angular';
 import { StudentsGradesComponent } from './students-grades/students-grades.component';
 import {CalendarModule} from "primeng/calendar";
+import {ChartModule} from "primeng/chart";
 
 export function MSALInstanceFactory(): IPublicClientApplication {
   return new PublicClientApplication(msalConfig);
@@ -109,36 +110,37 @@ export function MSALGuardConfigFactory(): MsalGuardConfiguration {
     StudentGradesComponent,
     StudentsGradesComponent,
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    HttpClientModule,
-    BrowserAnimationsModule,
-    SidebarModule,
-    ButtonModule,
-    MenubarModule,
-    DropdownModule,
-    FormsModule,
-    MenuModule,
-    TieredMenuModule,
-    TableModule,
-    ToastModule,
-    ToolbarModule,
-    FileUploadModule,
-    CardModule,
-    InputTextModule,
-    RippleModule,
-    MsalModule,
-    DialogModule,
-    ConfirmDialogModule,
-    TabMenuModule,
-    MultiSelectModule,
-    ProgressSpinnerModule,
-    InputSwitchModule,
-    ChipModule,
-    FullCalendarModule,
-    CalendarModule
-  ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        HttpClientModule,
+        BrowserAnimationsModule,
+        SidebarModule,
+        ButtonModule,
+        MenubarModule,
+        DropdownModule,
+        FormsModule,
+        MenuModule,
+        TieredMenuModule,
+        TableModule,
+        ToastModule,
+        ToolbarModule,
+        FileUploadModule,
+        CardModule,
+        InputTextModule,
+        RippleModule,
+        MsalModule,
+        DialogModule,
+        ConfirmDialogModule,
+        TabMenuModule,
+        MultiSelectModule,
+        ProgressSpinnerModule,
+        InputSwitchModule,
+        ChipModule,
+        FullCalendarModule,
+        CalendarModule,
+        ChartModule
+    ],
   providers: [
     {
       provide: HTTP_INTERCEPTORS,

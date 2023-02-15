@@ -19,5 +19,6 @@
     <h2 class="text-primary"><p-chip styleClass="mr-2 custom-chip" *ngFor="let subject of subjects">{{subject.name}}</p-chip></h2>
   </div>
 
+  <p-chart height="50rem" type="bar" [data]="chartData" [options]="chartOptions"></p-chart>
 </p-card>
 
