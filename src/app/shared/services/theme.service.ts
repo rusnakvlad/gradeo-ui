@@ -2,6 +2,7 @@ import {EventEmitter, Inject, Injectable, OnInit} from '@angular/core';
 import {DOCUMENT} from "@angular/common";
 import {ThemeStorageKey} from "../constants/local-storage-keys";
 import {Theme} from "../enums/theme";
+import {DarkModeBodyColor, LightModeBodyColor} from "../constants/colors";
 
 @Injectable({
   providedIn: 'root'
@@ -13,9 +14,11 @@ export class ThemeService {
 
   switchTheme(theme: string) {
     let themeLink = this.document.getElementById('app-theme') as HTMLLinkElement;
+    let body = this.document.getElementById('body') as HTMLElement;
 
     if (themeLink) {
       themeLink.href = 'assets/styles/theme/' + theme + '/theme.css';
+      body.style.backgroundColor = theme == Theme.DarkMode ? DarkModeBodyColor : LightModeBodyColor;
       localStorage.setItem(ThemeStorageKey, theme);
     }
   }
