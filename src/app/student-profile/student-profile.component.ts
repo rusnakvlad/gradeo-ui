@@ -6,7 +6,7 @@ import {StudyGroupService} from "../shared/services/study-group.service";
 import {ChartModule} from "primeng/chart";
 import {StatisticsService} from "../shared/services/statistics.service";
 import {SpinnerService} from "../shared/services/spinner.service";
-import {BarChartModel} from "../shared/models/chart.model";
+import {ChartModel} from "../shared/models/chart.model";
 import {ChartColors} from "../shared/constants/colors";
 
 @Component({
@@ -21,7 +21,7 @@ export class StudentProfileComponent implements OnInit {
 
   chartData: any;
   chartOptions: any;
-  averageGrades: BarChartModel[];
+  averageGrades: ChartModel[];
 
   constructor(private studentService: StudentProfileService,
               private studyGroupService: StudyGroupService,
