@@ -1,3 +1,9 @@
-<p-card header="Students per group" [style]="{'width': '30rem'}">
-  <p-chart height="25rem" type="pie" [data]="studentsPerGroupChart"></p-chart>
-</p-card>
+<div class="flex justify-content-start gap-5">
+  <p-card header="Students per group" [style]="{'width': '30rem'}">
+    <p-chart height="25rem" type="pie" [data]="studentsPerGroupChart"></p-chart>
+  </p-card>
+
+  <p-card header="Academic performance" [style]="{'width': '30rem'}">
+    <p-chart height="25rem" type="line" [data]="studentsPerGroupChart"></p-chart>
+  </p-card>
+</div>

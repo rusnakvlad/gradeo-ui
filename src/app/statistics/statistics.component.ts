@@ -32,7 +32,9 @@ export class StatisticsComponent implements OnInit {
       datasets: [
         {
           data: this.studentsPerGroupData.map(x => x.value),
-          backgroundColor: ChartColors
+          backgroundColor: ChartColors,
+          borderColor: '#42A5F5',
+          tension: .4
         }
       ]
     };
