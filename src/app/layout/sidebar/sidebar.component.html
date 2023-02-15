@@ -8,5 +8,11 @@
     <button  routerLink="{{item.routerLink}}" (click)="closeSidebar()" pButton pRipple type="button" label="{{item.name}}" class="p-button-outlined p-button-rounded" icon="{{item.primeIcon}}" iconPos="left"></button>
     <br><br>
   </ng-container>
+  <div style="position: fixed; bottom: 5px">
+    <div class="flex align-items-stretch flex-wrap">
+      <img src="assets/images/moon.png" width="30px" height="30px">
+      <p-inputSwitch [style]="{'margin-left':'5px'}" (onChange)="switchTheme()" id="isActive" [(ngModel)]="isDarkMode"></p-inputSwitch>
+    </div>
+  </div>
 </p-sidebar>
 
