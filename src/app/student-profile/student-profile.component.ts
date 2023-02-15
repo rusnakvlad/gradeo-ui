@@ -4,10 +4,10 @@ import {StudentProfile} from "../shared/models/student-profile.model";
 import {MasterSubject} from "../shared/models/subject.model";
 import {StudyGroupService} from "../shared/services/study-group.service";
 import {ChartModule} from "primeng/chart";
-import {colors} from "../shared/models/colors.model";
 import {StatisticsService} from "../shared/services/statistics.service";
 import {SpinnerService} from "../shared/services/spinner.service";
 import {BarChartModel} from "../shared/models/chart.model";
+import {ChartColors} from "../shared/constants/colors";
 
 @Component({
   selector: 'app-student-profile',
@@ -59,7 +59,7 @@ export class StudentProfileComponent implements OnInit {
       datasets: [
         {
           label: 'Average grade per subject',
-          backgroundColor: colors,
+          backgroundColor: ChartColors,
           data: this.averageGrades.map(x => x.value)
         }
       ]
