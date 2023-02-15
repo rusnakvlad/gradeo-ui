@@ -25,6 +25,7 @@ export class SidebarComponent implements OnInit {
     this.menuService.getMenuItems().subscribe(response => {
       this.menuItems = response;
     })
+    this.isDarkMode = this.themeService.isLastSelectedDarkMode();
   }
 
   closeSidebar() {
