@@ -11,7 +11,7 @@
   <div style="position: fixed; bottom: 5px">
     <div class="flex align-items-stretch flex-wrap">
       <img src="assets/images/moon.png" width="30px" height="30px">
-      <p-inputSwitch (onChange)="switchTheme()" id="isActive" [(ngModel)]="isDarkMode"></p-inputSwitch>
+      <p-inputSwitch [style]="{'margin-left':'5px'}" (onChange)="switchTheme()" id="isActive" [(ngModel)]="isDarkMode"></p-inputSwitch>
     </div>
   </div>
 </p-sidebar>
