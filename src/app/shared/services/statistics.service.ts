@@ -13,7 +13,11 @@ export class StatisticsService {
   }
 
   getCurrentStudentAverageGrades(): Observable<BarChartModel[]> {
-    return this.httpClient.get<BarChartModel[]>(this.api.statistics);
+    return this.httpClient.get<BarChartModel[]>(this.api.statistics + '/studentAverageGradePerSubject');
+  }
+
+  getStudentsCountPerStudyGroup(): Observable<BarChartModel[]> {
+    return this.httpClient.get<BarChartModel[]>(this.api.statistics + '/studentsPerGroup');
   }
 
 }

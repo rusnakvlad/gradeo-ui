@@ -57,6 +57,7 @@ import { FullCalendarModule } from '@fullcalendar/angular';
 import { StudentsGradesComponent } from './students-grades/students-grades.component';
 import {CalendarModule} from "primeng/calendar";
 import {ChartModule} from "primeng/chart";
+import { StatisticsComponent } from './statistics/statistics.component';
 
 export function MSALInstanceFactory(): IPublicClientApplication {
   return new PublicClientApplication(msalConfig);
@@ -109,6 +110,7 @@ export function MSALGuardConfigFactory(): MsalGuardConfiguration {
     TeacherProfileComponent,
     StudentGradesComponent,
     StudentsGradesComponent,
+    StatisticsComponent,
   ],
     imports: [
         BrowserModule,
