@@ -33,3 +33,8 @@ export type GradeFilterModel = {
   startDate: Date,
   endDate: Date,
 }
+
+export type DateRangeFilter = {
+  startDate: Date,
+  endDate: Date
+}
