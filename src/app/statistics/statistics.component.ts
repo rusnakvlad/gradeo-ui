@@ -35,13 +35,13 @@ export class StatisticsComponent implements OnInit {
 
   setAverageGradePerStudyGroup() {
     this.statisticsService.getAverageGradePerStudyGroup().subscribe(response => {
-      this.averageGradePerGroupData = response.sort((x,y) => x.value - y.value);
+      this.averageGradePerGroupData = response;
       this.averageGradePerGroupChart = this.getChart(this.averageGradePerGroupData, 'Average grade per group');
     })
   }
 
   getChart(chartData: ChartModel[], label: string = ''): any {
-    if(label){
+    if (label) {
       return {
         labels: chartData.map(x => x.label),
         datasets: [
