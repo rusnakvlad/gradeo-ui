@@ -18,12 +18,16 @@ export class StatisticsComponent implements OnInit {
   averageGradePerGroupData: ChartModel[];
 
 
+  averageGradePerSubjectChart: any;
+  averageGradePerSubjectData: ChartModel[];
+
   constructor(private statisticsService: StatisticsService) {
   }
 
   ngOnInit(): void {
     this.setStudentsPerGroupData();
     this.setAverageGradePerStudyGroup();
+    this.setAverageGradePerSubject();
   }
 
   setStudentsPerGroupData() {
@@ -37,6 +41,13 @@ export class StatisticsComponent implements OnInit {
     this.statisticsService.getAverageGradePerStudyGroup().subscribe(response => {
       this.averageGradePerGroupData = response;
       this.averageGradePerGroupChart = this.getChart(this.averageGradePerGroupData, 'Average grade per group');
+    })
+  }
+
+  setAverageGradePerSubject() {
+    this.statisticsService.getAverageGradePerSubject().subscribe(response => {
+      this.averageGradePerSubjectData = response;
+      this.averageGradePerSubjectChart = this.getRadarChart(this.averageGradePerSubjectData);
     })
   }
 
@@ -61,6 +72,24 @@ export class StatisticsComponent implements OnInit {
           data: chartData.map(x => x.value),
           backgroundColor: ChartColors,
           tension: .4
+        }
+      ]
+    };
+  }
+
+  getRadarChart(chartData: ChartModel[]): any {
+    return {
+      labels: chartData.map(x => x.label),
+      datasets: [
+        {
+          label: 'Average grades per subject',
+          data: chartData.map(x => x.value),
+          backgroundColor: 'rgba(255,99,132,0.2)',
+          borderColor: 'rgba(255,99,132,1)',
+          pointBackgroundColor: 'rgba(255,99,132,1)',
+          pointBorderColor: '#fff',
+          pointHoverBackgroundColor: '#fff',
+          pointHoverBorderColor: 'rgba(255,99,132,1)'
         }
       ]
     };
