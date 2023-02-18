@@ -20,4 +20,7 @@ export class StatisticsService {
     return this.httpClient.get<ChartModel[]>(this.api.statistics + '/studentsPerGroup');
   }
 
+    getAverageGradePerStudyGroup(): Observable<ChartModel[]> {
+      return this.httpClient.get<ChartModel[]>(this.api.statistics + '/averageGradePerGroup');
+  }
 }
