@@ -4,6 +4,9 @@
     <h3>Smart solutions</h3>
   </div>
 
+<div class="center" *ngIf="!this.menuItems || this.menuItems.length == 0">
+  <p-progressSpinner></p-progressSpinner>
+</div>
   <ng-container *ngFor="let item of menuItems">
     <button  routerLink="{{item.routerLink}}" (click)="closeSidebar()" pButton pRipple type="button" label="{{item.name}}" class="p-button-outlined p-button-rounded" icon="{{item.primeIcon}}" iconPos="left"></button>
     <br><br>
