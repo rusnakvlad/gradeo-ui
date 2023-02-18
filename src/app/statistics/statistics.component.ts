@@ -2,6 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {StatisticsService} from "../shared/services/statistics.service";
 import {ChartModel} from "../shared/models/chart.model";
 import {ChartColors} from "../shared/constants/colors";
+import {ThemeService} from "../shared/services/theme.service";
+import {Theme} from "../shared/enums/theme";
 
 @Component({
   selector: 'app-statistics',
@@ -21,10 +23,16 @@ export class StatisticsComponent implements OnInit {
   averageGradePerSubjectChart: any;
   averageGradePerSubjectData: ChartModel[];
 
-  constructor(private statisticsService: StatisticsService) {
+  chartOptions: any;
+
+  constructor(private statisticsService: StatisticsService, private themeService: ThemeService) {
+    this.themeService.themeChanged.subscribe(newTheme => {
+      this.chartOptions = newTheme == Theme.LightMode ? this.themeService.getChartLightTheme() : this.themeService.getChartDarkTheme();
+    })
   }
 
   ngOnInit(): void {
+    this.chartOptions = this.themeService.isLastSelectedDarkMode() ? this.themeService.getChartDarkTheme() : this.themeService.getChartLightTheme();
     this.setStudentsPerGroupData();
     this.setAverageGradePerStudyGroup();
     this.setAverageGradePerSubject();
