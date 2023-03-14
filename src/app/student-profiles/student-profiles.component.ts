@@ -25,7 +25,7 @@ export class StudentProfilesComponent implements OnInit {
   loading: boolean = false;
   studyGroupOptions: StudyGroupBasicInfo[];
   userEmailOptions: string[];
-  isEditMode: boolean;
+  isEditMode: boolean = false;
 
   constructor(private popupService: PopupService,
               private studentService: StudentProfileService,
