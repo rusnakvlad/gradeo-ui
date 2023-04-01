@@ -4,7 +4,7 @@ import {TableModule} from 'primeng/table';
 import {CardModule} from "primeng/card";
 import {DialogModule} from "primeng/dialog";
 
-import {CreateUserModel, User, UserDetails, UsersPaged} from "../shared/models/user.model";
+import {CreateUserModel, UpdateUserModel, User, UserDetails, UsersPaged} from "../shared/models/user.model";
 import {ConfirmationService, LazyLoadEvent, MessageService} from "primeng/api";
 import {UserService} from "../shared/services/user.service";
 import {DefaultPageNumber, DefaultPageSize} from "../shared/models/pagination.model";
@@ -36,6 +36,7 @@ export class UsersComponent implements OnInit {
   rolesOptions: RoleBasicInfo[];
   selectedRoles: number[];
   currentUser: UserDetails;
+  editMode: boolean;
 
   constructor(
     private userService: UserService,
@@ -59,18 +60,24 @@ export class UsersComponent implements OnInit {
   }
 
   edit(user: User) {
-
+    this.user = user;
+    this.selectedRoles = user.roleIds;
+    this.retrieveRoles();
+    this.showDialog = true;
+    this.editMode = true;
   }
 
   openNew() {
     this.user = {} as User;
     this.retrieveRoles();
     this.showDialog = true;
+    this.editMode=false;
   }
 
   hideDialog() {
     this.showDialog = false;
     this.submitted = false;
+    this.editMode=false;
   }
 
   saveContent() {
@@ -92,6 +99,25 @@ export class UsersComponent implements OnInit {
           this.refreshGrid(DefaultPageNumber, DefaultPageSize);
         },
         (error: HttpErrorResponse) => {
+          this.spinner.hide();
+          this.messageService.add({severity: 'error', summary: 'Error', detail: 'User not created', life: 3000});
+        })
+    } else {
+      let updateUserModel = {} as UpdateUserModel;
+      updateUserModel.userId = this.user.id;
+      updateUserModel.firstName = this.user.firstName;
+      updateUserModel.lastName = this.user.lastName;
+      updateUserModel.roleIds = this.selectedRoles;
+      this.spinner.show();
+      this.userService.update(updateUserModel).subscribe(response => {
+          this.messageService.add({severity: 'success', summary: 'Successful', detail: 'Record saved', life: 3000});
+          this.showDialog = false;
+          this.spinner.hide();
+          this.editMode=false;
+          this.refreshGrid(DefaultPageNumber, DefaultPageSize);
+        },
+        (error: HttpErrorResponse) => {
+          this.spinner.hide();
           this.messageService.add({severity: 'error', summary: 'Error', detail: 'User not created', life: 3000});
         })
     }
@@ -133,7 +159,7 @@ export class UsersComponent implements OnInit {
   setCurrentUser() {
     this.userService.getCurrentUser().subscribe(response => {
       this.currentUser = response;
-      if(this.currentUser.systemType == 1){
+      if (this.currentUser.systemType == 1) {
         this.retrieveSchools();
       }
     })

@@ -7,5 +7,5 @@ export interface PaginationModel {
 }
 
 export const DefaultPageNumber: number = 1;
-export const DefaultPageSize: number = 5;
+export const DefaultPageSize: number = 10
 

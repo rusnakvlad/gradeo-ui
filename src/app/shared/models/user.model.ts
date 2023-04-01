@@ -6,7 +6,8 @@ export type User = {
   firstName: string
   lastName: string,
   email: string,
-  userType?: string
+  userType?: string,
+  roleIds: number[]
 }
 
 export type CreateUserModel = {
@@ -30,4 +31,11 @@ export type UserDetails = {
 export type UserFilterModel = {
   searchTerm?: string,
   userType?: UserType
+}
+
+export type UpdateUserModel = {
+  userId: string,
+  firstName: string,
+  lastName: string,
+  roleIds: number[],
 }

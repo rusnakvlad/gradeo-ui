@@ -10,8 +10,8 @@
 
   <p-table [value]="users?.items || []"
            [paginator]="true"
-           [rows]="5"
-           [rowsPerPageOptions]="[5]"
+           [rows]="10"
+           [rowsPerPageOptions]="[10]"
            [lazy]="true"
            [loading]="loading"
            [lazyLoadOnInit]="false"
@@ -72,23 +72,23 @@
     </div>
     <div class="field">
       <label for="userType">User Type</label>
-      <p-dropdown [options]="userTypes" id="userType" [(ngModel)]="userType"></p-dropdown>
-      <small class="p-error" *ngIf="submitted && !user.userType">City is required.</small>
+      <p-dropdown [options]="userTypes" id="userType" [(ngModel)]="userType" [disabled]="editMode"></p-dropdown>
+      <small class="p-error" *ngIf="submitted && !user.userType">User Type is required.</small>
     </div>
     <div class="field">
       <label for="firstName">First Name</label>
-      <input type="text" pInputText id="firstName" [(ngModel)]="user.firstName" required autofocus />
+      <input type="text" pInputText id="firstName" [(ngModel)]="user.firstName" required autofocus/>
       <small class="p-error" *ngIf="submitted && !user.firstName">Name is required.</small>
     </div>
     <div class="field">
       <label for="lastName">Last Name</label>
       <input type="text" pInputText id="lastName" [(ngModel)]="user.lastName" required autofocus />
-      <small class="p-error" *ngIf="submitted && !user.lastName">Country is required.</small>
+      <small class="p-error" *ngIf="submitted && !user.lastName">Last is required.</small>
     </div>
     <div class="field">
       <label for="email">Email</label>
-      <input type="text" pInputText id="email" [(ngModel)]="user.email" required autofocus />
-      <small class="p-error" *ngIf="submitted && !user.email">City is required.</small>
+      <input type="text" pInputText id="email" [(ngModel)]="user.email" required autofocus [disabled]="editMode"/>
+      <small class="p-error" *ngIf="submitted && !user.email">Email is required.</small>
     </div>
   </ng-template>
 

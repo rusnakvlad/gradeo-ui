@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpParams} from "@angular/common/http";
 import {Observable} from "rxjs";
-import {CreateUserModel, User, UserDetails, UserFilterModel, UsersPaged} from "../models/user.model";
+import {CreateUserModel, UpdateUserModel, User, UserDetails, UserFilterModel, UsersPaged} from "../models/user.model";
 import {CommonApiService} from "./common-api.service";
 import {UserType} from "../enums/user-type";
 
@@ -31,6 +31,9 @@ export class UserService {
     return this.httpClient.post(this.api.users, user)
   }
 
+  update(user: UpdateUserModel){
+    return this.httpClient.put(this.api.users, user);
+  }
   getCurrentUser(): Observable<UserDetails> {
     return this.httpClient.get<UserDetails>(this.api.users + '/currentUser');
   }
