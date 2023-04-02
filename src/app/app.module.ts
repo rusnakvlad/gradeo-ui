@@ -58,6 +58,7 @@ import { StudentsGradesComponent } from './students-grades/students-grades.compo
 import {CalendarModule} from "primeng/calendar";
 import {ChartModule} from "primeng/chart";
 import { StatisticsComponent } from './statistics/statistics.component';
+import { AnalyticsComponent } from './analytics/analytics.component';
 
 export function MSALInstanceFactory(): IPublicClientApplication {
   return new PublicClientApplication(msalConfig);
@@ -111,6 +112,7 @@ export function MSALGuardConfigFactory(): MsalGuardConfiguration {
     StudentGradesComponent,
     StudentsGradesComponent,
     StatisticsComponent,
+    AnalyticsComponent,
   ],
     imports: [
         BrowserModule,
