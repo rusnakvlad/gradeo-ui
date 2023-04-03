@@ -38,3 +38,13 @@ export type DateRangeFilter = {
   startDate: Date,
   endDate: Date
 }
+
+export type GradePredictionModel = {
+  failures:number,
+  medu:number,
+  studyTime:number,
+  absences:number,
+  g1:number,
+  g2:number,
+  higher: boolean,
+}

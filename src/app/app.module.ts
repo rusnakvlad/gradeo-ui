@@ -59,6 +59,8 @@ import {CalendarModule} from "primeng/calendar";
 import {ChartModule} from "primeng/chart";
 import { StatisticsComponent } from './statistics/statistics.component';
 import { AnalyticsComponent } from './analytics/analytics.component';
+import {ToggleButtonModule} from "primeng/togglebutton";
+import {MessageModule} from "primeng/message";
 
 export function MSALInstanceFactory(): IPublicClientApplication {
   return new PublicClientApplication(msalConfig);
@@ -114,37 +116,39 @@ export function MSALGuardConfigFactory(): MsalGuardConfiguration {
     StatisticsComponent,
     AnalyticsComponent,
   ],
-    imports: [
-        BrowserModule,
-        AppRoutingModule,
-        HttpClientModule,
-        BrowserAnimationsModule,
-        SidebarModule,
-        ButtonModule,
-        MenubarModule,
-        DropdownModule,
-        FormsModule,
-        MenuModule,
-        TieredMenuModule,
-        TableModule,
-        ToastModule,
-        ToolbarModule,
-        FileUploadModule,
-        CardModule,
-        InputTextModule,
-        RippleModule,
-        MsalModule,
-        DialogModule,
-        ConfirmDialogModule,
-        TabMenuModule,
-        MultiSelectModule,
-        ProgressSpinnerModule,
-        InputSwitchModule,
-        ChipModule,
-        FullCalendarModule,
-        CalendarModule,
-        ChartModule
-    ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    HttpClientModule,
+    BrowserAnimationsModule,
+    SidebarModule,
+    ButtonModule,
+    MenubarModule,
+    DropdownModule,
+    FormsModule,
+    MenuModule,
+    TieredMenuModule,
+    TableModule,
+    ToastModule,
+    ToolbarModule,
+    FileUploadModule,
+    CardModule,
+    InputTextModule,
+    RippleModule,
+    MsalModule,
+    DialogModule,
+    ConfirmDialogModule,
+    TabMenuModule,
+    MultiSelectModule,
+    ProgressSpinnerModule,
+    InputSwitchModule,
+    ChipModule,
+    FullCalendarModule,
+    CalendarModule,
+    ChartModule,
+    ToggleButtonModule,
+    MessageModule
+  ],
   providers: [
     {
       provide: HTTP_INTERCEPTORS,
