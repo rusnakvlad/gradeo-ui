@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {CalendarOptions} from "@fullcalendar/core";
+import {CalendarOptions, DatesSetArg} from "@fullcalendar/core";
 import dayGridPlugin from '@fullcalendar/daygrid';
 import {GradeService} from "../shared/services/grade.service";
 import {formatDate} from "@angular/common";
@@ -20,15 +20,18 @@ export class StudentGradesComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
     this.calendarOptions = {
-      plugins: [dayGridPlugin]
+      plugins: [dayGridPlugin],
+      datesSet: arg => {
+        this.dateRangeChanged(arg)
+      },
     };
+  }
 
-    const date = new Date();
+  getGrades(startDate: Date, endDate: Date) {
     let dateRangeFilter = {} as DateRangeFilter;
-    dateRangeFilter.startDate = this.getFirstDayOfMonth(date.getFullYear(), date.getMonth());
-    dateRangeFilter.endDate = this.getLastDayOfMonth(date.getFullYear(), date.getMonth());
+    dateRangeFilter.startDate = startDate;
+    dateRangeFilter.endDate = endDate;
 
     this.spinner.show();
     this.gradeService.getStudentGrades(dateRangeFilter).subscribe(response => {
@@ -47,11 +50,8 @@ export class StudentGradesComponent implements OnInit {
       })
   }
 
-  getFirstDayOfMonth(year: number, month: number) {
-    return new Date(year, month, 1);
-  }
+  dateRangeChanged(arg: DatesSetArg) {
 
-  getLastDayOfMonth(year: number, month: number) {
-    return new Date(year, month + 1, 0);
+    this.getGrades(arg.start, arg.end);
   }
 }
