@@ -45,7 +45,7 @@
           {{ student.studentFirstName + ' ' + student.studentLastName }}
         </td>
         <td *ngFor="let date of daysRange">
-          {{getStudentGradeForDate(student.grades, date).grade}}
+          {{getStudentGradeForDate(student.grades, date)?.grade}}
 
           <i *ngIf="getStudentGradeForDate(student.grades, date) else createGradeBlock"
              class="pi pi-pencil"
