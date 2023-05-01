@@ -10,10 +10,10 @@ export class PopupService {
   }
 
   success(message: string = "Changes saved") {
-    this.messageService.add({severity: 'success', summary: 'Successful', detail: 'Record saved', life: 3000});
+    this.messageService.add({severity: 'success', summary: 'Successful', detail: message, life: 3000});
   }
 
   error(message: string = "Changes not saved") {
-    this.messageService.add({severity: 'error', summary: 'Error', detail: 'Record not created', life: 3000});
+    this.messageService.add({severity: 'error', summary: 'Error', detail: message, life: 3000});
   }
 }

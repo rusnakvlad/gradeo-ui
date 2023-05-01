@@ -3,7 +3,7 @@ import {StudentProfile, StudentProfileUpsertModel, StudentProfilePaged} from "..
 import {PopupService} from "../shared/services/popup.service";
 import {StudentProfileService} from "../shared/services/student-profile.service";
 import {DefaultPageNumber, DefaultPageSize} from "../shared/models/pagination.model";
-import {LazyLoadEvent} from "primeng/api";
+import {LazyLoadEvent, MessageService} from "primeng/api";
 import {StudyGroupBasicInfo} from "../shared/models/study-group.model";
 import {StudyGroupService} from "../shared/services/study-group.service";
 import {UserService} from "../shared/services/user.service";
@@ -71,6 +71,7 @@ export class StudentProfilesComponent implements OnInit {
       },
       error => {
         this.loading = false;
+        this.popupService.error(error.Message)
       })
   }
 
