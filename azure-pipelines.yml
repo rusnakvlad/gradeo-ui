@@ -17,6 +17,7 @@ steps:
 
 - script: |
     npm install -g @angular/cli@14.2.12
+    npm config set fund false
     npm install
     ng build --prod
   displayName: 'npm install and build'
