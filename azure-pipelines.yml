@@ -24,11 +24,11 @@ steps:
       command: 'install'
     displayName: 'Install npm packages'
 
-  - task: PowerShell@2
-    displayName: Build angular
+  - task: Npm@1
     inputs:
-      targetType: 'inline'
-      script: 'ng serve'
+      command: 'custom'
+      customCommand: 'run build -- --prod'
+    displayName: 'Build the Angular app'
 
   - task: ArchiveFiles@2
     inputs:
