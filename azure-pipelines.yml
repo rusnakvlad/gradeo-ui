@@ -15,20 +15,20 @@ variables:
 
 steps:
   - task: NodeTool@0
+    displayName: 'Install Node.js'
     inputs:
       versionSpec: '14.x'
-    displayName: 'Install Node.js'
 
   - task: Npm@1
+    displayName: 'Install npm packages'
     inputs:
       command: 'install'
-    displayName: 'Install npm packages'
 
   - task: Npm@1
+    displayName: 'Build the Angular app'
     inputs:
       command: 'custom'
-      customCommand: 'run build -- --prod'
-    displayName: 'Build the Angular app'
+      customCommand: 'run build'
 
   - task: ArchiveFiles@2
     inputs:
@@ -40,7 +40,7 @@ steps:
     displayName: 'Create the artifact'
 
   - task: PublishBuildArtifacts@1
+    displayName: 'Publish the artifact'
     inputs:
       artifactName: '$(artifactName)'
       pathToPublish: '$(Build.ArtifactStagingDirectory)/$(artifactName).zip'
-    displayName: 'Publish the artifact'
