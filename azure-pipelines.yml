@@ -17,7 +17,7 @@ steps:
   - task: NodeTool@0
     displayName: 'Install Node.js'
     inputs:
-      versionSpec: '14.x'
+      versionSpec: '16.x'
 
   - task: Npm@1
     displayName: 'Install npm packages'
@@ -28,19 +28,10 @@ steps:
     displayName: 'Build the Angular app'
     inputs:
       command: 'custom'
-      customCommand: 'run build'
-
-  - task: ArchiveFiles@2
-    inputs:
-      rootFolderOrFile: '$(Build.SourcesDirectory)/dist'
-      includeRootFolder: false
-      archiveType: 'zip'
-      archiveFile: '$(Build.ArtifactStagingDirectory)/$(artifactName).zip'
-      replaceExistingArchive: true
-    displayName: 'Create the artifact'
+      customCommand: 'npm start'
 
   - task: PublishBuildArtifacts@1
-    displayName: 'Publish the artifact'
     inputs:
-      artifactName: '$(artifactName)'
-      pathToPublish: '$(Build.ArtifactStagingDirectory)/$(artifactName).zip'
+      PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+      ArtifactName: 'drop'
+      publishLocation: 'Container'
