@@ -28,7 +28,7 @@ steps:
     displayName: 'Build the Angular app'
     inputs:
       command: 'custom'
-      customCommand: 'npm run build'
+      customCommand: 'run ng build --prod'
 
   - task: PublishBuildArtifacts@1
     inputs:
