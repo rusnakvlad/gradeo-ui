@@ -29,17 +29,8 @@ steps:
   inputs:
     targetFolder: '$(Build.ArtifactStagingDirectory)'
 
-- task: ArchiveFiles@2
-  inputs:
-    rootFolderOrFile: '$(Build.SourcesDirectory)'
-    includeRootFolder: false
-    archiveType: 'zip'
-    archiveFile: '$(Build.ArtifactStagingDirectory)/$(artifactName).zip'
-    replaceExistingArchive: true
-  displayName: 'Create the artifact'
-
 - task: PublishBuildArtifacts@1
   inputs:
-    artifactName: '$(artifactName)'
-    pathToPublish: '$(Build.ArtifactStagingDirectory)/$(artifactName).zip'
-  displayName: 'Publish the artifact'
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+    ArtifactName: 'drop'
+    publishLocation: 'Container'
