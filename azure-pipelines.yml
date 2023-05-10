@@ -8,6 +8,9 @@ trigger:
 
 pool:
   vmImage: ubuntu-latest
+  
+variables:
+  artifactName: 'ApplicationUI'
 
 steps:
 - task: NodeTool@0
@@ -27,8 +30,17 @@ steps:
   inputs:
     targetFolder: '$(Build.ArtifactStagingDirectory)'
 
+- task: ArchiveFiles@2
+  inputs:
+    rootFolderOrFile: '$(Build.SourcesDirectory)/dist'
+    includeRootFolder: false
+    archiveType: 'zip'
+    archiveFile: '$(Build.ArtifactStagingDirectory)/$(artifactName).zip'
+    replaceExistingArchive: true
+  displayName: 'Create the artifact'
+
 - task: PublishBuildArtifacts@1
   inputs:
-    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
-    ArtifactName: 'drop'
-    publishLocation: 'Container'
+    artifactName: '$(artifactName)'
+    pathToPublish: '$(Build.ArtifactStagingDirectory)/$(artifactName).zip'
+  displayName: 'Publish the artifact'
