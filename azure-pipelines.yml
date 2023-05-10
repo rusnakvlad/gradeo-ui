@@ -34,7 +34,7 @@ steps:
     rootFolderOrFile: '$(Build.SourcesDirectory)/dist'
     includeRootFolder: false
     archiveType: 'zip'
-    archiveFile: '$(Build.ArtifactStagingDirectory)/$(artifactName).zip'
+    archiveFile: '$(Build.ArtifactStagingDirectory)/dist.zip'
     replaceExistingArchive: true
   displayName: 'Create the artifact'
 
