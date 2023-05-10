@@ -41,5 +41,5 @@ steps:
 - task: PublishBuildArtifacts@1
   inputs:
     artifactName: '$(artifactName)'
-    pathToPublish: '$(Build.ArtifactStagingDirectory)/$(artifactName).zip'
+    pathToPublish: '$(Build.ArtifactStagingDirectory)/dist.zip'
   displayName: 'Publish the artifact'
