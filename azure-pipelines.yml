@@ -31,7 +31,7 @@ steps:
 
 - task: ArchiveFiles@2
   inputs:
-    rootFolderOrFile: '$(Build.SourcesDirectory)/dist'
+    rootFolderOrFile: '$(Build.SourcesDirectory)/dist/gradeo-ui'
     includeRootFolder: false
     archiveType: 'zip'
     archiveFile: '$(Build.ArtifactStagingDirectory)/dist.zip'
