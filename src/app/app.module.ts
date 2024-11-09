@@ -1,10 +1,5 @@
-import { NgModule } from '@angular/core';
+import { importProvidersFrom, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
-import { IPublicClientApplication, PublicClientApplication, InteractionType } from '@azure/msal-browser';
-import { MsalGuard, MsalInterceptor, MsalBroadcastService, MsalInterceptorConfiguration, MsalModule, MsalService, MSAL_GUARD_CONFIG, MSAL_INSTANCE, MSAL_INTERCEPTOR_CONFIG, MsalGuardConfiguration, MsalRedirectComponent } from '@azure/msal-angular';
-
-import { msalConfig, loginRequest, protectedResources } from './auth-config';
 
 // Import the Angular HTTP interceptor.
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -61,37 +56,11 @@ import { StatisticsComponent } from './statistics/statistics.component';
 import { AnalyticsComponent } from './analytics/analytics.component';
 import {ToggleButtonModule} from "primeng/togglebutton";
 import {MessageModule} from "primeng/message";
-
-export function MSALInstanceFactory(): IPublicClientApplication {
-  return new PublicClientApplication(msalConfig);
-}
-
-/**
- * MSAL Angular will automatically retrieve tokens for resources
- * added to protectedResourceMap. For more info, visit:
- * https://github.com/AzureAD/microsoft-authentication-library-for-js/blob/dev/lib/msal-angular/docs/v2-docs/initialization.md#get-tokens-for-web-api-calls
- */
-export function MSALInterceptorConfigFactory(): MsalInterceptorConfiguration {
-  const protectedResourceMap = new Map<string, Array<string>>();
-
-  protectedResourceMap.set(protectedResources.GradeoCoreApi.endpoint, protectedResources.GradeoCoreApi.scopes);
-
-  return {
-    interactionType: InteractionType.Redirect,
-    protectedResourceMap
-  };
-}
-
-/**
- * Set your default interaction type for MSALGuard here. If you have any
- * additional scopes you want the user to consent upon login, add them here as well.
- */
-export function MSALGuardConfigFactory(): MsalGuardConfiguration {
-  return {
-    interactionType: InteractionType.Redirect,
-    authRequest: loginRequest
-  };
-}
+import { provideFirebaseApp, initializeApp } from '@angular/fire/app';
+import { provideAuth, getAuth } from '@angular/fire/auth';
+import { LoginComponent } from './login/login.component';
+import { firebaseConfig } from './firebase.config';
+import { AngularFireModule } from '@angular/fire/compat'
 
 @NgModule({
   declarations: [
@@ -115,6 +84,7 @@ export function MSALGuardConfigFactory(): MsalGuardConfiguration {
     StudentsGradesComponent,
     StatisticsComponent,
     AnalyticsComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
@@ -135,7 +105,6 @@ export function MSALGuardConfigFactory(): MsalGuardConfiguration {
     CardModule,
     InputTextModule,
     RippleModule,
-    MsalModule,
     DialogModule,
     ConfirmDialogModule,
     TabMenuModule,
@@ -147,32 +116,13 @@ export function MSALGuardConfigFactory(): MsalGuardConfiguration {
     CalendarModule,
     ChartModule,
     ToggleButtonModule,
-    MessageModule
+    MessageModule,
+    //AngularFireModule.initializeApp(firebaseConfig),
   ],
   providers: [
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: MsalInterceptor,
-      multi: true
-    },
-    {
-      provide: MSAL_INSTANCE,
-      useFactory: MSALInstanceFactory
-    },
-    {
-      provide: MSAL_GUARD_CONFIG,
-      useFactory: MSALGuardConfigFactory
-    },
-    {
-      provide: MSAL_INTERCEPTOR_CONFIG,
-      useFactory: MSALInterceptorConfigFactory
-    },
-    MsalService,
-    MsalGuard,
-    MsalBroadcastService,
     MessageService,
-    ConfirmationService,
+    ConfirmationService
   ],
-  bootstrap: [AppComponent, MsalRedirectComponent]
+  bootstrap: [AppComponent]
 })
 export class AppModule { }

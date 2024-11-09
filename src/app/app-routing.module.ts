@@ -2,7 +2,6 @@ import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {LayoutComponent} from "./layout/layout.component";
 import {SchoolsComponent} from "./schools/schools.component";
-import {MsalGuard, MsalRedirectComponent} from "@azure/msal-angular";
 import {WelcomeComponent} from "./layout/welcome/welcome.component";
 import {UsersComponent} from "./users/users.component";
 import {MasterDataComponent} from "./master-data/master-data.component";
@@ -18,6 +17,7 @@ import {StudentGradesComponent} from "./student-grades/student-grades.component"
 import {StudentsGradesComponent} from "./students-grades/students-grades.component";
 import {StatisticsComponent} from "./statistics/statistics.component";
 import {AnalyticsComponent} from "./analytics/analytics.component";
+import { LoginComponent } from './login/login.component';
 
 const routes: Routes = [
   {
@@ -29,64 +29,67 @@ const routes: Routes = [
         component: WelcomeComponent,
       },
       {
+        path: 'login',
+        component: LoginComponent,
+      },
+      {
         path: 'schools',
         component: SchoolsComponent,
-        canActivate: [MsalGuard]
+        
       },
       {
         path: 'schoolProfile',
         component: SchoolProfileComponent,
-        canActivate: [MsalGuard]
+        
       },
       {
         path: 'statistics',
         component: StatisticsComponent,
-        canActivate: [MsalGuard]
+        
       },
       {
         path: 'analytics',
         component: AnalyticsComponent,
-        canActivate: [MsalGuard]
+        
       },
       {
         path: 'users',
         component: UsersComponent,
-        canActivate: [MsalGuard]
+        
       },
       {
         path: 'myGrades',
         component: StudentGradesComponent,
-        canActivate: [MsalGuard]
+        
       },
       {
         path: 'studentsGrades',
         component: StudentsGradesComponent,
-        canActivate: [MsalGuard]
+        
       },
       {
         path: 'students',
         component: StudentProfilesComponent,
-        canActivate: [MsalGuard]
+        
       },
       {
         path: 'studentProfile',
         component: StudentProfileComponent,
-        canActivate: [MsalGuard]
+        
       },
       {
         path: 'teachers',
         component: TeacherProfilesComponent,
-        canActivate: [MsalGuard]
+        
       },
       {
         path: 'teacherProfile',
         component: TeacherProfileComponent,
-        canActivate: [MsalGuard]
+        
       },
       {
         path:'admin',
         component: MasterDataComponent,
-        canActivate: [MsalGuard],
         children:[
           {
             path: 'subjects',
@@ -103,9 +106,6 @@ const routes: Routes = [
         ]
       }
     ]
-  },
-  {
-    path: 'auth', component: MsalRedirectComponent
   }
 ];
 
