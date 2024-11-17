@@ -61,6 +61,7 @@ import { provideAuth, getAuth } from '@angular/fire/auth';
 import { LoginComponent } from './login/login.component';
 import { firebaseConfig } from './firebase.config';
 import { AngularFireModule } from '@angular/fire/compat'
+import { TokenInterceptor } from './HttpInterceptors/token.interceptor';
 
 @NgModule({
   declarations: [
@@ -117,9 +118,14 @@ import { AngularFireModule } from '@angular/fire/compat'
     ChartModule,
     ToggleButtonModule,
     MessageModule,
-    //AngularFireModule.initializeApp(firebaseConfig),
+    AngularFireModule.initializeApp(firebaseConfig),
   ],
   providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptor,
+      multi: true,
+  },
     MessageService,
     ConfirmationService
   ],

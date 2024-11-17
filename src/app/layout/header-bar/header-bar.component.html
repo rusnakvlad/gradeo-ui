@@ -1,11 +1,11 @@
 <p-menubar>
   <ng-template pTemplate="start">
-    <button *ngIf="loginDisplay" pButton pRipple type="button" icon="pi pi-bars" class="p-button-outlined"></button>
+    <button *ngIf="isLoggedIn" pButton pRipple type="button" icon="pi pi-bars" class="p-button-outlined" (click)=expandSidebar()></button>
     <img src="assets/images/applogo.png" height="40" style="padding-left: 5px">
   </ng-template>
   <ng-template pTemplate="end">
-    <p-button *ngIf="!loginDisplay">Login</p-button>
-    <ng-container *ngIf="loginDisplay">
+    <p-button *ngIf="!isLoggedIn" routerLink='login'>Login</p-button>
+    <ng-container *ngIf="isLoggedIn">
       <button type="button" pButton class="p-button-text" icon="pi pi-angle-down" iconPos="right" label="{{userDisplayName}}" (click)="menu.toggle($event)"></button>
       <p-tieredMenu #menu [model]="items" [popup]="true"></p-tieredMenu>
     </ng-container>

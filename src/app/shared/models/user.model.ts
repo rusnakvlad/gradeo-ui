@@ -22,6 +22,9 @@ export type UsersPaged = {
 
 export type UserDetails = {
   id: string,
+  email: string,
+  firstName: string,
+  lastName: string,
   userType?: UserType,
   systemType: number,
   businessUnitId?: number

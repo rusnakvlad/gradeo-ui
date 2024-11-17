@@ -4,6 +4,7 @@ import {MenuItemModel} from "../../shared/models/menu.model";
 import {MenuService} from "../../shared/services/menu.service";
 import {ThemeService} from "../../shared/services/theme.service";
 import {Theme} from "../../shared/enums/theme";
+import { UserAuthService } from 'src/app/shared/services/user-auth.service';
 
 @Component({
   selector: 'app-sidebar',
@@ -16,15 +17,18 @@ export class SidebarComponent implements OnInit {
   menuItems: MenuItemModel[];
   isDarkMode: boolean = false;
 
-  constructor(private layoutService: LayoutService, private menuService: MenuService, private themeService: ThemeService) {
+  constructor(private layoutService: LayoutService, private menuService: MenuService, private themeService: ThemeService, private userAuthService: UserAuthService) {
     layoutService.menuToggled.subscribe(sidebarState => this.display = sidebarState);
     menuService.menuUpdated.subscribe(response => this.menuItems = response);
   }
 
   ngOnInit(): void {
-    this.menuService.getMenuItems().subscribe(response => {
-      this.menuItems = response;
-    })
+
+    if(this.userAuthService.isAuth()){
+      this.menuService.getMenuItems().subscribe(response => {
+        this.menuItems = response;
+      })
+    }
     this.isDarkMode = this.themeService.isLastSelectedDarkMode();
   }
 

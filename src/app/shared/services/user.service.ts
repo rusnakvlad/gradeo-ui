@@ -34,8 +34,13 @@ export class UserService {
   update(user: UpdateUserModel){
     return this.httpClient.put(this.api.users, user);
   }
+
   getCurrentUser(): Observable<UserDetails> {
     return this.httpClient.get<UserDetails>(this.api.users + '/currentUser');
+  }
+
+  getUserByEmail(email: string): Observable<UserDetails> {
+    return this.httpClient.get<UserDetails>(this.api.users + `/email/${email}`);
   }
 
   getFilteredEmails(searchTerm?: string, userType?: UserType): Observable<string[]>{

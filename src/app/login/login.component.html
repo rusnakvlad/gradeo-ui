@@ -1,1 +1,14 @@
-<p>login works!</p>
+<div class="center">
+    <div class="center-vertically">
+
+        <div class="field">
+            <input type="text" pInputText id="email" placeholder="Email" [(ngModel)]="email" required autofocus />
+        </div>
+        <div class="field">
+            <input type="text" pInputText id="password" placeholder="Password" [(ngModel)]="password" required
+                autofocus />
+        </div>
+
+        <button pButton pRipple class="p-button-text" (click)="login()">Login</button>
+    </div>
+</div>

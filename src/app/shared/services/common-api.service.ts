@@ -5,7 +5,7 @@ import {Injectable} from '@angular/core';
 })
 export class CommonApiService {
 
-  url = "";
+  url = "https://localhost:7001";
   schools: string = this.url + '/api/schools'
   users: string = this.url + '/api/users'
   masterSubjects: string = this.url + '/api/masterSubjects'
