@@ -1,109 +1,68 @@
-<p-message severity="warn" [text]="warningMessage" [style]="{'margin-bottom':'5px'}"></p-message>
+<!-- <p-message severity="warn" [text]="warningMessage" [style]="{'margin-bottom':'5px'}"></p-message> -->
 <div class="flex-container gap-2 justify-content-center align-items-center">
   <p-card header="Input values" styleClass="p-fluid">
     <ng-template pTemplate="content">
+
+      <div class="row">
+        <div class="field">
+          <label for="gender">Gender</label>
+          <p-dropdown [options]="genderOptions" id="gender" [(ngModel)]="predictionRequest.gender"></p-dropdown>
+          <small class="p-error" *ngIf="false">Gender is required</small>
+        </div>
+
+        <div class="field">
+          <label for="ethnicity">Race or Ethnicity</label>
+          <p-dropdown [options]="ethnicityOptions" id="ethnicity"
+            [(ngModel)]="predictionRequest.ethnicity"></p-dropdown>
+          <small class="p-error" *ngIf="false">Race or Ethnicity is required</small>
+        </div>
+      </div>
+
+
       <div class="field">
-        <label for="failures">Failures</label>
-        <input type="number" min="0" max="4" pInputText id="failures" [(ngModel)]="predictionRequest.failures" required
-               autofocus/>
-        <small class="p-error" *ngIf="submited && !predictionRequest.failures">Field is required.</small>
+        <label for="parent-education">Parental Level of Education</label>
+        <p-dropdown [options]="parentLevelEducationOptions" id="parent-education"
+          [(ngModel)]="predictionRequest.parental_level_of_education"></p-dropdown>
+        <small class="p-error" *ngIf="false">Parental Level of Education is required</small>
       </div>
 
       <div class="field">
-        <label for="medu">Mother's Education</label>
-        <input type="number" min="0" max="4" pInputText id="medu" [(ngModel)]="predictionRequest.medu" required
-               autofocus/>
-        <small class="p-error" *ngIf="submited && !predictionRequest.medu">Field is required.</small>
+        <label for="lunch">Lunch Type</label>
+        <p-dropdown [options]="lunchOptions" id="lunch" [(ngModel)]="predictionRequest.lunch"></p-dropdown>
+        <small class="p-error" *ngIf="false">Lunch Type is required</small>
       </div>
 
       <div class="field">
-        <label for="studytime">Study Time</label>
-        <input type="number" min="1" max="4" pInputText id="studytime" [(ngModel)]="predictionRequest.studyTime"
-               required autofocus/>
-        <small class="p-error" *ngIf="submited && !predictionRequest.studyTime">Field is required.</small>
+        <label for="test-course">Test Preparation Course</label>
+        <p-dropdown [options]="testPreparationCourseOptions" id="test-course"
+          [(ngModel)]="predictionRequest.test_preparation_course"></p-dropdown>
+        <small class="p-error" *ngIf="false">Test Preparation Course is required</small>
+      </div>
+
+      <div class="row">
+        <div class="field">
+          <label for="reading">Reading Score out of 100</label>
+          <input type="number" min="0" max="100" pInputText id="reading" [(ngModel)]="predictionRequest.reading_score"
+            required autofocus />
+          <small class="p-error" *ngIf="false">Reading Score is required.</small>
+        </div>
+
+        <div class="field">
+          <label for="writing">Writing Score out of 100</label>
+          <input type="number" min="0" max="100" pInputText id="writing" [(ngModel)]="predictionRequest.writing_score"
+            required autofocus />
+          <small class="p-error" *ngIf="false">Writing Score is required.</small>
+        </div>
       </div>
 
       <div class="field">
-        <label for="abscences">Abscences</label>
-        <input type="number" min="0" max="93" pInputText id="abscences" [(ngModel)]="predictionRequest.absences"
-               required autofocus/>
-        <small class="p-error" *ngIf="submited && !predictionRequest.absences">Field is required.</small>
+        <h4>Prediction Result: <span style="font-weight: lighter;">{{prediction}}</span></h4>
       </div>
 
-      <div class="field">
-        <label for="g1">G1</label>
-        <input type="number" min="0" max="12" pInputText id="g1" [(ngModel)]="g1" required autofocus/>
-        <small class="p-error" *ngIf="submited && !predictionRequest.g1">Field is required.</small>
-      </div>
-
-      <div class="field">
-        <label for="g2">G2</label>
-        <input type="number" min="0" max="12" pInputText id="g2" [(ngModel)]="g2" required autofocus/>
-        <small class="p-error" *ngIf="submited && !predictionRequest.g2">Field is required.</small>
-      </div>
-
-      <div class="field">
-        <label for="higher">Higher Education</label>
-        <p-toggleButton id="higher" onLabel="Yes" offLabel="No" [(ngModel)]="predictionRequest.higher"></p-toggleButton>
-        <small class="p-error" *ngIf="false">Field is required.</small>
-      </div>
     </ng-template>
 
     <ng-template pTemplate="footer">
-      <button pButton pRipple label="Predict" class="p-button-text" (click)="getPrediction()"></button>
+      <button pButton pRipple label="Predict" class="p-button-text" (click)="getPrediction()" [disabled]="!isModelValid(predictionRequest)"></button>
     </ng-template>
   </p-card>
-
-  <div>
-    <p-card header="Definition" styleClass="p-fluid">
-      <div class="flex align-items-stretch gap-2">
-        <h3>Failures:</h3>
-        <h3 class="text-primary">Number of past class failures (numeric: n if 1<=n<3, else 4)</h3>
-      </div>
-
-      <div class="flex align-items-stretch gap-2">
-        <h3>Mother's education:</h3>
-        <h3 class="text-primary">Mother's education (numeric: 0 - none, 1 - primary education (4th grade), 2 - 5th to
-          9th grade, 3 - secondary, 4 - higher education</h3>
-      </div>
-
-      <div class="flex align-items-stretch gap-2">
-        <h3>Study Time:</h3>
-        <h3 class="text-primary">Weekly study time (numeric: 1 - <2 hours, 2 - 2 to 5 hours, 3 - 5 to 10 hours, or 4 -
-          >10 hours)</h3>
-      </div>
-
-      <div class="flex align-items-stretch gap-2">
-        <h3>Abscences:</h3>
-        <h3 class="text-primary">Number of school absences (numeric: from 0 to 93) wants to take higher education</h3>
-      </div>
-
-      <div class="flex align-items-stretch gap-2">
-        <h3>G1:</h3>
-        <h3 class="text-primary">First period grade (numeric: from 0 to 12)</h3>
-      </div>
-
-      <div class="flex align-items-stretch gap-2">
-        <h3>G2:</h3>
-        <h3 class="text-primary">Second period grade (numeric: from 0 to 12)</h3>
-      </div>
-
-      <div class="flex align-items-stretch gap-2">
-        <h3>G2:</h3>
-        <h3 class="text-primary">Most probably third grade</h3>
-      </div>
-
-      <div class="flex align-items-stretch gap-2">
-        <h3>Higher Education:</h3>
-        <h3 class="text-primary">Wants to take higher education</h3>
-      </div>
-    </p-card>
-    <p-card header="Result" styleClass="p-fluid" [style]="{'margin-top': '10px'}">
-      <div class="flex align-items-stretch gap-2">
-        <h3>Most probably G3 score:</h3>
-        <h3 class="text-primary">{{prediction}}</h3>
-      </div>
-    </p-card>
-  </div>
 </div>
-

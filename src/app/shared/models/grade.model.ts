@@ -40,11 +40,11 @@ export type DateRangeFilter = {
 }
 
 export type GradePredictionModel = {
-  failures:number,
-  medu:number,
-  studyTime:number,
-  absences:number,
-  g1:number,
-  g2:number,
-  higher: boolean,
+  gender: string
+  ethnicity: string
+  parental_level_of_education: string
+  lunch: string
+  test_preparation_course: string
+  reading_score: number
+  writing_score: number
 }

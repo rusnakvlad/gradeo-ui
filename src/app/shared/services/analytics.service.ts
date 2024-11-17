@@ -11,7 +11,7 @@ export class AnalyticsService {
   constructor(private httpClient: HttpClient) {
   }
 
-  getGradePrediction(predictionRequest: GradePredictionModel): Observable<{ prediction: number }> {
-    return this.httpClient.post<{ prediction: number }>('http://127.0.0.1:5000/predict', predictionRequest);
+  getGradePrediction(predictionRequest: GradePredictionModel): Observable<any> {
+    return this.httpClient.post<any>('http://127.0.0.1:5000/predict-json', predictionRequest);
   }
 }
