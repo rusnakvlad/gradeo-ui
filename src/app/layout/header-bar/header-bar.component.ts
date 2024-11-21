@@ -54,7 +54,8 @@ export class HeaderBarComponent implements OnInit {
       {
         label: 'Logout',
         icon: 'pi pi-fw pi-power-off',
-        command: () => this.logout()
+        command: () => this.logout(),
+        routerLink: '/login'
       }]
   }
 

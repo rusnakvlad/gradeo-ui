@@ -42,7 +42,6 @@ export class UserAuthService {
   logout() {
     this.fireAuth.signOut().then(() => {
       localStorage.removeItem('accessToken');
-      this.router.navigate(['/login']);
       window.location.reload();
     }, err => {
       alert(err.message);
