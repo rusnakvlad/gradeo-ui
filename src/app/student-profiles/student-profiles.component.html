@@ -1,24 +1,16 @@
 <p-card>
   <p-toolbar styleClass="p-mb-4">
     <ng-template pTemplate="left">
-      <button pButton pRipple label="New" (click)="openNew()" icon="pi pi-plus" class="p-button-success p-mr-2" style="margin-right:10px"></button>
+      <button pButton pRipple label="New" (click)="openNew()" icon="pi pi-plus" class="p-button-success p-mr-2"
+        style="margin-right:10px"></button>
     </ng-template>
   </p-toolbar>
   <br>
 
-  <p-table [value]="students?.items || []"
-           [paginator]="true"
-           [rows]="10"
-           [rowsPerPageOptions]="[10]"
-           [lazy]="true"
-           [loading]="loading"
-           [lazyLoadOnInit]="false"
-           (onLazyLoad)="nextPage($event)"
-           [totalRecords]="students?.totalCount || 0"
-           [showCurrentPageReport]=true
-           [(selection)]="selectedStudents"
-           [rowHover]="true"
-           dataKey="id">
+  <p-table [value]="students?.items || []" [paginator]="true" [rows]="10" [rowsPerPageOptions]="[10]" [lazy]="true"
+    [loading]="loading" [lazyLoadOnInit]="false" (onLazyLoad)="nextPage($event)"
+    [totalRecords]="students?.totalCount || 0" [showCurrentPageReport]=true [(selection)]="selectedStudents"
+    [rowHover]="true" dataKey="id">
 
     <ng-template pTemplate="header">
       <tr>
@@ -35,15 +27,18 @@
         <td>{{student.lastName}}</td>
         <td>{{student.studyGroups[0].name}}</td>
         <td class="flex justify-content-center flex-wrap gap-1">
-          <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success p-mr-2" (click) = "edit(student)"></button>
-          <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="deleteSingle(student.id)"></button>
+          <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success p-mr-2"
+            (click)="edit(student)"></button>
+          <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning"
+            (click)="deleteSingle(student.id)"></button>
         </td>
       </tr>
     </ng-template>
   </p-table>
 </p-card>
 
-<p-dialog [(visible)]="showDialog" [style]="{width: '450px', height:'500px'}" header="Study group details" [modal]="true" styleClass="p-fluid" (onHide)="hideDialog()">
+<p-dialog [(visible)]="showDialog" [style]="{width: '600px', height:'650px'}" header="Study group details"
+  [modal]="true" styleClass="p-fluid" (onHide)="hideDialog()">
   <ng-template pTemplate="content">
 
     <div class="field" *ngIf="isEditMode">
@@ -53,15 +48,51 @@
 
     <div class="field" *ngIf="isEditMode == false">
       <label for="emailOptions">Student Email</label>
-      <p-dropdown [disabled]="isEditMode" [options]="userEmailOptions" id="emailOptions" [(ngModel)]="student.userEmail"></p-dropdown>
+      <p-dropdown [disabled]="isEditMode" [options]="userEmailOptions" id="emailOptions"
+        [(ngModel)]="student.userEmail"></p-dropdown>
       <small class="p-error" *ngIf="submitted && !student.userEmail">User email required</small>
     </div>
 
     <div class="field">
       <label for="studyGroup">Study Group</label>
-      <p-dropdown [options]="studyGroupOptions" id="studyGroup" [(ngModel)]="student.studyGroupId" optionLabel="name" optionValue="id"></p-dropdown>
+      <p-dropdown [options]="studyGroupOptions" id="studyGroup" [(ngModel)]="student.studyGroupId" optionLabel="name"
+        optionValue="id"></p-dropdown>
       <small class="p-error" *ngIf="submitted && !student.studyGroupId">Study group required</small>
     </div>
+
+    <div class="field">
+      <label for="gender">Gender</label>
+      <p-dropdown [options]="genderOptions" id="gender" [(ngModel)]="student.gender"></p-dropdown>
+      <small class="p-error" *ngIf="false">Gender is required</small>
+    </div>
+
+    <div class="field">
+      <label for="ethnicity">Race or Ethnicity</label>
+      <p-dropdown [options]="ethnicityOptions" id="ethnicity" [(ngModel)]="student.ethnicity"></p-dropdown>
+      <small class="p-error" *ngIf="false">Race or Ethnicity is required</small>
+    </div>
+
+
+    <div class="field">
+      <label for="parent-education">Parental Level of Education</label>
+      <p-dropdown [options]="parentLevelEducationOptions" id="parent-education"
+        [(ngModel)]="student.parentalLevelOfEducation"></p-dropdown>
+      <small class="p-error" *ngIf="false">Parental Level of Education is required</small>
+    </div>
+
+    <div class="field">
+      <label for="lunch">Lunch Type</label>
+      <p-dropdown [options]="lunchOptions" id="lunch" [(ngModel)]="student.lunch"></p-dropdown>
+      <small class="p-error" *ngIf="false">Lunch Type is required</small>
+    </div>
+
+    <div class="field" style="margin-bottom: 80px;">
+      <label for="test-course">Test Preparation Course</label>
+      <p-dropdown [options]="testPreparationCourseOptions" id="test-course"
+        [(ngModel)]="student.testPreparationCourse"></p-dropdown>
+      <small class="p-error" *ngIf="false">Test Preparation Course is required</small>
+    </div>
+
   </ng-template>
 
   <ng-template pTemplate="footer">

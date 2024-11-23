@@ -4,6 +4,7 @@ import { UserService } from "./user.service";
 import { Router } from '@angular/router';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { jwtDecode } from 'jwt-decode';
+import { SpinnerService } from './spinner.service';
 @Injectable({
   providedIn: 'root'
 })
@@ -13,11 +14,13 @@ export class UserAuthService {
 
   constructor(private userService: UserService,
     private fireAuth: AngularFireAuth,
-    private router: Router) {
+    private router: Router,
+    private spinner: SpinnerService) {
   }
 
   // login method
   login(email: string, password: string) {
+    this.spinner.show();
     this.fireAuth.signInWithEmailAndPassword(email, password).then(res => {
       let authInfo = res.user?.multiFactor as any;
 
@@ -26,7 +29,7 @@ export class UserAuthService {
         this.setToken(authInfo.user.accessToken);
 
         this.currentUser = userDetails;
-
+        this.spinner.hide();
         this.user.emit(this.currentUser);
 
         this.router.navigate(['/']);

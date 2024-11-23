@@ -68,7 +68,7 @@
   <ng-template pTemplate="content">
     <div class="field">
       <label for="grade">Grade</label>
-      <input type="text" pInputText id="grade" [(ngModel)]="selectedGrade" required autofocus/>
+      <input type="number" min="1" max="12" pInputText id="grade" [(ngModel)]="selectedGrade" required autofocus/>
       <small class="p-error" *ngIf="submitted && !selectedGrade">Field is required.</small>
     </div>
   </ng-template>

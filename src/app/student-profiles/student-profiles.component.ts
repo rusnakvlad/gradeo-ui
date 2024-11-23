@@ -9,6 +9,8 @@ import {StudyGroupService} from "../shared/services/study-group.service";
 import {UserService} from "../shared/services/user.service";
 import {UserType} from "../shared/enums/user-type";
 import {SpinnerService} from "../shared/services/spinner.service";
+import { OptionService } from '../shared/services/option.service';
+import { DictionaryOptionType } from '../shared/models/option.model';
 
 @Component({
   selector: 'app-student-profiles',
@@ -27,11 +29,18 @@ export class StudentProfilesComponent implements OnInit {
   userEmailOptions: string[];
   isEditMode: boolean = false;
 
+  genderOptions:string[];
+  ethnicityOptions: string[];
+  parentLevelEducationOptions: string[];
+  lunchOptions: string[];
+  testPreparationCourseOptions: string[];
+
   constructor(private popupService: PopupService,
               private studentService: StudentProfileService,
               private studyGroupService: StudyGroupService,
               private userService: UserService,
-              private spinner: SpinnerService) { }
+              private spinner: SpinnerService,
+              private optionService: OptionService) { }
 
   ngOnInit(): void {
     this.refreshGrid(DefaultPageNumber, DefaultPageSize)
@@ -40,6 +49,7 @@ export class StudentProfilesComponent implements OnInit {
   openNew() {
     this.retrieveStudyGroups();
     this.getStudentsEmails();
+    this.retrieveProfileOptions();
     this.student = {} as StudentProfileUpsertModel;
     this.showDialog = true;
   }
@@ -50,7 +60,14 @@ export class StudentProfilesComponent implements OnInit {
     this.student.userEmail = studentProfile.email;
     this.student.studyGroupId = studentProfile.studyGroups[0].id;
     this.student.id = studentProfile.id;
+    this.student.gender = studentProfile.gender;
+    this.student.ethnicity = studentProfile.ethnicity;
+    this.student.parentalLevelOfEducation = studentProfile.parentalLevelOfEducation;
+    this.student.lunch = studentProfile.lunch;
+    this.student.testPreparationCourse = studentProfile.testPreparationCourse;
+    
     this.retrieveStudyGroups();
+    this.retrieveProfileOptions();
     this.showDialog = true;
   }
 
@@ -67,6 +84,7 @@ export class StudentProfilesComponent implements OnInit {
     this.loading = true;
     this.studentService.get(pageNumber, pageSize).subscribe(response => {
         this.students = response;
+        console.log(this.students);
         this.loading = false;
       },
       error => {
@@ -117,6 +135,16 @@ export class StudentProfilesComponent implements OnInit {
   getStudentsEmails() {
     this.userService.getFilteredEmails("", UserType.Student).subscribe(response => {
       this.userEmailOptions = response;
+    })
+  }
+
+  retrieveProfileOptions(){
+    this.optionService.getAll().subscribe(response => {
+      this.genderOptions = response.filter(x => x.optionType == DictionaryOptionType.Gender).map(x => x.optionValue);
+      this.ethnicityOptions = response.filter(x => x.optionType == DictionaryOptionType.Ethnicity).map(x => x.optionValue);
+      this.parentLevelEducationOptions = response.filter(x => x.optionType == DictionaryOptionType.ParentalLevelOfEducation).map(x => x.optionValue);
+      this.lunchOptions = response.filter(x => x.optionType == DictionaryOptionType.Lunch).map(x => x.optionValue);
+      this.testPreparationCourseOptions = response.filter(x => x.optionType == DictionaryOptionType.TestPreparationCourse).map(x => x.optionValue);
     })
   }
 }

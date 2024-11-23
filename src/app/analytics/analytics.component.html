@@ -1,4 +1,4 @@
-<!-- <p-message severity="warn" [text]="warningMessage" [style]="{'margin-bottom':'5px'}"></p-message> -->
+<p-messages severity="info" [(value)]="warningMessage" [style]="{'margin-bottom':'5px'}"></p-messages>
 <div class="flex-container gap-2 justify-content-center align-items-center">
   <p-card header="Input values" styleClass="p-fluid">
     <ng-template pTemplate="content">
@@ -41,28 +41,29 @@
 
       <div class="row">
         <div class="field">
-          <label for="reading">Reading Score out of 100</label>
-          <input type="number" min="0" max="100" pInputText id="reading" [(ngModel)]="predictionRequest.reading_score"
+          <label for="reading">Reading Score out of 12</label>
+          <input type="number" min="1" max="12" pInputText id="reading" [(ngModel)]="predictionRequest.reading_score"
             required autofocus />
           <small class="p-error" *ngIf="false">Reading Score is required.</small>
         </div>
 
         <div class="field">
-          <label for="writing">Writing Score out of 100</label>
-          <input type="number" min="0" max="100" pInputText id="writing" [(ngModel)]="predictionRequest.writing_score"
+          <label for="writing">Writing Score out of 12</label>
+          <input type="number" min="1" max="12" pInputText id="writing" [(ngModel)]="predictionRequest.writing_score"
             required autofocus />
           <small class="p-error" *ngIf="false">Writing Score is required.</small>
         </div>
       </div>
 
       <div class="field">
-        <h4>Prediction Result: <span style="font-weight: lighter;">{{prediction}}</span></h4>
+        <h4>Math Prediction Result: <span style="font-weight: lighter;">{{prediction}}</span></h4>
       </div>
 
     </ng-template>
 
     <ng-template pTemplate="footer">
-      <button pButton pRipple label="Predict" class="p-button-text" (click)="getPrediction()" [disabled]="!isModelValid(predictionRequest)"></button>
+      <button pButton pRipple label="Predict" class="p-button-text" (click)="getPrediction()"
+        [disabled]="!isModelValid(predictionRequest)"></button>
     </ng-template>
   </p-card>
 </div>
